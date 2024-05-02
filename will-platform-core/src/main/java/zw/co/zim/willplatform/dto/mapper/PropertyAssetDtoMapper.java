@@ -22,6 +22,7 @@ public class PropertyAssetDtoMapper implements Function<PropertyAsset, PropertyA
             propertyAsset.getYouHoldDeed(),
             propertyAsset.getPersonWhoHoldsDeed(),
             propertyAsset.getAdditionalInformation(),
-            propertyAsset.getUserId());
+            propertyAsset.getUserId(),
+            propertyAsset.getRecordStatus());
     }
 }

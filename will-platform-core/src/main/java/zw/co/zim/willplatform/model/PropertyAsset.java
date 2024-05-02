@@ -1,13 +1,12 @@
 package zw.co.zim.willplatform.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import zw.co.zim.willplatform.dto.PropertyAssetRecordDto;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import zw.co.zim.willplatform.enums.RecordStatus;
 
 @Entity
 @Getter
@@ -27,9 +26,10 @@ public class PropertyAsset extends BaseEntity {
     private String personWhoHoldsDeed;
     private String additionalInformation;
     @ManyToOne
-    @JoinColumn(name = "userId")
-    @JsonBackReference
     private User userId;
+
+    @Enumerated(EnumType.STRING)
+    private RecordStatus recordStatus;
 
     public PropertyAsset(PropertyAssetRecordDto propertyAssetRecordDto) {
         this.propertyName = propertyAssetRecordDto.propertyName();
@@ -45,5 +45,6 @@ public class PropertyAsset extends BaseEntity {
         this.personWhoHoldsDeed = propertyAssetRecordDto.personWhoHoldsDeed();
         this.additionalInformation = propertyAssetRecordDto.additionalInformation();
         this.userId = propertyAssetRecordDto.user();
+        this.recordStatus = getRecordStatus();
     }
 }

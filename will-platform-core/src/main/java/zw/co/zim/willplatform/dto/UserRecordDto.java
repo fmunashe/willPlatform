@@ -3,6 +3,7 @@ package zw.co.zim.willplatform.dto;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import zw.co.zim.willplatform.enums.RecordStatus;
 
 import java.time.LocalDate;
 
@@ -37,5 +38,6 @@ public record UserRecordDto(Long id,
                             String province,
                             @NotNull(message = "Country is required")
                             @NotBlank(message = "Country field cannot be blank")
-                            String country) {
+                            String country,
+                            RecordStatus recordStatus) {
 }

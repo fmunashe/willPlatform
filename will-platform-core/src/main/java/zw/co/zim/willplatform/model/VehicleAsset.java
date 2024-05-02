@@ -1,13 +1,12 @@
 package zw.co.zim.willplatform.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import zw.co.zim.willplatform.dto.VehicleAssetRecordDto;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import zw.co.zim.willplatform.enums.RecordStatus;
 
 import java.time.LocalDate;
 
@@ -26,9 +25,9 @@ public class VehicleAsset extends BaseEntity {
     private Boolean fullyPaid;
     private String registrationPaperWith;
     @ManyToOne
-    @JoinColumn(name = "userId")
-    @JsonBackReference
     private User userId;
+    @Enumerated(EnumType.STRING)
+    private RecordStatus recordStatus;
 
     public VehicleAsset(VehicleAssetRecordDto vehicleAssetRecordDto) {
         this.make = vehicleAssetRecordDto.make();

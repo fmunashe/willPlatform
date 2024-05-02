@@ -1,13 +1,12 @@
 package zw.co.zim.willplatform.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import zw.co.zim.willplatform.dto.AssetPersonOwingMoneyRecordDto;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import zw.co.zim.willplatform.enums.RecordStatus;
 
 @Getter
 @Setter
@@ -18,14 +17,16 @@ public class AssetPersonOwingMoney extends BaseEntity {
     private Double amountOwed;
     private String contactNumber;
     @ManyToOne
-    @JoinColumn(name = "userId")
-    @JsonBackReference
     private User userId;
+
+    @Enumerated(EnumType.STRING)
+    private RecordStatus recordStatus;
 
     public AssetPersonOwingMoney(AssetPersonOwingMoneyRecordDto recordDto) {
         this.personDetails = recordDto.personDetails();
         this.amountOwed = recordDto.amountOwed();
         this.contactNumber = recordDto.contactNumber();
         this.userId = recordDto.userId();
+        this.recordStatus = getRecordStatus();
     }
 }

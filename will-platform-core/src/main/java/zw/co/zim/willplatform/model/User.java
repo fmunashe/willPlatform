@@ -1,13 +1,13 @@
 package zw.co.zim.willplatform.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Builder;
-import zw.co.zim.willplatform.dto.UserRecordDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import zw.co.zim.willplatform.dto.UserRecordDto;
+import zw.co.zim.willplatform.enums.RecordStatus;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -40,7 +40,7 @@ public class User extends BaseEntity {
     @JsonManagedReference
     private List<PropertyAsset> properties;
 
-    @OneToMany(mappedBy = "userId",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<BankAsset> bankAccounts;
 
@@ -71,6 +71,9 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<AssetInvestment> assetInvestments;
+
+    @Enumerated(EnumType.STRING)
+    private RecordStatus recordStatus;
 
     public User(UserRecordDto userRecordDto) {
         this.firstName = userRecordDto.firstName();

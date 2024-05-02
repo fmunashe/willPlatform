@@ -1,5 +1,6 @@
 package zw.co.zim.willplatform.dto;
 
+import zw.co.zim.willplatform.enums.RecordStatus;
 import zw.co.zim.willplatform.model.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,6 +18,7 @@ public record AssetPolicyRecordDto(
     String company,
     @NotNull(message = "Policy value is required")
     Double value,
-    User userId
+    User userId,
+    RecordStatus recordStatus
 ) {
 }

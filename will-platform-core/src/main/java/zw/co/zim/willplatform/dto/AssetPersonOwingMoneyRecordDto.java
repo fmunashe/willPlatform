@@ -1,5 +1,6 @@
 package zw.co.zim.willplatform.dto;
 
+import zw.co.zim.willplatform.enums.RecordStatus;
 import zw.co.zim.willplatform.model.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -15,6 +16,7 @@ public record AssetPersonOwingMoneyRecordDto(
     @NotBlank(message = "Person owing money contact number cannot be blank")
     String contactNumber,
 
-    User userId
+    User userId,
+    RecordStatus recordStatus
 ) {
 }

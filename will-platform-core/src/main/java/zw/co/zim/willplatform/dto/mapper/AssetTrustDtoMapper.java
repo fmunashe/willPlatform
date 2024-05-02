@@ -10,6 +10,6 @@ import java.util.function.Function;
 public class AssetTrustDtoMapper implements Function<AssetTrust, AssetTrustDto> {
     @Override
     public AssetTrustDto apply(AssetTrust assetTrust) {
-        return new AssetTrustDto(assetTrust.getNameOfTrust(), assetTrust.getTrustValue(), assetTrust.getUserId());
+        return new AssetTrustDto(assetTrust.getNameOfTrust(), assetTrust.getTrustValue(), assetTrust.getUserId(),assetTrust.getRecordStatus());
     }
 }

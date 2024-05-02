@@ -10,6 +10,6 @@ import java.util.function.Function;
 public class AssetInvestmentDtoMapper implements Function<AssetInvestment, AssetInvestmentRecordDto> {
     @Override
     public AssetInvestmentRecordDto apply(AssetInvestment assetInvestment) {
-        return new AssetInvestmentRecordDto(assetInvestment.getInvestmentType(), assetInvestment.getInvestmentValue(), assetInvestment.getCompany(), assetInvestment.getUserId());
+        return new AssetInvestmentRecordDto(assetInvestment.getInvestmentType(), assetInvestment.getInvestmentValue(), assetInvestment.getCompany(), assetInvestment.getUserId(),assetInvestment.getRecordStatus());
     }
 }

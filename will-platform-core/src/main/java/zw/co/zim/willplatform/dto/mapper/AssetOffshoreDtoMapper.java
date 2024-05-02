@@ -10,6 +10,6 @@ import java.util.function.Function;
 public class AssetOffshoreDtoMapper implements Function<AssetOffshore, AssetOffshoreRecordDto> {
     @Override
     public AssetOffshoreRecordDto apply(AssetOffshore assetOffshore) {
-        return new AssetOffshoreRecordDto(assetOffshore.getDescription(), assetOffshore.getOffshoreValue(), assetOffshore.getUserId());
+        return new AssetOffshoreRecordDto(assetOffshore.getDescription(), assetOffshore.getOffshoreValue(), assetOffshore.getUserId(),assetOffshore.getRecordStatus());
     }
 }

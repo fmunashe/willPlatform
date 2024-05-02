@@ -1,5 +1,6 @@
 package zw.co.zim.willplatform.dto;
 
+import zw.co.zim.willplatform.enums.RecordStatus;
 import zw.co.zim.willplatform.model.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -13,5 +14,8 @@ public record BankAssetRecordDto(
     String accountNumber,
     @NotNull(message = "Balance is required")
     Double balance,
-    User user) {
+    User user,
+    RecordStatus recordStatus
+) {
+
 }

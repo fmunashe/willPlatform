@@ -10,6 +10,6 @@ import java.util.function.Function;
 public class AssetTimeshareDtoMapper implements Function<AssetTimeShare, AssetTimeShareDto> {
     @Override
     public AssetTimeShareDto apply(AssetTimeShare assetTimeShare) {
-        return new AssetTimeShareDto(assetTimeShare.getDescription(), assetTimeShare.getTimeshareValue(), assetTimeShare.getUserId());
+        return new AssetTimeShareDto(assetTimeShare.getDescription(), assetTimeShare.getTimeshareValue(), assetTimeShare.getUserId(),assetTimeShare.getRecordStatus());
     }
 }

@@ -1,8 +1,11 @@
 package zw.co.zim.willplatform.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
+import zw.co.zim.willplatform.enums.RecordStatus;
 
 import java.time.LocalDate;
 
@@ -20,5 +23,7 @@ public class UsersChild extends BaseEntity {
     private Integer trustAge;
     @ManyToOne
     private User userId;
+    @Enumerated(EnumType.STRING)
+    private RecordStatus recordStatus;
 
 }
