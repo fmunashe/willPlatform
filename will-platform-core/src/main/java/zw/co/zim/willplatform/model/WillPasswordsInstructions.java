@@ -16,7 +16,7 @@ import zw.co.zim.willplatform.enums.RecordStatus;
 public class WillPasswordsInstructions extends BaseEntity {
     private String instructions;
     @ManyToOne
-    private User UserId;
+    private Client UserId;
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;
 }

@@ -17,7 +17,7 @@ public class WillAlternativeExecutor extends BaseEntity {
     @Embedded
     private Address address;
     @OneToOne
-    private User userId;
+    private Client userId;
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;
 }

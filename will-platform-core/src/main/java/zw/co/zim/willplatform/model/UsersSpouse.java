@@ -27,7 +27,7 @@ public class UsersSpouse extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private CiviallyMarriedStatus civillyMarriedStatus;
     @ManyToOne
-    private User userId;
+    private Client userId;
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;
 }

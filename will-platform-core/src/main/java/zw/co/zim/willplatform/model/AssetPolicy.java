@@ -1,6 +1,5 @@
 package zw.co.zim.willplatform.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import zw.co.zim.willplatform.dto.AssetPolicyRecordDto;
 import lombok.Getter;
@@ -18,7 +17,7 @@ public class AssetPolicy extends BaseEntity {
     private String company;
     private Double policyValue;
     @ManyToOne
-    private User userId;
+    private Client userId;
 
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;

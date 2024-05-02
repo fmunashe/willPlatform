@@ -3,7 +3,7 @@ package zw.co.zim.willplatform.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import zw.co.zim.willplatform.enums.RecordStatus;
-import zw.co.zim.willplatform.model.User;
+import zw.co.zim.willplatform.model.Client;
 
 import java.time.LocalDate;
 
@@ -37,7 +37,7 @@ public record VehicleAssetRecordDto(
     @NotNull(message = "Registration papers with field is required")
     @NotBlank(message = "Registration papers with field cannot be blank")
     String registrationPaperWith,
-    User user,
+    Client user,
     RecordStatus recordStatus
 ) {
 }

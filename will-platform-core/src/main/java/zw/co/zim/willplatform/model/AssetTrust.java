@@ -1,6 +1,5 @@
 package zw.co.zim.willplatform.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import zw.co.zim.willplatform.dto.AssetTrustDto;
 import lombok.Getter;
@@ -16,7 +15,7 @@ public class AssetTrust extends BaseEntity {
     private String nameOfTrust;
     private double trustValue;
     @ManyToOne
-    private User userId;
+    private Client userId;
 
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;

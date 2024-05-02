@@ -2,7 +2,7 @@ package zw.co.zim.willplatform.processor.impl;
 
 import zw.co.zim.willplatform.dto.UserRecordDto;
 import zw.co.zim.willplatform.dto.mapper.UserDtoMapper;
-import zw.co.zim.willplatform.model.User;
+import zw.co.zim.willplatform.model.Client;
 import zw.co.zim.willplatform.processor.UserProcessor;
 import zw.co.zim.willplatform.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -28,19 +28,19 @@ public class UserProcessorImpl implements UserProcessor {
 
     @Override
     public Optional<UserRecordDto> findById(Long id) {
-        Optional<User> optionalUser = userService.findById(id);
+        Optional<Client> optionalUser = userService.findById(id);
         return optionalUser.map(userDtoMapper);
     }
 
     @Override
     public UserRecordDto save(UserRecordDto userRecordDto) {
-        User user = userService.save(new User(userRecordDto));
+        Client user = userService.save(new Client(userRecordDto));
         return userDtoMapper.apply(user);
     }
 
     @Override
     public UserRecordDto update(Long id, UserRecordDto userRecordDto) {
-        User user = userService.update(id, new User(userRecordDto));
+        Client user = userService.update(id, new Client(userRecordDto));
         return userDtoMapper.apply(user);
     }
 

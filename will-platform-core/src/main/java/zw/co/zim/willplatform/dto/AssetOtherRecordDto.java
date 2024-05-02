@@ -1,7 +1,7 @@
 package zw.co.zim.willplatform.dto;
 
 import zw.co.zim.willplatform.enums.RecordStatus;
-import zw.co.zim.willplatform.model.User;
+import zw.co.zim.willplatform.model.Client;
 import jakarta.validation.constraints.NotNull;
 
 public record AssetOtherRecordDto(
@@ -12,7 +12,7 @@ public record AssetOtherRecordDto(
     @NotNull(message = "Other asset value is required")
     Double value,
 
-    User userId,
+    Client userId,
     RecordStatus recordStatus
 ) {
 }

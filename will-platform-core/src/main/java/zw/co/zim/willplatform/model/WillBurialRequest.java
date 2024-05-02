@@ -20,7 +20,7 @@ public class WillBurialRequest extends BaseEntity {
     private String burialInformation;
     private Boolean livingWill;
     @OneToOne
-    private User userId;
+    private Client userId;
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;
 }

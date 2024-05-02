@@ -1,6 +1,5 @@
 package zw.co.zim.willplatform.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import zw.co.zim.willplatform.dto.PropertyAssetRecordDto;
 import lombok.Getter;
@@ -26,7 +25,7 @@ public class PropertyAsset extends BaseEntity {
     private String personWhoHoldsDeed;
     private String additionalInformation;
     @ManyToOne
-    private User userId;
+    private Client userId;
 
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;

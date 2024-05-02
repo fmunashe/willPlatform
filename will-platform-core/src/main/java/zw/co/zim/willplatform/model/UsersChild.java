@@ -22,7 +22,7 @@ public class UsersChild extends BaseEntity {
     private LocalDate dob;
     private Integer trustAge;
     @ManyToOne
-    private User userId;
+    private Client userId;
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;
 

@@ -2,7 +2,7 @@ package zw.co.zim.willplatform.dto;
 
 import zw.co.zim.willplatform.enums.RecordStatus;
 import zw.co.zim.willplatform.model.Address;
-import zw.co.zim.willplatform.model.User;
+import zw.co.zim.willplatform.model.Client;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -31,7 +31,7 @@ public record PropertyAssetRecordDto(
     Boolean youHoldDeed,
     String personWhoHoldsDeed,
     String additionalInformation,
-    User user,
+    Client user,
     RecordStatus recordStatus
 ) {
 }

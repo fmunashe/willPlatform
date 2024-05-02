@@ -26,7 +26,7 @@ public class Cases extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private CaseType caseType;
     @ManyToOne
-    private User userId;
+    private Client userId;
     @ManyToOne
     private SystemUser assignedAgent;
 }

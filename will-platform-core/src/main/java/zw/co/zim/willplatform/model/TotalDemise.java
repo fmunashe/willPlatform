@@ -16,7 +16,7 @@ import zw.co.zim.willplatform.enums.RecordStatus;
 public class TotalDemise extends BaseEntity {
     private String beneficiaryDetails;
     @ManyToOne
-    private User userId;
+    private Client userId;
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;
 }

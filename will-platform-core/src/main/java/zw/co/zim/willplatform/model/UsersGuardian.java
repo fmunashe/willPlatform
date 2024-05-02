@@ -31,7 +31,7 @@ public class UsersGuardian extends BaseEntity {
     private String contactNumber;
     private String email;
     @ManyToOne
-    private User userId;
+    private Client userId;
 
     @Embedded
     private Address address;

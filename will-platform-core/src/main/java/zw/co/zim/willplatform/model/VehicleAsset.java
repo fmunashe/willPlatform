@@ -1,6 +1,5 @@
 package zw.co.zim.willplatform.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import zw.co.zim.willplatform.dto.VehicleAssetRecordDto;
 import lombok.Getter;
@@ -25,7 +24,7 @@ public class VehicleAsset extends BaseEntity {
     private Boolean fullyPaid;
     private String registrationPaperWith;
     @ManyToOne
-    private User userId;
+    private Client userId;
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;
 

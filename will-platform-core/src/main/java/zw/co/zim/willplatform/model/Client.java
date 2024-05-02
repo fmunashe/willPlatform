@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class User extends BaseEntity {
+public class Client extends BaseEntity {
     @Column(nullable = false)
     @NotNull
     private String firstName;
@@ -75,7 +75,7 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;
 
-    public User(UserRecordDto userRecordDto) {
+    public Client(UserRecordDto userRecordDto) {
         this.firstName = userRecordDto.firstName();
         this.lastName = userRecordDto.lastName();
         this.dateOfBirth = userRecordDto.dob();

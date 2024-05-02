@@ -1,7 +1,5 @@
 package zw.co.zim.willplatform.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Builder;
 import zw.co.zim.willplatform.dto.BankAssetRecordDto;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -18,7 +16,7 @@ public class BankAsset extends BaseEntity{
     private String accountNumber;
     private Double balance;
     @ManyToOne
-    private User userId;
+    private Client userId;
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;
 

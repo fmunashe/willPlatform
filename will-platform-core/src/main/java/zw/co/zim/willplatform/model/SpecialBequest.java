@@ -17,7 +17,7 @@ public class SpecialBequest extends BaseEntity {
     private String personDetails;
     private String specialBequestInformation;
     @ManyToOne
-    private User userId;
+    private Client userId;
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;
 }

@@ -1,7 +1,7 @@
 package zw.co.zim.willplatform.dto;
 
 import zw.co.zim.willplatform.enums.RecordStatus;
-import zw.co.zim.willplatform.model.User;
+import zw.co.zim.willplatform.model.Client;
 import jakarta.validation.constraints.NotNull;
 
 public record AssetOffshoreRecordDto(
@@ -12,7 +12,7 @@ public record AssetOffshoreRecordDto(
     @NotNull(message = "Asset offshore value is required")
     Double value,
 
-    User userId,
+    Client userId,
     RecordStatus recordStatus
 ) {
 }

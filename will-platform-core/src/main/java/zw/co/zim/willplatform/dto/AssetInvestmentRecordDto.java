@@ -2,7 +2,7 @@ package zw.co.zim.willplatform.dto;
 
 import jakarta.validation.constraints.NotNull;
 import zw.co.zim.willplatform.enums.RecordStatus;
-import zw.co.zim.willplatform.model.User;
+import zw.co.zim.willplatform.model.Client;
 
 public record AssetInvestmentRecordDto(
     @NotNull(message = "Investment type is required")
@@ -16,7 +16,7 @@ public record AssetInvestmentRecordDto(
     @NotNull(message = "Investment company cannot be blank")
     String company,
 
-    User userId,
+    Client userId,
 
     RecordStatus recordStatus
 ) {

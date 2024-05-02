@@ -16,7 +16,7 @@ import zw.co.zim.willplatform.enums.RecordStatus;
 public class WillComments extends BaseEntity {
     private String comments;
     @ManyToOne
-    private User userId;
+    private Client userId;
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;
 }

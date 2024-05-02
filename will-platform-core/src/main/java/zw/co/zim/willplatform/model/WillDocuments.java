@@ -17,7 +17,7 @@ public class WillDocuments extends BaseEntity {
     private String fileName;
     private String documentPath;
     @ManyToOne
-    private User userId;
+    private Client userId;
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;
 }
