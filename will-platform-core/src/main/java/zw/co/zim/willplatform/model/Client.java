@@ -21,6 +21,9 @@ public class Client extends BaseEntity {
     @Column(nullable = false)
     @NotNull
     private String firstName;
+    private String middleName;
+    private String knownAs;
+    private String firstLanguage;
     @NotNull
     private String lastName;
     @NotNull
