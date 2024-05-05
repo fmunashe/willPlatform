@@ -39,5 +39,6 @@ public class VehicleAsset extends BaseEntity {
         this.fullyPaid = vehicleAssetRecordDto.fullyPaid();
         this.registrationPaperWith = vehicleAssetRecordDto.registrationPaperWith();
         this.userId = vehicleAssetRecordDto.user();
+        this.recordStatus = vehicleAssetRecordDto.recordStatus();
     }
 }

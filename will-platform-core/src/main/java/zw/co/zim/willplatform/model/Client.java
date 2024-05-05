@@ -1,16 +1,15 @@
 package zw.co.zim.willplatform.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import zw.co.zim.willplatform.dto.UserRecordDto;
+import zw.co.zim.willplatform.enums.OTPDeliveryChannel;
 import zw.co.zim.willplatform.enums.RecordStatus;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -23,9 +22,9 @@ public class Client extends BaseEntity {
     private String firstName;
     private String middleName;
     private String knownAs;
-    private String firstLanguage;
     @NotNull
     private String lastName;
+    private String firstLanguage;
     @NotNull
     private LocalDate dateOfBirth;
     @Column(unique = true)
@@ -35,45 +34,12 @@ public class Client extends BaseEntity {
     @Embedded
     private Address address;
 
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<VehicleAsset> vehicles;
+    private String password;
+    private Boolean acceptedTermsAndConditions;
+    private String OTP;
 
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<PropertyAsset> properties;
-
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private List<BankAsset> bankAccounts;
-
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<AssetPolicy> policies;
-
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<AssetTrust> trusts;
-
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<AssetTimeShare> timeShares;
-
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<AssetPersonOwingMoney> personOwingMonies;
-
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<AssetOther> assetOthers;
-
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<AssetOffshore> assetOffShores;
-
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<AssetInvestment> assetInvestments;
+    @Enumerated(EnumType.STRING)
+    private OTPDeliveryChannel sendOtpVia;
 
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;
