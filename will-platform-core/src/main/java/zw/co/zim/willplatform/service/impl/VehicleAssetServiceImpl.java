@@ -1,11 +1,12 @@
 package zw.co.zim.willplatform.service.impl;
 
+import org.springframework.stereotype.Service;
+import zw.co.zim.willplatform.enums.RecordStatus;
 import zw.co.zim.willplatform.exceptions.RecordExistsException;
 import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
 import zw.co.zim.willplatform.model.VehicleAsset;
 import zw.co.zim.willplatform.repository.VehicleAssetRepository;
 import zw.co.zim.willplatform.service.VehicleAssetService;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,8 +31,8 @@ public class VehicleAssetServiceImpl implements VehicleAssetService {
 
     @Override
     public VehicleAsset save(VehicleAsset vehicleAsset) {
-        Optional<VehicleAsset> optionalRegNumber = vehicleAssetRepository.findFirstByRegistrationNumber(vehicleAsset.getRegistrationNumber());
-        Optional<VehicleAsset> optionalEngineNumber = vehicleAssetRepository.findFirstByEngineNumber(vehicleAsset.getEngineNumber());
+        Optional<VehicleAsset> optionalRegNumber = vehicleAssetRepository.findFirstByRegistrationNumberAndRecordStatusNot(vehicleAsset.getRegistrationNumber(), RecordStatus.DELETED);
+        Optional<VehicleAsset> optionalEngineNumber = vehicleAssetRepository.findFirstByEngineNumberAndRecordStatusNot(vehicleAsset.getEngineNumber(), RecordStatus.DELETED);
         if (optionalRegNumber.isPresent())
             throw new RecordExistsException("A vehicle with the same registration number of " + vehicleAsset.getRegistrationNumber() + " already exist");
 
@@ -63,6 +64,6 @@ public class VehicleAssetServiceImpl implements VehicleAssetService {
 
     @Override
     public Optional<VehicleAsset> findVehicleByRegNumber(String regNumber) {
-        return Optional.ofNullable(vehicleAssetRepository.findFirstByRegistrationNumber(regNumber).orElseThrow(() -> new RecordNotFoundException("Vehicle with registration number of " + regNumber + "not found")));
+        return Optional.ofNullable(vehicleAssetRepository.findFirstByRegistrationNumberAndRecordStatusNot(regNumber,RecordStatus.DELETED).orElseThrow(() -> new RecordNotFoundException("Vehicle with registration number of " + regNumber + "not found")));
     }
 }

@@ -1,5 +1,6 @@
 package zw.co.zim.willplatform.service.impl;
 
+import zw.co.zim.willplatform.enums.RecordStatus;
 import zw.co.zim.willplatform.exceptions.RecordExistsException;
 import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
 import zw.co.zim.willplatform.model.AssetPolicy;
@@ -62,6 +63,6 @@ public class AssetPolicyServiceImpl implements AssetPolicyService {
 
     @Override
     public Optional<AssetPolicy> findFirstByPolicyNumber(String policyNumber) {
-        return Optional.ofNullable(repository.findFirstByPolicyNumber(policyNumber).orElseThrow(() -> new RecordNotFoundException("Policy with number " + policyNumber + " could not be found")));
+        return Optional.ofNullable(repository.findFirstByPolicyNumber(policyNumber, RecordStatus.DELETED).orElseThrow(() -> new RecordNotFoundException("Policy with number " + policyNumber + " could not be found")));
     }
 }

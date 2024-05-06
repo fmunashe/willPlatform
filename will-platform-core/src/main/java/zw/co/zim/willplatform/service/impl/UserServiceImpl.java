@@ -1,13 +1,14 @@
 package zw.co.zim.willplatform.service.impl;
 
-import zw.co.zim.willplatform.exceptions.RecordExistsException;
-import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
-import zw.co.zim.willplatform.model.Client;
-import zw.co.zim.willplatform.repository.UserRepository;
-import zw.co.zim.willplatform.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import zw.co.zim.willplatform.enums.RecordStatus;
+import zw.co.zim.willplatform.exceptions.RecordExistsException;
+import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
+import zw.co.zim.willplatform.model.Client;
+import zw.co.zim.willplatform.repository.ClientRepository;
+import zw.co.zim.willplatform.service.UserService;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class UserServiceImpl implements UserService {
-    private final UserRepository userRepository;
+    private final ClientRepository userRepository;
 
     @Override
     public List<Client> findAll() {
@@ -30,8 +31,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Client save(Client user) {
-        Optional<Client> optionalNationalId = userRepository.findFirstByNationalIdNumber(user.getNationalIdNumber());
-        Optional<Client> optionalPassport = userRepository.findFirstByPassportNumber(user.getPassportNumber());
+        Optional<Client> optionalNationalId = userRepository.findFirstByNationalIdNumberAndRecordStatusNot(user.getNationalIdNumber(), RecordStatus.DELETED);
+        Optional<Client> optionalPassport = userRepository.findFirstByPassportNumberAAndRecordStatusNot(user.getPassportNumber(), RecordStatus.DELETED);
         if (optionalNationalId.isPresent())
             throw new RecordExistsException("A user with the same national id number of " + user.getNationalIdNumber() + " already exist");
 

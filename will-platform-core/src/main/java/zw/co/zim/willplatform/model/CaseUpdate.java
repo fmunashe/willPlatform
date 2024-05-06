@@ -2,8 +2,11 @@ package zw.co.zim.willplatform.model;
 
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
+import zw.co.zim.willplatform.enums.RecordStatus;
 
 @Getter
 @Setter
@@ -11,10 +14,12 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class CaseUpdate extends BaseEntity{
+public class CaseUpdate extends BaseEntity {
     @ManyToOne
     private Cases caseId;
     private String name;
     private String description;
     private String createdBy;
+    @Enumerated(EnumType.STRING)
+    private RecordStatus status;
 }

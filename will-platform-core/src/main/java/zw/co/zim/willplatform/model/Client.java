@@ -24,6 +24,8 @@ public class Client extends BaseEntity {
     private String knownAs;
     @NotNull
     private String lastName;
+    @NotNull
+    private String email;
     private String firstLanguage;
     @NotNull
     private LocalDate dateOfBirth;
@@ -32,7 +34,7 @@ public class Client extends BaseEntity {
     @Column(unique = true)
     private String passportNumber;
     @Embedded
-    private Address address;
+    private Address physicalAddress;
 
     private String password;
     private Boolean acceptedTermsAndConditions;
@@ -50,6 +52,6 @@ public class Client extends BaseEntity {
         this.dateOfBirth = userRecordDto.dob();
         this.nationalIdNumber = userRecordDto.nationalId();
         this.passportNumber = userRecordDto.passportNumber();
-        this.address = new Address(userRecordDto.streetNumber(), userRecordDto.suburb(), userRecordDto.city(), userRecordDto.province(), userRecordDto.country());
+        this.physicalAddress = new Address(userRecordDto.streetNumber(), userRecordDto.suburb(), userRecordDto.city(), userRecordDto.province(), userRecordDto.country());
     }
 }

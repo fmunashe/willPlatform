@@ -1,5 +1,6 @@
 package zw.co.zim.willplatform.service.impl;
 
+import zw.co.zim.willplatform.enums.RecordStatus;
 import zw.co.zim.willplatform.exceptions.RecordExistsException;
 import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
 import zw.co.zim.willplatform.model.BankAsset;
@@ -31,7 +32,7 @@ public class BankAssetServiceImpl implements BankAssetService {
 
     @Override
     public BankAsset save(BankAsset bankAsset) {
-        Optional<BankAsset> currentBank = bankAssetRepository.findFirstByAccountNumber(bankAsset.getAccountNumber());
+        Optional<BankAsset> currentBank = bankAssetRepository.findFirstByAccountNumber(bankAsset.getAccountNumber(), RecordStatus.DELETED);
         if (currentBank.isPresent())
             throw new RecordExistsException("Bank record with account number " + bankAsset.getAccountNumber() + " already exists");
         return bankAssetRepository.save(bankAsset);
