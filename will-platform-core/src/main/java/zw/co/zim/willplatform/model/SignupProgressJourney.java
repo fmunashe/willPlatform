@@ -1,8 +1,11 @@
 package zw.co.zim.willplatform.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToOne;
 import lombok.*;
+import zw.co.zim.willplatform.enums.RecordStatus;
 
 @Getter
 @Setter
@@ -22,4 +25,6 @@ public class SignupProgressJourney extends BaseEntity {
     private Boolean willComplete;
     private Boolean finalisedWill;
     private Boolean subscribed;
+    @Enumerated(EnumType.STRING)
+    private RecordStatus recordStatus;
 }

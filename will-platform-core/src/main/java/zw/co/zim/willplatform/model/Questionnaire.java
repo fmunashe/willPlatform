@@ -1,8 +1,11 @@
 package zw.co.zim.willplatform.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToOne;
 import lombok.*;
+import zw.co.zim.willplatform.enums.RecordStatus;
 
 @Getter
 @Setter
@@ -43,4 +46,6 @@ public class Questionnaire extends BaseEntity {
     private Double monthlyIncome;
     private Double monthlyHouseholdExpense;
     private Boolean smoker;
+    @Enumerated(EnumType.STRING)
+    private RecordStatus recordStatus;
 }

@@ -7,7 +7,8 @@ public enum RecordStatus {
     DELIVERED("DELIVERED"),
     ACTIVE("ACTIVE"),
     INACTIVE("INACTIVE"),
-    DELETED("DELETED");
+    DELETED("DELETED"),
+    EXPIRED("EXPIRED");
     private String status;
 
     RecordStatus(String status) {
