@@ -16,6 +16,7 @@ public class BankAsset extends BaseEntity{
     private String accountNumber;
     private Double balance;
     @ManyToOne
+    @JoinColumn(name = "user_id",nullable = false)
     private Client userId;
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;

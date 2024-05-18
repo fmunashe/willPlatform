@@ -24,6 +24,7 @@ public class VehicleAsset extends BaseEntity {
     private Boolean fullyPaid;
     private String registrationPaperWith;
     @ManyToOne
+    @JoinColumn(name = "user_id",nullable = false)
     private Client userId;
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;

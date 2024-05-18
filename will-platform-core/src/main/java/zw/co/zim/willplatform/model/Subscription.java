@@ -16,7 +16,7 @@ import java.util.List;
 public class Subscription extends BaseEntity {
     @OneToOne
     private Client userId;
-    @OneToMany
+    @OneToMany(mappedBy = "subscription")
     private List<Products> products;
     private Double totalDueNow;
     private Double recurringAmount;

@@ -16,6 +16,7 @@ public class AssetPersonOwingMoney extends BaseEntity {
     private Double amountOwed;
     private String contactNumber;
     @ManyToOne
+    @JoinColumn(name = "user_id",nullable = false)
     private Client userId;
 
     @Enumerated(EnumType.STRING)

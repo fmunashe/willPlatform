@@ -1,9 +1,6 @@
 package zw.co.zim.willplatform.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.*;
 import zw.co.zim.willplatform.enums.ProductNames;
 import zw.co.zim.willplatform.enums.RecordStatus;
@@ -23,4 +20,7 @@ public class Products extends BaseEntity {
     private Currency currency;
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;
+    @ManyToOne
+    @JoinColumn(name="subscription_id")
+    private Subscription subscription;
 }

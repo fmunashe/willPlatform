@@ -25,6 +25,7 @@ public class PropertyAsset extends BaseEntity {
     private String personWhoHoldsDeed;
     private String additionalInformation;
     @ManyToOne
+    @JoinColumn(name = "user_id",nullable = false)
     private Client userId;
 
     @Enumerated(EnumType.STRING)

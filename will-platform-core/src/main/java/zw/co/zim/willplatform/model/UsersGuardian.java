@@ -31,6 +31,7 @@ public class UsersGuardian extends BaseEntity {
     private String contactNumber;
     private String email;
     @ManyToOne
+    @JoinColumn(name = "user_id",nullable = false)
     private Client userId;
 
     @Embedded

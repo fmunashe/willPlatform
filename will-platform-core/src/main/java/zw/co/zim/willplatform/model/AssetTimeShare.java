@@ -15,6 +15,7 @@ public class AssetTimeShare extends BaseEntity {
     private String description;
     private double timeshareValue;
     @ManyToOne
+    @JoinColumn(name = "user_id",nullable = false)
     private Client userId;
 
     @Enumerated(EnumType.STRING)

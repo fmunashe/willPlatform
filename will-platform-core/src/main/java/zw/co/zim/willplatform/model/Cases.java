@@ -1,9 +1,6 @@
 package zw.co.zim.willplatform.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 import zw.co.zim.willplatform.enums.CasePriority;
 import zw.co.zim.willplatform.enums.CaseType;
@@ -26,7 +23,9 @@ public class Cases extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private CaseType caseType;
     @ManyToOne
+    @JoinColumn(name = "user_id",nullable = false)
     private Client userId;
     @ManyToOne
+    @JoinColumn(name = "assigned_agent_id",nullable = false)
     private SystemUser assignedAgent;
 }

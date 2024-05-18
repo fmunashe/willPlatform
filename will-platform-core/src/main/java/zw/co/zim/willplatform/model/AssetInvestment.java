@@ -16,6 +16,7 @@ public class AssetInvestment extends BaseEntity {
     private Double investmentValue;
     private String company;
     @ManyToOne
+    @JoinColumn(name = "user_id",nullable = false)
     private Client userId;
 
     @Enumerated(EnumType.STRING)

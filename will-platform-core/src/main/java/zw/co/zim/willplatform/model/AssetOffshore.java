@@ -15,6 +15,7 @@ public class AssetOffshore extends BaseEntity {
     private String description;
     private Double offshoreValue;
     @ManyToOne
+    @JoinColumn(name = "user_id",nullable = false)
     private Client userId;
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;

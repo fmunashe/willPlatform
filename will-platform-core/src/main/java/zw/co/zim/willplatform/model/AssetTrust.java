@@ -15,6 +15,7 @@ public class AssetTrust extends BaseEntity {
     private String nameOfTrust;
     private double trustValue;
     @ManyToOne
+    @JoinColumn(name = "user_id",nullable = false)
     private Client userId;
 
     @Enumerated(EnumType.STRING)

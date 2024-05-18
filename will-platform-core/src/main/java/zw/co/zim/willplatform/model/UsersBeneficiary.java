@@ -35,6 +35,7 @@ public class UsersBeneficiary extends BaseEntity {
     private String instructions;
     private Boolean overEighteen;
     @ManyToOne
+    @JoinColumn(name = "user_id",nullable = false)
     private Client userId;
     @Embedded
     private Address address;
