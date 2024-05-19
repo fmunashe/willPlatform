@@ -1,6 +1,7 @@
 package zw.co.zim.willplatform.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 import lombok.*;
 import zw.co.zim.willplatform.enums.ProductNames;
 import zw.co.zim.willplatform.enums.RecordStatus;
@@ -20,5 +21,7 @@ public class Coupons extends BaseEntity {
     private LocalDate expiryDate;
     private Double discount;
     private boolean applied;
+    @OneToOne
+    private Client userId;
     private RecordStatus recordStatus;
 }

@@ -1,10 +1,12 @@
 package zw.co.zim.willplatform.service.impl;
 
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
 import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
 import zw.co.zim.willplatform.model.AssetInvestment;
 import zw.co.zim.willplatform.repository.AssetInvestmentRepository;
+import zw.co.zim.willplatform.repository.spcecifications.AssetInvestmentSpecification;
 import zw.co.zim.willplatform.service.AssetInvestmentService;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +22,17 @@ public class AssetInvestmentServiceImpl implements AssetInvestmentService {
 
     @Override
     public List<AssetInvestment> findAll() {
+
         return repository.findAll();
+    }
+
+    public List<AssetInvestment> findAll(String investmentType) {
+
+        Specification<AssetInvestment> spec = Specification.where(null);
+        if (investmentType != null && !investmentType.isEmpty()) {
+            spec = spec.and(AssetInvestmentSpecification.ofType(investmentType));
+        }
+        return repository.findAll(spec);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package zw.co.zim.willplatform.repository;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import zw.co.zim.willplatform.enums.CaseType;
@@ -13,9 +14,9 @@ import java.util.Optional;
 public interface CaseAllocationRepository extends JpaRepository<CaseAllocation, Long> {
     List<CaseAllocation> findAllByRecordStatusNot(RecordStatus recordStatus);
 
-    List<CaseAllocation> findAllByRecordStatusNot(Pageable pageable, RecordStatus recordStatus);
+    Page<CaseAllocation> findAllByRecordStatusNot(Pageable pageable, RecordStatus recordStatus);
 
-    List<CaseAllocation> findAllByCaseTypeAndRecordStatusNot(CaseType caseType, Pageable pageable, RecordStatus recordStatus);
+    Page<CaseAllocation> findAllByCaseTypeAndRecordStatusNot(CaseType caseType, Pageable pageable, RecordStatus recordStatus);
 
     Optional<CaseAllocation> findFirstByCaseIdAndRecordStatusNot(Cases caseId, RecordStatus recordStatus);
 
