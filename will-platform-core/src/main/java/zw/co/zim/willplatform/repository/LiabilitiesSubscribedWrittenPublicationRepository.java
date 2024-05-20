@@ -1,5 +1,6 @@
 package zw.co.zim.willplatform.repository;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import zw.co.zim.willplatform.enums.RecordStatus;
@@ -10,9 +11,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface LiabilitiesSubscribedWrittenPublicationRepository extends JpaRepository<LiabilitiesSubscribedWrittenPublication, Long> {
-    List<LiabilitiesSubscribedWrittenPublication> findAllByRecordStatusNot(Pageable pageable, RecordStatus recordStatus);
+    Page<LiabilitiesSubscribedWrittenPublication> findAllByRecordStatusNot(Pageable pageable, RecordStatus recordStatus);
 
-    List<LiabilitiesSubscribedWrittenPublication> findAllByUserIdAndRecordStatusNot(Pageable pageable, Client clientId, RecordStatus recordStatus);
+    Page<LiabilitiesSubscribedWrittenPublication> findAllByUserIdAndRecordStatusNot(Pageable pageable, Client clientId, RecordStatus recordStatus);
 
     Optional<LiabilitiesSubscribedWrittenPublication> findFirstByIdAndRecordStatusNot(Long id, RecordStatus recordStatus);
 }
