@@ -1,5 +1,6 @@
 package zw.co.zim.willplatform.repository;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,9 +13,11 @@ import java.util.Optional;
 
 @Repository
 public interface AssetPersonOwingMoneyRepository extends JpaRepository<AssetPersonOwingMoney, Long> {
-    List<AssetPersonOwingMoney> findAllByRecordStatusNot(Pageable pageable, RecordStatus recordStatus);
+    List<AssetPersonOwingMoney> findAllByRecordStatusNot(RecordStatus recordStatus);
 
-    List<AssetPersonOwingMoney> findAllByUserIdAndRecordStatusNot(Pageable pageable, Client clientId, RecordStatus recordStatus);
+    Page<AssetPersonOwingMoney> findAllByRecordStatusNot(Pageable pageable, RecordStatus recordStatus);
+
+    Page<AssetPersonOwingMoney> findAllByUserIdAndRecordStatusNot(Pageable pageable, Client clientId, RecordStatus recordStatus);
 
     Optional<AssetPersonOwingMoney> findFirstByIdAndRecordStatusNot(Long id, RecordStatus recordStatus);
 }

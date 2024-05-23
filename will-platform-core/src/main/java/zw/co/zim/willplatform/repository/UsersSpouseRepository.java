@@ -15,7 +15,7 @@ public interface UsersSpouseRepository extends JpaRepository<UsersSpouse, Long> 
 
     Page<UsersSpouse> findAllByRecordStatusNot(Pageable pageable, RecordStatus recordStatus);
 
-    Optional<UsersSpouse> findFirstByUserIdAndRecordStatusNot(Client userId, RecordStatus recordStatus);
+    Page<UsersSpouse> findAllByUserIdAndRecordStatusNot(Pageable pageable, Client userId, RecordStatus recordStatus);
 
     Optional<UsersSpouse> findFirstByIdAndRecordStatusNot(Long id, RecordStatus recordStatus);
 }

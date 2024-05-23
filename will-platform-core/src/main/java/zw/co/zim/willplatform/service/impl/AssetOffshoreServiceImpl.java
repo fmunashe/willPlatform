@@ -1,10 +1,16 @@
 package zw.co.zim.willplatform.service.impl;
 
-import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import zw.co.zim.willplatform.enums.RecordStatus;
 import zw.co.zim.willplatform.model.AssetOffshore;
+import zw.co.zim.willplatform.model.Client;
 import zw.co.zim.willplatform.repository.AssetOffshoreRepository;
 import zw.co.zim.willplatform.service.AssetOffshoreService;
-import org.springframework.stereotype.Service;
+import zw.co.zim.willplatform.utils.PageableHelper;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,12 +25,28 @@ public class AssetOffshoreServiceImpl implements AssetOffshoreService {
 
     @Override
     public List<AssetOffshore> findAll() {
-        return repository.findAll();
+        return repository.findAllByRecordStatusNot(RecordStatus.DELETED);
+    }
+
+    @Override
+    public Page<AssetOffshore> findAll(Integer pageNo, Integer pageSize) {
+        pageNo = PageableHelper.cleanPageNumber(pageNo);
+        pageSize = PageableHelper.cleanPageSize(pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "id");
+        return repository.findAllByRecordStatusNot(pageable, RecordStatus.DELETED);
+    }
+
+    @Override
+    public Page<AssetOffshore> findAllByUserId(Client clientId, Integer pageNo, Integer pageSize) {
+        pageNo = PageableHelper.cleanPageNumber(pageNo);
+        pageSize = PageableHelper.cleanPageSize(pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "id");
+        return repository.findAllByUserIdAndRecordStatusNot(pageable, clientId, RecordStatus.DELETED);
     }
 
     @Override
     public Optional<AssetOffshore> findById(Long id) {
-        return Optional.ofNullable(repository.findById(id).orElseThrow(() -> new RecordNotFoundException("Record with id of " + id + " could not be found")));
+        return repository.findFirstByIdAndRecordStatusNot(id, RecordStatus.DELETED);
     }
 
     @Override
@@ -36,20 +58,20 @@ public class AssetOffshoreServiceImpl implements AssetOffshoreService {
     public AssetOffshore update(Long id, AssetOffshore assetOffshore) {
         Optional<AssetOffshore> optionalAssetOffshore = this.findById(id);
 
-        if (optionalAssetOffshore.isEmpty())
-            throw new RecordNotFoundException("Record with id of " + id + " could not be found");
-
-        assetOffshore.setId(optionalAssetOffshore.get().getId());
-        return repository.save(assetOffshore);
+        if (optionalAssetOffshore.isPresent()) {
+            assetOffshore.setId(optionalAssetOffshore.get().getId());
+            return repository.save(assetOffshore);
+        }
+        return assetOffshore;
     }
 
     @Override
     public void deleteById(Long id) {
         Optional<AssetOffshore> optionalAssetOffshore = this.findById(id);
-
-        if (optionalAssetOffshore.isEmpty())
-            throw new RecordNotFoundException("Record with id of " + id + " could not be found");
-
-        repository.deleteById(id);
+        if (optionalAssetOffshore.isPresent()) {
+            AssetOffshore offshore = optionalAssetOffshore.get();
+            offshore.setRecordStatus(RecordStatus.DELETED);
+            repository.save(offshore);
+        }
     }
 }

@@ -1,10 +1,16 @@
 package zw.co.zim.willplatform.service.impl;
 
-import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import zw.co.zim.willplatform.enums.RecordStatus;
 import zw.co.zim.willplatform.model.AssetTrust;
+import zw.co.zim.willplatform.model.Client;
 import zw.co.zim.willplatform.repository.AssetTrustRepository;
 import zw.co.zim.willplatform.service.AssetTrustService;
-import org.springframework.stereotype.Service;
+import zw.co.zim.willplatform.utils.PageableHelper;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,12 +26,28 @@ public class AssetTrustServiceImpl implements AssetTrustService {
 
     @Override
     public List<AssetTrust> findAll() {
-        return assetTrustRepository.findAll();
+        return assetTrustRepository.findAllByRecordStatusNot(RecordStatus.DELETED);
+    }
+
+    @Override
+    public Page<AssetTrust> findAll(Integer pageNo, Integer pageSize) {
+        pageNo = PageableHelper.cleanPageNumber(pageNo);
+        pageSize = PageableHelper.cleanPageSize(pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "id");
+        return assetTrustRepository.findAllByRecordStatusNot(pageable, RecordStatus.DELETED);
+    }
+
+    @Override
+    public Page<AssetTrust> findAllByUserId(Client clientId, Integer pageNo, Integer pageSize) {
+        pageNo = PageableHelper.cleanPageNumber(pageNo);
+        pageSize = PageableHelper.cleanPageSize(pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "id");
+        return assetTrustRepository.findAllByUserIdAndRecordStatusNot(pageable, clientId, RecordStatus.DELIVERED);
     }
 
     @Override
     public Optional<AssetTrust> findById(Long id) {
-        return Optional.ofNullable(assetTrustRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("Record with id of " + id + " could not be found")));
+        return assetTrustRepository.findFirstByIdAndRecordStatusNot(id, RecordStatus.DELETED);
     }
 
     @Override
@@ -36,18 +58,21 @@ public class AssetTrustServiceImpl implements AssetTrustService {
     @Override
     public AssetTrust update(Long id, AssetTrust assetTrust) {
         Optional<AssetTrust> optionalAssetTrust = this.findById(id);
-        if (optionalAssetTrust.isEmpty())
-            throw new RecordNotFoundException("Asset Trust with id of " + id + " could not be found");
+        if (optionalAssetTrust.isPresent()) {
+            assetTrust.setId(optionalAssetTrust.get().getId());
+            return assetTrustRepository.save(assetTrust);
+        }
 
-        assetTrust.setId(optionalAssetTrust.get().getId());
-        return assetTrustRepository.save(assetTrust);
+        return assetTrust;
     }
 
     @Override
     public void deleteById(Long id) {
         Optional<AssetTrust> optionalAssetTrust = this.findById(id);
-        if (optionalAssetTrust.isEmpty())
-            throw new RecordNotFoundException("Asset Trust with id of " + id + " could not be found");
-        assetTrustRepository.deleteById(id);
+        if (optionalAssetTrust.isPresent()) {
+            AssetTrust trust = optionalAssetTrust.get();
+            trust.setRecordStatus(RecordStatus.DELETED);
+            assetTrustRepository.save(trust);
+        }
     }
 }

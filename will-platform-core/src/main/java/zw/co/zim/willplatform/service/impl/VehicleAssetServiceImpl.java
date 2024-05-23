@@ -1,12 +1,15 @@
 package zw.co.zim.willplatform.service.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import zw.co.zim.willplatform.enums.RecordStatus;
-import zw.co.zim.willplatform.exceptions.RecordExistsException;
-import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
 import zw.co.zim.willplatform.model.VehicleAsset;
 import zw.co.zim.willplatform.repository.VehicleAssetRepository;
 import zw.co.zim.willplatform.service.VehicleAssetService;
+import zw.co.zim.willplatform.utils.PageableHelper;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,49 +24,54 @@ public class VehicleAssetServiceImpl implements VehicleAssetService {
 
     @Override
     public List<VehicleAsset> findAll() {
-        return vehicleAssetRepository.findAll();
+        return vehicleAssetRepository.findAllByRecordStatusNot(RecordStatus.DELETED);
+    }
+
+    @Override
+    public Page<VehicleAsset> findAll(Integer pageNo, Integer pageSize) {
+        pageNo = PageableHelper.cleanPageNumber(pageNo);
+        pageSize = PageableHelper.cleanPageSize(pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "id");
+        return vehicleAssetRepository.findAllByRecordStatusNot(pageable, RecordStatus.DELETED);
+    }
+
+    @Override
+    public Optional<VehicleAsset> findVehicleByEngineNumber(String engineNumber) {
+        return vehicleAssetRepository.findFirstByEngineNumberAndRecordStatusNot(engineNumber, RecordStatus.DELETED);
     }
 
     @Override
     public Optional<VehicleAsset> findById(Long id) {
-        return Optional.ofNullable(vehicleAssetRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("Vehicle with ID of " + id + " not found")));
+        return vehicleAssetRepository.findFirstByIdAndRecordStatusNot(id, RecordStatus.DELETED);
     }
 
     @Override
     public VehicleAsset save(VehicleAsset vehicleAsset) {
-        Optional<VehicleAsset> optionalRegNumber = vehicleAssetRepository.findFirstByRegistrationNumberAndRecordStatusNot(vehicleAsset.getRegistrationNumber(), RecordStatus.DELETED);
-        Optional<VehicleAsset> optionalEngineNumber = vehicleAssetRepository.findFirstByEngineNumberAndRecordStatusNot(vehicleAsset.getEngineNumber(), RecordStatus.DELETED);
-        if (optionalRegNumber.isPresent())
-            throw new RecordExistsException("A vehicle with the same registration number of " + vehicleAsset.getRegistrationNumber() + " already exist");
-
-        if (optionalEngineNumber.isPresent())
-            throw new RecordExistsException("A vehicle with the same engine number of " + vehicleAsset.getEngineNumber() + " already exist");
-
         return vehicleAssetRepository.save(vehicleAsset);
     }
 
     @Override
     public VehicleAsset update(Long id, VehicleAsset vehicleAsset) {
-        Optional<VehicleAsset> currentVehicle = vehicleAssetRepository.findById(id);
+        Optional<VehicleAsset> currentVehicle = this.findById(id);
         if (currentVehicle.isPresent()) {
             vehicleAsset.setId(currentVehicle.get().getId());
             return vehicleAssetRepository.save(vehicleAsset);
         }
-        throw new RecordNotFoundException("Vehicle with id of " + id + " not found");
+        return vehicleAsset;
     }
 
     @Override
     public void deleteById(Long id) {
-        Optional<VehicleAsset> vehicleOptional = vehicleAssetRepository.findById(id);
+        Optional<VehicleAsset> vehicleOptional = this.findById(id);
         if (vehicleOptional.isPresent()) {
-            vehicleAssetRepository.deleteById(id);
-        } else {
-            throw new RecordNotFoundException("Vehicle with id of " + id + " not found");
+            VehicleAsset asset = vehicleOptional.get();
+            asset.setRecordStatus(RecordStatus.DELETED);
+            vehicleAssetRepository.save(asset);
         }
     }
 
     @Override
     public Optional<VehicleAsset> findVehicleByRegNumber(String regNumber) {
-        return Optional.ofNullable(vehicleAssetRepository.findFirstByRegistrationNumberAndRecordStatusNot(regNumber,RecordStatus.DELETED).orElseThrow(() -> new RecordNotFoundException("Vehicle with registration number of " + regNumber + "not found")));
+        return vehicleAssetRepository.findFirstByRegistrationNumberAndRecordStatusNot(regNumber, RecordStatus.DELETED);
     }
 }

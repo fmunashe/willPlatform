@@ -1,12 +1,16 @@
 package zw.co.zim.willplatform.service.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 import zw.co.zim.willplatform.enums.RecordStatus;
-import zw.co.zim.willplatform.exceptions.RecordExistsException;
-import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
 import zw.co.zim.willplatform.model.BankAsset;
+import zw.co.zim.willplatform.model.Client;
 import zw.co.zim.willplatform.repository.BankAssetRepository;
 import zw.co.zim.willplatform.service.BankAssetService;
-import org.springframework.stereotype.Service;
+import zw.co.zim.willplatform.utils.PageableHelper;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,42 +26,58 @@ public class BankAssetServiceImpl implements BankAssetService {
 
     @Override
     public List<BankAsset> findAll() {
-        return bankAssetRepository.findAll();
+        return bankAssetRepository.findAllByRecordStatusNot(RecordStatus.DELETED);
+    }
+
+    @Override
+    public Page<BankAsset> findAll(Integer pageNo, Integer pageSize) {
+        pageNo = PageableHelper.cleanPageNumber(pageNo);
+        pageSize = PageableHelper.cleanPageSize(pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "id");
+        return bankAssetRepository.findAllByRecordStatusNot(pageable, RecordStatus.DELETED);
+    }
+
+    @Override
+    public Page<BankAsset> findAllByUserId(Client clientId, Integer pageNo, Integer pageSize) {
+        pageNo = PageableHelper.cleanPageNumber(pageNo);
+        pageSize = PageableHelper.cleanPageSize(pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "id");
+        return bankAssetRepository.findAllByUserIdAndRecordStatusNot(pageable, clientId, RecordStatus.DELETED);
     }
 
     @Override
     public Optional<BankAsset> findById(Long id) {
-        return Optional.ofNullable(bankAssetRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("Bank details with Id of " + id + " not found")));
+        return bankAssetRepository.findFirstByIdAndRecordStatusNot(id, RecordStatus.DELETED);
     }
 
     @Override
     public BankAsset save(BankAsset bankAsset) {
-        Optional<BankAsset> currentBank = bankAssetRepository.findFirstByAccountNumberAndRecordStatusNot(bankAsset.getAccountNumber(), RecordStatus.DELETED);
-        if (currentBank.isPresent())
-            throw new RecordExistsException("Bank record with account number " + bankAsset.getAccountNumber() + " already exists");
         return bankAssetRepository.save(bankAsset);
     }
 
     @Override
     public BankAsset update(Long id, BankAsset bankAsset) {
-        Optional<BankAsset> currentBank = bankAssetRepository.findById(id);
-        if (currentBank.isEmpty())
-            throw new RecordNotFoundException("Bank record with id of " + id + " not found");
-        bankAsset.setId(currentBank.get().getId());
-        return bankAssetRepository.save(bankAsset);
-
+        Optional<BankAsset> currentBank = this.findById(id);
+        if (currentBank.isPresent()) {
+            bankAsset.setId(currentBank.get().getId());
+            return bankAssetRepository.save(bankAsset);
+        }
+        return bankAsset;
     }
 
     @Override
     public void deleteById(Long id) {
-        Optional<BankAsset> bankOptional = bankAssetRepository.findById(id);
-        if (bankOptional.isEmpty())
-            throw new RecordNotFoundException("Bank record with id of " + id + " not found");
-        bankAssetRepository.deleteById(id);
+        Optional<BankAsset> bankOptional = this.findById(id);
+        if (bankOptional.isPresent()) {
+            BankAsset asset = bankOptional.get();
+            asset.setRecordStatus(RecordStatus.DELETED);
+            bankAssetRepository.save(asset);
+        }
+
     }
 
     @Override
     public Optional<BankAsset> findBankByAccountNumber(String accountNumber) {
-        return Optional.empty();
+        return bankAssetRepository.findFirstByAccountNumberAndRecordStatusNot(accountNumber, RecordStatus.DELETED);
     }
 }

@@ -15,7 +15,7 @@ public interface WillPasswordInstructionsRepository extends JpaRepository<WillPa
 
     Page<WillPasswordsInstructions> findAllByRecordStatusNot(Pageable pageable, RecordStatus recordStatus);
 
-    List<WillPasswordsInstructions> findAllByUserIdAndRecordStatusNot(Client userId, RecordStatus recordStatus);
+    Page<WillPasswordsInstructions> findAllByUserIdAndRecordStatusNot(Pageable pageable, Client userId, RecordStatus recordStatus);
 
     Optional<WillPasswordsInstructions> findFirstByIdAndRecordStatusNot(Long id, RecordStatus recordStatus);
 }

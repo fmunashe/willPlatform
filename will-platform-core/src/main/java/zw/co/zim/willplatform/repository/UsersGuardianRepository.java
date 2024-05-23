@@ -15,7 +15,7 @@ public interface UsersGuardianRepository extends JpaRepository<UsersGuardian, Lo
 
     Page<UsersGuardian> findAllByRecordStatusNot(Pageable pageable, RecordStatus recordStatus);
 
-    Optional<UsersGuardian> findFirstByUserIdAndRecordStatusNot(Client userId, RecordStatus recordStatus);
+    Page<UsersGuardian> findAllByUserIdAndRecordStatusNot(Pageable pageable, Client userId, RecordStatus recordStatus);
 
     Optional<UsersGuardian> findFirstByIdAndRecordStatusNot(Long id, RecordStatus recordStatus);
 }

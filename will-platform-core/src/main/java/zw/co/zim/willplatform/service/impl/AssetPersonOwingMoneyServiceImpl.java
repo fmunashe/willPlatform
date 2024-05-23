@@ -1,10 +1,16 @@
 package zw.co.zim.willplatform.service.impl;
 
-import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import zw.co.zim.willplatform.enums.RecordStatus;
 import zw.co.zim.willplatform.model.AssetPersonOwingMoney;
+import zw.co.zim.willplatform.model.Client;
 import zw.co.zim.willplatform.repository.AssetPersonOwingMoneyRepository;
 import zw.co.zim.willplatform.service.AssetPersonOwingMoneyService;
-import org.springframework.stereotype.Service;
+import zw.co.zim.willplatform.utils.PageableHelper;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,12 +25,28 @@ public class AssetPersonOwingMoneyServiceImpl implements AssetPersonOwingMoneySe
 
     @Override
     public List<AssetPersonOwingMoney> findAll() {
-        return repository.findAll();
+        return repository.findAllByRecordStatusNot(RecordStatus.DELETED);
+    }
+
+    @Override
+    public Page<AssetPersonOwingMoney> findAll(Integer pageNo, Integer pageSize) {
+        pageNo = PageableHelper.cleanPageNumber(pageNo);
+        pageSize = PageableHelper.cleanPageSize(pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "id");
+        return repository.findAllByRecordStatusNot(pageable, RecordStatus.DELETED);
+    }
+
+    @Override
+    public Page<AssetPersonOwingMoney> findAllByUserId(Client clientId, Integer pageNo, Integer pageSize) {
+        pageNo = PageableHelper.cleanPageNumber(pageNo);
+        pageSize = PageableHelper.cleanPageSize(pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "id");
+        return repository.findAllByUserIdAndRecordStatusNot(pageable, clientId, RecordStatus.DELETED);
     }
 
     @Override
     public Optional<AssetPersonOwingMoney> findById(Long id) {
-        return Optional.ofNullable(repository.findById(id).orElseThrow(() -> new RecordNotFoundException("Record with id of " + id + " could not be found")));
+        return repository.findFirstByIdAndRecordStatusNot(id, RecordStatus.DELETED);
     }
 
     @Override
@@ -36,20 +58,20 @@ public class AssetPersonOwingMoneyServiceImpl implements AssetPersonOwingMoneySe
     public AssetPersonOwingMoney update(Long id, AssetPersonOwingMoney assetPersonOwingMoney) {
         Optional<AssetPersonOwingMoney> optionalAssetPersonOwingMoney = this.findById(id);
 
-        if (optionalAssetPersonOwingMoney.isEmpty())
-            throw new RecordNotFoundException("Record with id of " + id + " could not be found");
-
-        assetPersonOwingMoney.setId(optionalAssetPersonOwingMoney.get().getId());
-        return repository.save(assetPersonOwingMoney);
+        if (optionalAssetPersonOwingMoney.isPresent()) {
+            assetPersonOwingMoney.setId(optionalAssetPersonOwingMoney.get().getId());
+            return repository.save(assetPersonOwingMoney);
+        }
+        return assetPersonOwingMoney;
     }
 
     @Override
     public void deleteById(Long id) {
         Optional<AssetPersonOwingMoney> optionalAssetPersonOwingMoney = this.findById(id);
-
-        if (optionalAssetPersonOwingMoney.isEmpty())
-            throw new RecordNotFoundException("Record with id of " + id + " could not be found");
-
-        repository.deleteById(id);
+        if (optionalAssetPersonOwingMoney.isPresent()) {
+            AssetPersonOwingMoney owingMoney = optionalAssetPersonOwingMoney.get();
+            owingMoney.setRecordStatus(RecordStatus.DELETED);
+            repository.save(owingMoney);
+        }
     }
 }

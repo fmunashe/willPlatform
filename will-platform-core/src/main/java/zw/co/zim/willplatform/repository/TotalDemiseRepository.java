@@ -15,7 +15,7 @@ public interface TotalDemiseRepository extends JpaRepository<TotalDemise, Long> 
 
     Page<TotalDemise> findAllByRecordStatusNot(Pageable pageable, RecordStatus recordStatus);
 
-    Optional<TotalDemise> findFirstByUserIdAndRecordStatusNot(Client userId, RecordStatus recordStatus);
+    Page<TotalDemise> findAllByUserIdAndRecordStatusNot(Pageable pageable, Client userId, RecordStatus recordStatus);
 
     Optional<TotalDemise> findFirstByIdAndRecordStatusNot(Long id, RecordStatus recordStatus);
 }

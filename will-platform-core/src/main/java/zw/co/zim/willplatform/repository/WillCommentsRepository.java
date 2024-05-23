@@ -15,7 +15,7 @@ public interface WillCommentsRepository extends JpaRepository<WillComments, Long
 
     Page<WillComments> findAllByRecordStatusNot(Pageable pageable, RecordStatus recordStatus);
 
-    List<WillComments> findAllByUserIdAndRecordStatusNot(Client userId, RecordStatus recordStatus);
+    Page<WillComments> findAllByUserIdAndRecordStatusNot(Pageable pageable, Client userId, RecordStatus recordStatus);
 
     Optional<WillComments> findFirstByIdAndRecordStatusNot(Long id, RecordStatus recordStatus);
 }

@@ -15,7 +15,7 @@ public interface UsersChildRepository extends JpaRepository<UsersChild, Long> {
 
     Page<UsersChild> findAllByRecordStatusNot(Pageable pageable, RecordStatus recordStatus);
 
-    Optional<UsersChild> findFirstByUserIdAndRecordStatusNot(Client userId, RecordStatus recordStatus);
+    Page<UsersChild> findAllByUserIdAndRecordStatusNot(Pageable pageable, Client userId, RecordStatus recordStatus);
 
     Optional<UsersChild> findFirstByIdAndRecordStatusNot(Long id, RecordStatus recordStatus);
 }

@@ -15,7 +15,7 @@ public interface WillDocumentsRepository extends JpaRepository<WillDocuments, Lo
 
     Page<WillDocuments> findAllByRecordStatusNot(Pageable pageable, RecordStatus recordStatus);
 
-    List<WillDocuments> findAllByUserIdAndRecordStatusNot(Client userId, RecordStatus recordStatus);
+    Page<WillDocuments> findAllByUserIdAndRecordStatusNot(Pageable pageable, Client userId, RecordStatus recordStatus);
 
     Optional<WillDocuments> findFirstByIdAndRecordStatusNot(Long id, RecordStatus recordStatus);
 }

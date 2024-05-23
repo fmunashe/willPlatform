@@ -1,12 +1,16 @@
 package zw.co.zim.willplatform.service.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 import zw.co.zim.willplatform.enums.RecordStatus;
-import zw.co.zim.willplatform.exceptions.RecordExistsException;
-import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
 import zw.co.zim.willplatform.model.AssetPolicy;
+import zw.co.zim.willplatform.model.Client;
 import zw.co.zim.willplatform.repository.AssetPolicyRepository;
 import zw.co.zim.willplatform.service.AssetPolicyService;
-import org.springframework.stereotype.Service;
+import zw.co.zim.willplatform.utils.PageableHelper;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,47 +26,59 @@ public class AssetPolicyServiceImpl implements AssetPolicyService {
 
     @Override
     public List<AssetPolicy> findAll() {
-        return repository.findAll();
+        return repository.findAllByRecordStatusNot(RecordStatus.DELETED);
+    }
+
+    @Override
+    public Page<AssetPolicy> findAll(Integer pageNo, Integer pageSize) {
+        pageNo = PageableHelper.cleanPageNumber(pageNo);
+        pageSize = PageableHelper.cleanPageSize(pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "id");
+        return repository.findAllByRecordStatusNot(pageable, RecordStatus.DELETED);
+    }
+
+    @Override
+    public Page<AssetPolicy> findAllByUserId(Client clientId, Integer pageNo, Integer pageSize) {
+        pageNo = PageableHelper.cleanPageNumber(pageNo);
+        pageSize = PageableHelper.cleanPageSize(pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "id");
+        return repository.findAllByUserIdAndRecordStatusNot(pageable, clientId, RecordStatus.DELETED);
     }
 
     @Override
     public Optional<AssetPolicy> findById(Long id) {
-        return Optional.ofNullable(repository.findById(id).orElseThrow(() -> new RecordNotFoundException("Policy with id of " + id + " could not be found")));
+        return repository.findFirstByIdAndRecordStatusNot(id, RecordStatus.DELETED);
     }
 
     @Override
     public AssetPolicy save(AssetPolicy assetPolicy) {
-        Optional<AssetPolicy> optionalAssetPolicy = this.findFirstByPolicyNumber(assetPolicy.getPolicyNumber());
-
-        if (optionalAssetPolicy.isEmpty())
-            return repository.save(assetPolicy);
-
-        throw new RecordExistsException("Record with policy number of " + optionalAssetPolicy.get().getPolicyNumber() + " already exists");
+        return repository.save(assetPolicy);
     }
 
     @Override
     public AssetPolicy update(Long id, AssetPolicy assetPolicy) {
         Optional<AssetPolicy> optionalAssetPolicy = this.findById(id);
 
-        if (optionalAssetPolicy.isEmpty())
-            throw new RecordNotFoundException("Record with id of " + id + " could not be found");
-
-        assetPolicy.setId(optionalAssetPolicy.get().getId());
-        return repository.save(assetPolicy);
+        if (optionalAssetPolicy.isPresent()) {
+            assetPolicy.setId(optionalAssetPolicy.get().getId());
+            repository.save(assetPolicy);
+        }
+        return assetPolicy;
     }
 
     @Override
     public void deleteById(Long id) {
         Optional<AssetPolicy> optionalAssetPolicy = this.findById(id);
 
-        if (optionalAssetPolicy.isEmpty())
-            throw new RecordNotFoundException("Record with id of " + id + " could not be found");
-
-        repository.deleteById(id);
+        if (optionalAssetPolicy.isPresent()) {
+            AssetPolicy assetPolicy = optionalAssetPolicy.get();
+            assetPolicy.setRecordStatus(RecordStatus.DELETED);
+            repository.save(assetPolicy);
+        }
     }
 
     @Override
     public Optional<AssetPolicy> findFirstByPolicyNumber(String policyNumber) {
-        return Optional.ofNullable(repository.findFirstByPolicyNumberAndRecordStatusNot(policyNumber, RecordStatus.DELETED).orElseThrow(() -> new RecordNotFoundException("Policy with number " + policyNumber + " could not be found")));
+        return repository.findFirstByPolicyNumberAndRecordStatusNot(policyNumber, RecordStatus.DELETED);
     }
 }

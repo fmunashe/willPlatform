@@ -1,10 +1,16 @@
 package zw.co.zim.willplatform.service.impl;
 
-import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import zw.co.zim.willplatform.enums.RecordStatus;
 import zw.co.zim.willplatform.model.AssetTimeShare;
+import zw.co.zim.willplatform.model.Client;
 import zw.co.zim.willplatform.repository.AssetTimeShareRepository;
 import zw.co.zim.willplatform.service.AssetTimeshareService;
-import org.springframework.stereotype.Service;
+import zw.co.zim.willplatform.utils.PageableHelper;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,12 +26,28 @@ public class AssetTimeshareServiceImpl implements AssetTimeshareService {
 
     @Override
     public List<AssetTimeShare> findAll() {
-        return repository.findAll();
+        return repository.findAllByRecordStatusNot(RecordStatus.DELETED);
+    }
+
+    @Override
+    public Page<AssetTimeShare> findAll(Integer pageNo, Integer pageSize) {
+        pageNo = PageableHelper.cleanPageNumber(pageNo);
+        pageSize = PageableHelper.cleanPageSize(pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "id");
+        return repository.findAllByRecordStatusNot(pageable, RecordStatus.DELETED);
+    }
+
+    @Override
+    public Page<AssetTimeShare> findAllByUserId(Client clientId, Integer pageNo, Integer pageSize) {
+        pageNo = PageableHelper.cleanPageNumber(pageNo);
+        pageSize = PageableHelper.cleanPageSize(pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "id");
+        return repository.findAllByUserIdAndRecordStatusNot(pageable, clientId, RecordStatus.DELETED);
     }
 
     @Override
     public Optional<AssetTimeShare> findById(Long id) {
-        return Optional.ofNullable(repository.findById(id).orElseThrow(() -> new RecordNotFoundException("Record with id of " + id + " could not be found")));
+        return repository.findFirstByIdAndRecordStatusNot(id, RecordStatus.DELETED);
     }
 
     @Override
@@ -37,20 +59,21 @@ public class AssetTimeshareServiceImpl implements AssetTimeshareService {
     public AssetTimeShare update(Long id, AssetTimeShare assetTimeShare) {
         Optional<AssetTimeShare> optionalAssetTimeShare = this.findById(id);
 
-        if (optionalAssetTimeShare.isEmpty())
-            throw new RecordNotFoundException("Record with id of " + id + " could not be found");
+        if (optionalAssetTimeShare.isPresent()) {
+            assetTimeShare.setId(optionalAssetTimeShare.get().getId());
+            return repository.save(assetTimeShare);
+        }
 
-        assetTimeShare.setId(optionalAssetTimeShare.get().getId());
-        return repository.save(assetTimeShare);
+        return assetTimeShare;
     }
 
     @Override
     public void deleteById(Long id) {
         Optional<AssetTimeShare> optionalAssetTimeShare = this.findById(id);
-
-        if (optionalAssetTimeShare.isEmpty())
-            throw new RecordNotFoundException("Record with id of " + id + " could not be found");
-
-        repository.deleteById(id);
+        if (optionalAssetTimeShare.isPresent()) {
+            AssetTimeShare timeShare = optionalAssetTimeShare.get();
+            timeShare.setRecordStatus(RecordStatus.DELETED);
+            repository.save(timeShare);
+        }
     }
 }

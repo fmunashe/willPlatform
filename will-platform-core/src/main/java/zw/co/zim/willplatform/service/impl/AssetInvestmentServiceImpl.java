@@ -1,12 +1,18 @@
 package zw.co.zim.willplatform.service.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
+import zw.co.zim.willplatform.enums.RecordStatus;
 import zw.co.zim.willplatform.model.AssetInvestment;
+import zw.co.zim.willplatform.model.Client;
 import zw.co.zim.willplatform.repository.AssetInvestmentRepository;
 import zw.co.zim.willplatform.repository.spcecifications.AssetInvestmentSpecification;
 import zw.co.zim.willplatform.service.AssetInvestmentService;
+import zw.co.zim.willplatform.utils.PageableHelper;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,21 +29,41 @@ public class AssetInvestmentServiceImpl implements AssetInvestmentService {
     @Override
     public List<AssetInvestment> findAll() {
 
-        return repository.findAll();
+        return repository.findAllByRecordStatusNot(RecordStatus.DELETED);
     }
 
-    public List<AssetInvestment> findAll(String investmentType) {
+    @Override
+    public Page<AssetInvestment> findAll(Integer pageNo, Integer pageSize) {
+        pageNo = PageableHelper.cleanPageNumber(pageNo);
+        pageSize = PageableHelper.cleanPageSize(pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "id");
+        return repository.findAllByRecordStatusNot(pageable, RecordStatus.DELETED);
+    }
+
+    @Override
+    public Page<AssetInvestment> findAllByInvestmentType(String investmentType, Integer pageNo, Integer pageSize) {
+        pageNo = PageableHelper.cleanPageNumber(pageNo);
+        pageSize = PageableHelper.cleanPageSize(pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "id");
 
         Specification<AssetInvestment> spec = Specification.where(null);
         if (investmentType != null && !investmentType.isEmpty()) {
             spec = spec.and(AssetInvestmentSpecification.ofType(investmentType));
         }
-        return repository.findAll(spec);
+        return repository.findAll(spec, pageable);
+    }
+
+    @Override
+    public Page<AssetInvestment> findAllByUserId(Client clientId, Integer pageNo, Integer pageSize) {
+        pageNo = PageableHelper.cleanPageNumber(pageNo);
+        pageSize = PageableHelper.cleanPageSize(pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "id");
+        return repository.findAllByUserIdAndRecordStatusNot(pageable, clientId, RecordStatus.DELETED);
     }
 
     @Override
     public Optional<AssetInvestment> findById(Long id) {
-        return Optional.ofNullable(repository.findById(id).orElseThrow(() -> new RecordNotFoundException("Record with id of " + id + " could not be found")));
+        return repository.findFirstByIdAndRecordStatusNot(id, RecordStatus.DELETED);
     }
 
     @Override
@@ -48,22 +74,21 @@ public class AssetInvestmentServiceImpl implements AssetInvestmentService {
     @Override
     public AssetInvestment update(Long id, AssetInvestment assetInvestment) {
         Optional<AssetInvestment> optionalAssetInvestment = this.findById(id);
-
-        if (optionalAssetInvestment.isEmpty())
-            throw new RecordNotFoundException("Record with id of " + id + " could not be found");
-
-        assetInvestment.setId(optionalAssetInvestment.get().getId());
-        return repository.save(assetInvestment);
+        if (optionalAssetInvestment.isPresent()) {
+            AssetInvestment investment = optionalAssetInvestment.get();
+            assetInvestment.setId(investment.getId());
+            return repository.save(assetInvestment);
+        }
+        return assetInvestment;
     }
 
     @Override
     public void deleteById(Long id) {
         Optional<AssetInvestment> optionalAssetInvestment = this.findById(id);
-
-        if (optionalAssetInvestment.isEmpty())
-            throw new RecordNotFoundException("Record with id of " + id + " could not be found");
-
-
-        repository.deleteById(id);
+        if (optionalAssetInvestment.isPresent()) {
+            AssetInvestment investment = optionalAssetInvestment.get();
+            investment.setRecordStatus(RecordStatus.DELETED);
+            repository.save(investment);
+        }
     }
 }
