@@ -44,7 +44,7 @@ public class LiabilitiesCreditCardServiceImpl implements LiabilitiesCreditCardSe
         if (optional.isPresent()) {
             LiabilitiesCreditCard creditCard = optional.get();
             creditCard.setUserId(liabilitiesCreditCard.getUserId());
-            creditCard.setValue(liabilitiesCreditCard.getValue());
+            creditCard.setCardValue(liabilitiesCreditCard.getCardValue());
             creditCard.setNameOfInstitution(liabilitiesCreditCard.getNameOfInstitution());
             creditCard.setRecordStatus(liabilitiesCreditCard.getRecordStatus());
             return repository.save(creditCard);

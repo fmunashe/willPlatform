@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 public interface AssetPolicyRepository extends JpaRepository<AssetPolicy, Long> {
-    Optional<AssetPolicy> findFirstByPolicyNumber(String policyNumber,RecordStatus recordStatus);
+    Optional<AssetPolicy> findFirstByPolicyNumberAndRecordStatusNot(String policyNumber,RecordStatus recordStatus);
     List<AssetPolicy> findAllByRecordStatusNot(Pageable pageable, RecordStatus recordStatus);
 
     List<AssetPolicy> findAllByUserIdAndRecordStatusNot(Pageable pageable, Client clientId, RecordStatus recordStatus);

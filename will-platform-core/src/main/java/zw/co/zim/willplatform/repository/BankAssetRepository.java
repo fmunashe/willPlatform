@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 public interface BankAssetRepository extends JpaRepository<BankAsset, Long> {
-    Optional<BankAsset> findFirstByAccountNumber(String accountNumber, RecordStatus recordStatus);
+    Optional<BankAsset> findFirstByAccountNumberAndRecordStatusNot(String accountNumber, RecordStatus recordStatus);
     List<BankAsset> findAllByRecordStatusNot(Pageable pageable, RecordStatus recordStatus);
 
     List<BankAsset> findAllByUserIdAndRecordStatusNot(Pageable pageable, Client clientId, RecordStatus recordStatus);

@@ -3,6 +3,7 @@ package zw.co.zim.willplatform.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
 import lombok.*;
 import zw.co.zim.willplatform.enums.RecordStatus;
 import zw.co.zim.willplatform.enums.RoleEnum;
@@ -13,6 +14,7 @@ import zw.co.zim.willplatform.enums.RoleEnum;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "system_users")
 public class SystemUser extends BaseEntity {
     private String name;
     private String middleName;

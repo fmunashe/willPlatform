@@ -44,7 +44,7 @@ public class LiabilitiesOutstandingAccountServiceImpl implements LiabilitiesOuts
         if (optional.isPresent()) {
             LiabilitiesOutstandingAccount account = optional.get();
             account.setNameOfAccount(liabilitiesOutstandingAccount.getNameOfAccount());
-            account.setValue(liabilitiesOutstandingAccount.getValue());
+            account.setAccountValue(liabilitiesOutstandingAccount.getAccountValue());
             account.setUserId(liabilitiesOutstandingAccount.getUserId());
             account.setRecordStatus(liabilitiesOutstandingAccount.getRecordStatus());
             repository.save(account);

@@ -10,6 +10,6 @@ import java.util.function.Function;
 public class VehicleAssetDtoMapper implements Function<VehicleAsset, VehicleAssetRecordDto> {
     @Override
     public VehicleAssetRecordDto apply(VehicleAsset vehicleAsset) {
-        return new VehicleAssetRecordDto(vehicleAsset.getId(), vehicleAsset.getMake(), vehicleAsset.getModel(), vehicleAsset.getColor(), vehicleAsset.getRegistrationNumber(), vehicleAsset.getEngineNumber(), vehicleAsset.getManufactureYear(), vehicleAsset.getVehicleValue(), vehicleAsset.getFullyPaid(), vehicleAsset.getRegistrationPaperWith(), vehicleAsset.getUserId());
+        return new VehicleAssetRecordDto(vehicleAsset.getId(), vehicleAsset.getMake(), vehicleAsset.getModel(), vehicleAsset.getColor(), vehicleAsset.getRegistrationNumber(), vehicleAsset.getEngineNumber(), vehicleAsset.getManufactureYear(), vehicleAsset.getVehicleValue(), vehicleAsset.getFullyPaid(), vehicleAsset.getRegistrationPaperWith(), vehicleAsset.getUserId(),vehicleAsset.getRecordStatus());
     }
 }

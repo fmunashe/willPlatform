@@ -17,5 +17,5 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     public Optional<Client> findFirstByNationalIdNumberAndRecordStatusNot(String nationalId, RecordStatus recordStatus);
 
-    public Optional<Client> findFirstByPassportNumberAAndRecordStatusNot(String passportNumber, RecordStatus recordStatus);
+    public Optional<Client> findFirstByPassportNumberAndRecordStatusNot(String passportNumber, RecordStatus recordStatus);
 }

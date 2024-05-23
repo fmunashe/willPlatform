@@ -9,7 +9,7 @@ public enum RecordStatus {
     INACTIVE("INACTIVE"),
     DELETED("DELETED"),
     EXPIRED("EXPIRED");
-    private String status;
+    private final String status;
 
     RecordStatus(String status) {
         this.status = status;

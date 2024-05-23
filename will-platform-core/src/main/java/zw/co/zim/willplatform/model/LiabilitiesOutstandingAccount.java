@@ -12,7 +12,7 @@ import zw.co.zim.willplatform.enums.RecordStatus;
 @Entity
 public class LiabilitiesOutstandingAccount extends BaseEntity {
     private String nameOfAccount;
-    private Double value;
+    private Double accountValue;
     @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
     private Client userId;

@@ -63,6 +63,6 @@ public class AssetPolicyServiceImpl implements AssetPolicyService {
 
     @Override
     public Optional<AssetPolicy> findFirstByPolicyNumber(String policyNumber) {
-        return Optional.ofNullable(repository.findFirstByPolicyNumber(policyNumber, RecordStatus.DELETED).orElseThrow(() -> new RecordNotFoundException("Policy with number " + policyNumber + " could not be found")));
+        return Optional.ofNullable(repository.findFirstByPolicyNumberAndRecordStatusNot(policyNumber, RecordStatus.DELETED).orElseThrow(() -> new RecordNotFoundException("Policy with number " + policyNumber + " could not be found")));
     }
 }

@@ -10,6 +10,6 @@ import java.util.function.Function;
 public class UserDtoMapper implements Function<Client, UserRecordDto> {
     @Override
     public UserRecordDto apply(Client user) {
-        return new UserRecordDto(user.getId(), user.getFirstName(), user.getLastName(), user.getDateOfBirth(), user.getNationalIdNumber(), user.getPassportNumber(), user.getAddress().getStreet(), user.getAddress().getSuburb(), user.getAddress().getCity(), user.getAddress().getProvince(), user.getAddress().getCountry(),user.getRecordStatus());
+        return new UserRecordDto(user.getId(), user.getFirstName(), user.getLastName(), user.getDateOfBirth(), user.getNationalIdNumber(), user.getPassportNumber(), user.getPhysicalAddress().getStreet(), user.getPhysicalAddress().getSuburb(), user.getPhysicalAddress().getCity(), user.getPhysicalAddress().getProvince(), user.getPhysicalAddress().getCountry(),user.getRecordStatus());
     }
 }

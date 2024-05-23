@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Client save(Client user) {
         Optional<Client> optionalNationalId = userRepository.findFirstByNationalIdNumberAndRecordStatusNot(user.getNationalIdNumber(), RecordStatus.DELETED);
-        Optional<Client> optionalPassport = userRepository.findFirstByPassportNumberAAndRecordStatusNot(user.getPassportNumber(), RecordStatus.DELETED);
+        Optional<Client> optionalPassport = userRepository.findFirstByPassportNumberAndRecordStatusNot(user.getPassportNumber(), RecordStatus.DELETED);
         if (optionalNationalId.isPresent())
             throw new RecordExistsException("A user with the same national id number of " + user.getNationalIdNumber() + " already exist");
 

@@ -13,7 +13,7 @@ import zw.co.zim.willplatform.enums.RecordStatus;
 @AllArgsConstructor
 @Entity
 public class TransferFees extends BaseEntity {
-    private Double value;
+    private Double transferValue;
     private Double transferFee;
     private Double vat;
     private Double levy;

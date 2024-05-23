@@ -12,7 +12,7 @@ import zw.co.zim.willplatform.enums.RecordStatus;
 @Entity
 public class LiabilitiesCreditCard extends BaseEntity {
     private String nameOfInstitution;
-    private Double value;
+    private Double cardValue;
     @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
     private Client userId;

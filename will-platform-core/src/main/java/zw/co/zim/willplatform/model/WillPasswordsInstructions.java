@@ -14,7 +14,7 @@ public class WillPasswordsInstructions extends BaseEntity {
     private String instructions;
     @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
-    private Client UserId;
+    private Client userId;
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;
 }
