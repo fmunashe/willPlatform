@@ -1,5 +1,6 @@
 package zw.co.zim.willplatform.repository;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import zw.co.zim.willplatform.enums.RecordStatus;
@@ -9,7 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ClientRepository extends JpaRepository<Client, Long> {
-    List<Client> findAllByRecordStatusNot(Pageable pageable, RecordStatus recordStatus);
+    List<Client> findAllByRecordStatusNot(RecordStatus recordStatus);
+    Page<Client> findAllByRecordStatusNot(Pageable pageable, RecordStatus recordStatus);
 
     Optional<Client> findFirstByEmailOrNationalIdNumberAndRecordStatusNot(String email, String nationalId, RecordStatus recordStatus);
 

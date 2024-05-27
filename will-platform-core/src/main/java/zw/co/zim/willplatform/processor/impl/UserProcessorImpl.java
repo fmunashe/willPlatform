@@ -4,7 +4,7 @@ import zw.co.zim.willplatform.dto.UserRecordDto;
 import zw.co.zim.willplatform.dto.mapper.UserDtoMapper;
 import zw.co.zim.willplatform.model.Client;
 import zw.co.zim.willplatform.processor.UserProcessor;
-import zw.co.zim.willplatform.service.UserService;
+import zw.co.zim.willplatform.service.ClientsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class UserProcessorImpl implements UserProcessor {
-    private final UserService userService;
+    private final ClientsService userService;
     private final UserDtoMapper userDtoMapper;
 
     @Override

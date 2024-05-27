@@ -2,9 +2,7 @@ package zw.co.zim.willplatform.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import zw.co.zim.willplatform.dto.UserRecordDto;
 import zw.co.zim.willplatform.enums.OTPDeliveryChannel;
 import zw.co.zim.willplatform.enums.RecordStatus;
@@ -12,10 +10,12 @@ import zw.co.zim.willplatform.enums.RecordStatus;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "users")
+@Table(name = "clients")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Client extends BaseEntity {
     @Column(nullable = false)
     @NotNull

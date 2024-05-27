@@ -1,4 +1,4 @@
-package zw.co.zim.willplatform.messages.response.helper;
+package zw.co.zim.willplatform.messages.response.basic;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PagedResponse<T> implements Serializable {
+public class ApiResponse<T> implements Serializable {
     private int statusCode;
     private String message;
     private boolean success;

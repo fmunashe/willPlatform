@@ -95,4 +95,9 @@ public class CaseServiceImpl implements CaseService {
     public Optional<Cases> findFirstByCaseNumber(String caseNumber) {
         return repository.findFirstByCaseNumberAndStatusNot(caseNumber, RecordStatus.DELETED);
     }
+
+    @Override
+    public Optional<Cases> findLatestCase() {
+        return repository.findTopByOrderByIdDesc();
+    }
 }

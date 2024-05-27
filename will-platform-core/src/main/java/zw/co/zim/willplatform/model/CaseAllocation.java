@@ -1,9 +1,6 @@
 package zw.co.zim.willplatform.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.*;
 import zw.co.zim.willplatform.enums.CaseType;
 import zw.co.zim.willplatform.enums.RecordStatus;
@@ -24,6 +21,8 @@ public class CaseAllocation extends BaseEntity {
     private CaseType caseType;
 
     private LocalDateTime allocationTime;
+
+    private String allocatedAgent;
 
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;

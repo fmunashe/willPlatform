@@ -8,7 +8,6 @@ import zw.co.zim.willplatform.enums.RecordStatus;
 import zw.co.zim.willplatform.model.Cases;
 import zw.co.zim.willplatform.model.SystemUser;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface CasesRepository extends JpaRepository<Cases, Long> {
@@ -22,4 +21,5 @@ public interface CasesRepository extends JpaRepository<Cases, Long> {
 
     Optional<Cases> findFirstByIdAndStatusNot(Long id, RecordStatus status);
 
+    Optional<Cases> findTopByOrderByIdDesc();
 }

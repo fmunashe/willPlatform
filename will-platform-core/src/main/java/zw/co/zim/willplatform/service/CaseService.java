@@ -16,4 +16,5 @@ public interface CaseService extends AppService<Cases> {
     Page<Cases> findAllByAssignedAgent(SystemUser assignedAgent, Integer pageNo, Integer pageSize);
 
     Optional<Cases> findFirstByCaseNumber(String caseNumber);
+    Optional<Cases> findLatestCase();
 }

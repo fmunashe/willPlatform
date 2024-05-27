@@ -21,6 +21,7 @@ public class SystemUser extends BaseEntity {
     private String lastName;
     private String mobile;
     private String email;
+    @Enumerated(EnumType.STRING)
     private RoleEnum role;
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;
