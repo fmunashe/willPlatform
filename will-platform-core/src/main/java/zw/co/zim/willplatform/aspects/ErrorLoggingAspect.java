@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class ErrorLoggingAspect {
-    @AfterThrowing(pointcut = "execution(* com.zim.willplatform.*..*(..))", throwing = "error")
+    @AfterThrowing(pointcut = "execution(* zw.co.zim.willplatform.*..*(..))", throwing = "error")
     public void afterThrowingAdvice(JoinPoint jp, Throwable error) {
         System.out.println("=========== Error Details ===============\n");
         System.out.println("Method Signature: " + jp.getSignature());

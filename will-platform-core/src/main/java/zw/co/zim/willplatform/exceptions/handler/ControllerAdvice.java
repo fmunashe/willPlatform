@@ -6,8 +6,11 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import zw.co.zim.willplatform.exceptions.BusinessException;
+import zw.co.zim.willplatform.exceptions.RecordExistsException;
 import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
-import zw.co.zim.willplatform.messages.response.basic.GenericResponse;
+import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
+import zw.co.zim.willplatform.utils.messages.response.basic.GenericResponse;
+import zw.co.zim.willplatform.utils.messages.response.helper.HelperResponse;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,14 +30,14 @@ public class ControllerAdvice {
     }
 
     @ExceptionHandler(RecordNotFoundException.class)
-    public ResponseEntity<GenericResponse<String>> handleException(RecordNotFoundException exception) {
-        GenericResponse<String> response = GenericResponse.<String>builder()
-            .statusCode(HttpStatus.NOT_FOUND.value())
-            .success(false)
-            .message(exception.getMessage())
-            .responseDTOS(null)
-            .responseDTO(null)
-            .build();
+    public ResponseEntity<ApiResponse<String>> handleException(RecordNotFoundException exception) {
+        ApiResponse<String> response = HelperResponse.buildApiResponse(null, null, false, 404, false, exception.getMessage(), null);
+        return ResponseEntity.ok(response);
+    }
+
+    @ExceptionHandler(RecordExistsException.class)
+    public ResponseEntity<ApiResponse<String>> handleException(RecordExistsException exception) {
+        ApiResponse<String> response = HelperResponse.buildApiResponse(null, null, false, 400, false, exception.getMessage(), null);
         return ResponseEntity.ok(response);
     }
 

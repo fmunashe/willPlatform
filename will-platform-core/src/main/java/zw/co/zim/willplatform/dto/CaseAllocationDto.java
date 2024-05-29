@@ -18,4 +18,8 @@ public class CaseAllocationDto {
     private LocalDateTime allocationTime;
     private String allocatedAgent;
     private String recordStatus;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+
 }

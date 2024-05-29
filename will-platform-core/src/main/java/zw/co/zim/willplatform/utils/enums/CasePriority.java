@@ -1,4 +1,4 @@
-package zw.co.zim.willplatform.enums;
+package zw.co.zim.willplatform.utils.enums;
 
 public enum CasePriority {
     P1("P1"),P2("P2"),P3("P3");

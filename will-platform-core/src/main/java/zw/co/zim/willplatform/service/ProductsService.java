@@ -2,7 +2,7 @@ package zw.co.zim.willplatform.service;
 
 import org.springframework.data.domain.Page;
 import zw.co.zim.willplatform.common.AppService;
-import zw.co.zim.willplatform.enums.ProductNames;
+import zw.co.zim.willplatform.utils.enums.ProductNames;
 import zw.co.zim.willplatform.model.Currency;
 import zw.co.zim.willplatform.model.Products;
 

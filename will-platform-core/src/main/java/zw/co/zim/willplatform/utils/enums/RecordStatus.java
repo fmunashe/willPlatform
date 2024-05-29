@@ -1,4 +1,4 @@
-package zw.co.zim.willplatform.enums;
+package zw.co.zim.willplatform.utils.enums;
 
 public enum RecordStatus {
     OPEN("OPEN"), CLOSED("CLOSED"), PENDING("PENDING"),

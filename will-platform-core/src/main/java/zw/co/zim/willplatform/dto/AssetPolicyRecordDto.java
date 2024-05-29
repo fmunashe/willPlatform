@@ -1,11 +1,16 @@
 package zw.co.zim.willplatform.dto;
 
-import zw.co.zim.willplatform.enums.RecordStatus;
+import lombok.Builder;
+import zw.co.zim.willplatform.utils.enums.RecordStatus;
 import zw.co.zim.willplatform.model.Client;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDateTime;
+
+@Builder
 public record AssetPolicyRecordDto(
+    Long id,
     @NotNull(message = "Policy type is required")
     @NotBlank(message = "Policy type cannot be blank")
     String policyType,
@@ -19,6 +24,8 @@ public record AssetPolicyRecordDto(
     @NotNull(message = "Policy value is required")
     Double value,
     Client userId,
-    RecordStatus recordStatus
+    RecordStatus recordStatus,
+    LocalDateTime createdAt,
+    LocalDateTime updatedAt
 ) {
 }

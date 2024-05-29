@@ -5,7 +5,7 @@ import zw.co.zim.willplatform.dto.VehicleAssetRecordDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import zw.co.zim.willplatform.enums.RecordStatus;
+import zw.co.zim.willplatform.utils.enums.RecordStatus;
 
 import java.time.LocalDate;
 

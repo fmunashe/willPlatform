@@ -1,14 +1,14 @@
 package zw.co.zim.willplatform.controller.api;
 
-import zw.co.zim.willplatform.dto.AssetPolicyRecordDto;
-import zw.co.zim.willplatform.processor.AssetPolicyProcessor;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
+import zw.co.zim.willplatform.dto.AssetPolicyRecordDto;
+import zw.co.zim.willplatform.processor.AssetPolicyProcessor;
+import zw.co.zim.willplatform.utils.AppConstants;
+import zw.co.zim.willplatform.utils.messages.request.AssetPolicyRequest;
+import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 @RestController
 @CrossOrigin
@@ -22,41 +22,51 @@ public class AssetPolicyController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AssetPolicyRecordDto>> getAllPolicies() {
-        List<AssetPolicyRecordDto> policies = processor.findAll();
+    public ResponseEntity<ApiResponse<AssetPolicyRecordDto>> getAllPolicies(
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize) {
+        ApiResponse<AssetPolicyRecordDto> policies = processor.findAll(pageNo, pageSize);
         return ResponseEntity.status(HttpStatus.OK).body(policies);
     }
 
 
     @PostMapping("/save")
-    public ResponseEntity<AssetPolicyRecordDto> createAssetPolicy(@RequestBody @Valid AssetPolicyRecordDto policyRecordDto) {
-        AssetPolicyRecordDto recordDto = processor.save(policyRecordDto);
+    public ResponseEntity<ApiResponse<AssetPolicyRecordDto>> createAssetPolicy(@RequestBody @Valid AssetPolicyRequest policyRequest) {
+        ApiResponse<AssetPolicyRecordDto> recordDto = processor.save(policyRequest);
         return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<AssetPolicyRecordDto> updateAssetPolicy(@PathVariable("id") Long id, @RequestBody AssetPolicyRecordDto policyRecordDto) {
-        AssetPolicyRecordDto recordDto = processor.update(id, policyRecordDto);
+    public ResponseEntity<ApiResponse<AssetPolicyRecordDto>> updateAssetPolicy(@PathVariable("id") Long id, @RequestBody AssetPolicyRecordDto policyRecordDto) {
+        ApiResponse<AssetPolicyRecordDto> recordDto = processor.update(id, policyRecordDto);
         return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AssetPolicyRecordDto> findById(@PathVariable("id") Long id) {
-        Optional<AssetPolicyRecordDto> recordDto = processor.findById(id);
-        return recordDto.map(policyRecordDto -> ResponseEntity.status(HttpStatus.OK).body(policyRecordDto)).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ApiResponse<AssetPolicyRecordDto>> findById(@PathVariable("id") Long id) {
+        ApiResponse<AssetPolicyRecordDto> recordDto = processor.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 
     @GetMapping("/number/{policyNumber}")
-    public ResponseEntity<AssetPolicyRecordDto> findById(@PathVariable("policyNumber") String policyNumber) {
-        Optional<AssetPolicyRecordDto> recordDto = processor.findFirstByPolicyNumber(policyNumber);
-        return recordDto.map(policyRecordDto -> ResponseEntity.status(HttpStatus.OK).body(policyRecordDto)).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ApiResponse<AssetPolicyRecordDto>> findById(@PathVariable("policyNumber") String policyNumber) {
+        ApiResponse<AssetPolicyRecordDto> recordDto = processor.findFirstByPolicyNumber(policyNumber);
+        return ResponseEntity.status(HttpStatus.OK).body(recordDto);
+    }
+
+    @GetMapping("/byClientId/{clientId}")
+    public ResponseEntity<ApiResponse<AssetPolicyRecordDto>> findByClientId(
+        @PathVariable("clientId") Long clientId,
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize) {
+        ApiResponse<AssetPolicyRecordDto> recordDto = processor.findAllByUserId(clientId, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteAssetPolicy(@PathVariable("id") Long id) {
-        processor.deleteById(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Record with id of " + id + " successfully deleted");
+    public ResponseEntity<ApiResponse<AssetPolicyRecordDto>> deleteAssetPolicy(@PathVariable("id") Long id) {
+        ApiResponse<AssetPolicyRecordDto> response = processor.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-
 
 }

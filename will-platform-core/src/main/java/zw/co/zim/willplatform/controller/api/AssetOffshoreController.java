@@ -1,14 +1,14 @@
 package zw.co.zim.willplatform.controller.api;
 
-import zw.co.zim.willplatform.dto.AssetOffshoreRecordDto;
-import zw.co.zim.willplatform.processor.AssetOffshoreProcessor;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
+import zw.co.zim.willplatform.dto.AssetOffshoreRecordDto;
+import zw.co.zim.willplatform.processor.AssetOffshoreProcessor;
+import zw.co.zim.willplatform.utils.AppConstants;
+import zw.co.zim.willplatform.utils.messages.request.AssetOffshoreRequest;
+import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 @RestController
 @CrossOrigin
@@ -21,28 +21,41 @@ public class AssetOffshoreController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AssetOffshoreRecordDto>> getAllOffshoreAssets() {
-        List<AssetOffshoreRecordDto> assetOffshoreRecordDtos = processor.findAll();
+    public ResponseEntity<ApiResponse<AssetOffshoreRecordDto>> getAllOffshoreAssets(
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize) {
+
+        ApiResponse<AssetOffshoreRecordDto> assetOffshoreRecordDtos = processor.findAll(pageNo, pageSize);
         return ResponseEntity.status(HttpStatus.OK).body(assetOffshoreRecordDtos);
     }
 
 
     @PostMapping("/save")
-    public ResponseEntity<AssetOffshoreRecordDto> createOffshoreAsset(@RequestBody @Valid AssetOffshoreRecordDto assetOffshoreRecordDto) {
-        AssetOffshoreRecordDto recordDto = processor.save(assetOffshoreRecordDto);
+    public ResponseEntity<ApiResponse<AssetOffshoreRecordDto>> createOffshoreAsset(@RequestBody @Valid AssetOffshoreRequest offshoreRequest) {
+        ApiResponse<AssetOffshoreRecordDto> recordDto = processor.save(offshoreRequest);
         return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<AssetOffshoreRecordDto> updateOffshoreAsset(@PathVariable("id") Long id, @RequestBody AssetOffshoreRecordDto assetOffshoreRecordDto) {
-        AssetOffshoreRecordDto recordDto = processor.update(id, assetOffshoreRecordDto);
+    public ResponseEntity<ApiResponse<AssetOffshoreRecordDto>> updateOffshoreAsset(@PathVariable("id") Long id, @RequestBody AssetOffshoreRecordDto assetOffshoreRecordDto) {
+        ApiResponse<AssetOffshoreRecordDto> recordDto = processor.update(id, assetOffshoreRecordDto);
         return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AssetOffshoreRecordDto> findById(@PathVariable("id") Long id) {
-        Optional<AssetOffshoreRecordDto> recordDto = processor.findById(id);
-        return recordDto.map(assetOffshoreRecordDto -> ResponseEntity.status(HttpStatus.OK).body(assetOffshoreRecordDto)).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ApiResponse<AssetOffshoreRecordDto>> findById(@PathVariable("id") Long id) {
+        ApiResponse<AssetOffshoreRecordDto> recordDto = processor.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(recordDto);
+    }
+
+    @GetMapping("/byClientId{id}")
+    public ResponseEntity<ApiResponse<AssetOffshoreRecordDto>> findByClientId(
+        @PathVariable("id") Long clientId,
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize) {
+
+        ApiResponse<AssetOffshoreRecordDto> recordDto = processor.findAllByUserId(clientId, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 
     @DeleteMapping("/{id}")

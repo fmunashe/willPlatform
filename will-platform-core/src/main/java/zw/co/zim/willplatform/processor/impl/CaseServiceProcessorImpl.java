@@ -5,12 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import zw.co.zim.willplatform.dto.CaseDto;
 import zw.co.zim.willplatform.dto.mapper.CaseDtoMapper;
-import zw.co.zim.willplatform.enums.CasePriority;
-import zw.co.zim.willplatform.enums.CaseType;
-import zw.co.zim.willplatform.enums.RecordStatus;
-import zw.co.zim.willplatform.enums.RoleEnum;
-import zw.co.zim.willplatform.messages.response.basic.ApiResponse;
-import zw.co.zim.willplatform.messages.response.helper.HelperResponse;
+import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
 import zw.co.zim.willplatform.model.CaseAllocation;
 import zw.co.zim.willplatform.model.Cases;
 import zw.co.zim.willplatform.model.Client;
@@ -21,6 +16,12 @@ import zw.co.zim.willplatform.service.CaseService;
 import zw.co.zim.willplatform.service.ClientsService;
 import zw.co.zim.willplatform.service.SystemUserService;
 import zw.co.zim.willplatform.utils.AppConstants;
+import zw.co.zim.willplatform.utils.enums.CasePriority;
+import zw.co.zim.willplatform.utils.enums.CaseType;
+import zw.co.zim.willplatform.utils.enums.RecordStatus;
+import zw.co.zim.willplatform.utils.enums.RoleEnum;
+import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
+import zw.co.zim.willplatform.utils.messages.response.helper.HelperResponse;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -49,10 +50,6 @@ public class CaseServiceProcessorImpl implements CaseServiceProcessor {
         this.modelMapper = modelMapper;
     }
 
-    @Override
-    public ApiResponse<CaseDto> findAll() {
-        return null;
-    }
 
     @Override
     public ApiResponse<CaseDto> findAll(Integer pageNo, Integer pageSize) {
@@ -64,7 +61,7 @@ public class CaseServiceProcessorImpl implements CaseServiceProcessor {
     public ApiResponse<CaseDto> findById(Long id) {
         Optional<Cases> optional = service.findById(id);
         return optional.map(cases -> HelperResponse.buildApiResponse(null, null, false, 200, true, AppConstants.FOUND_MESSAGE, mapper.apply(cases)))
-            .orElseGet(() -> HelperResponse.buildApiResponse(null, null, false, 404, false, AppConstants.NOT_FOUND_MESSAGE, null));
+            .orElseThrow(() -> new RecordNotFoundException("Failed to find case record with Id of " + id));
     }
 
     @Override
@@ -72,7 +69,7 @@ public class CaseServiceProcessorImpl implements CaseServiceProcessor {
 
         Optional<Client> optionalClient = clientsService.findById(caseDto.getClientId());
         if (optionalClient.isEmpty()) {
-            return HelperResponse.buildApiResponse(null, null, false, 404, false, AppConstants.NOT_FOUND_MESSAGE, null);
+            throw new RecordNotFoundException("Failed to find client with Id " + caseDto.getClientId());
         }
 
         Client client = optionalClient.get();
@@ -80,7 +77,7 @@ public class CaseServiceProcessorImpl implements CaseServiceProcessor {
         List<SystemUser> agents = getAgents();
 
         if (agents.isEmpty()) {
-            return HelperResponse.buildApiResponse(null, null, false, 404, false, AppConstants.AGENTS_NOT_FOUND_MESSAGE, null);
+            throw new RecordNotFoundException(AppConstants.AGENTS_NOT_FOUND_MESSAGE);
         }
 
         int userIndex = counter.getAndIncrement() % agents.size();
@@ -99,7 +96,7 @@ public class CaseServiceProcessorImpl implements CaseServiceProcessor {
     public ApiResponse<CaseDto> update(Long id, CaseDto caseDto) {
         Optional<Cases> optional = service.findById(id);
         if (optional.isEmpty() || !Objects.equals(optional.get().getId(), id)) {
-            return HelperResponse.buildApiResponse(null, null, false, 404, false, AppConstants.NOT_FOUND_MESSAGE, null);
+            throw new RecordNotFoundException("Failed to find case with Id " + id);
         }
         Cases updatedCase = service.update(id, modelMapper.map(caseDto, Cases.class));
 
@@ -110,7 +107,7 @@ public class CaseServiceProcessorImpl implements CaseServiceProcessor {
     public ApiResponse<CaseDto> deleteById(Long id) {
         Optional<Cases> optional = service.findById(id);
         if (optional.isEmpty()) {
-            return HelperResponse.buildApiResponse(null, null, false, 404, false, AppConstants.NOT_FOUND_MESSAGE, null);
+            throw new RecordNotFoundException("Failed to find case with Id " + id);
         }
         service.deleteById(id);
 
@@ -128,7 +125,7 @@ public class CaseServiceProcessorImpl implements CaseServiceProcessor {
         Optional<SystemUser> optional = systemUserService.findById(assignedAgent);
 
         if (optional.isEmpty()) {
-            return HelperResponse.buildApiResponse(null, null, false, 404, false, AppConstants.NOT_FOUND_MESSAGE, null);
+            throw new RecordNotFoundException("Failed to find assigned agent with Id " + assignedAgent);
         }
         SystemUser agent = optional.get();
         Page<Cases> pagedCases = service.findAllByAssignedAgent(agent, pageNo, pageSize);
@@ -140,7 +137,7 @@ public class CaseServiceProcessorImpl implements CaseServiceProcessor {
     public ApiResponse<CaseDto> findFirstByCaseNumber(String caseNumber) {
         Optional<Cases> optional = service.findFirstByCaseNumber(caseNumber);
         return optional.map(cases -> HelperResponse.buildApiResponse(null, null, false, 200, true, AppConstants.FOUND_MESSAGE, mapper.apply(cases)))
-            .orElseGet(() -> HelperResponse.buildApiResponse(null, null, false, 404, false, AppConstants.NOT_FOUND_MESSAGE, null));
+            .orElseThrow(() -> new RecordNotFoundException("Failed to find case record with number " + caseNumber));
     }
 
     private List<SystemUser> getAgents() {

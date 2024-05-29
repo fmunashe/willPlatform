@@ -1,8 +1,8 @@
-package zw.co.zim.willplatform.messages.response.basic;
+package zw.co.zim.willplatform.utils.messages.response.basic;
 
 import lombok.Builder;
 import lombok.Data;
-import zw.co.zim.willplatform.enums.DeliveryState;
+import zw.co.zim.willplatform.utils.enums.DeliveryState;
 
 
 @Data

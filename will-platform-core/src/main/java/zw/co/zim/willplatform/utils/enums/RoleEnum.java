@@ -1,4 +1,4 @@
-package zw.co.zim.willplatform.enums;
+package zw.co.zim.willplatform.utils.enums;
 
 public enum RoleEnum {
     SYSADMIN("SYSADMIN"), CLIENT("CLIENT"), SUPPORT("SUPPORT"), BROKER("BROKER"),

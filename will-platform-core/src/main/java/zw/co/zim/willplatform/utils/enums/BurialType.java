@@ -1,4 +1,4 @@
-package zw.co.zim.willplatform.enums;
+package zw.co.zim.willplatform.utils.enums;
 
 public enum BurialType {
     BURIAL("BURIAL"), CREMATION("CREMATION"), ORGAN_DONOR("ORGAN_DONOR");

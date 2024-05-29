@@ -1,11 +1,16 @@
 package zw.co.zim.willplatform.dto;
 
-import zw.co.zim.willplatform.enums.RecordStatus;
-import zw.co.zim.willplatform.model.Client;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
+import zw.co.zim.willplatform.model.Client;
+import zw.co.zim.willplatform.utils.enums.RecordStatus;
 
+import java.time.LocalDateTime;
+
+@Builder
 public record AssetTimeShareDto(
+  Long id,
     @NotNull(message = "Asset timeshare description is required")
     @NotBlank(message = "Asset timeshare description cannot be blank")
     String description,
@@ -14,6 +19,8 @@ public record AssetTimeShareDto(
     double value,
 
     Client userId,
-    RecordStatus recordStatus
+    RecordStatus recordStatus,
+    LocalDateTime createdAt,
+    LocalDateTime updatedAt
 ) {
 }

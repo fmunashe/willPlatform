@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import zw.co.zim.willplatform.enums.RecordStatus;
+import zw.co.zim.willplatform.utils.enums.RecordStatus;
 import zw.co.zim.willplatform.model.Coupons;
 import zw.co.zim.willplatform.repository.CouponsRepository;
 import zw.co.zim.willplatform.repository.spcecifications.CouponSpecification;

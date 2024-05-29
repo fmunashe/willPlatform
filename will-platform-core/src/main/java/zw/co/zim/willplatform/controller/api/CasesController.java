@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import zw.co.zim.willplatform.dto.CaseDto;
-import zw.co.zim.willplatform.messages.response.basic.ApiResponse;
+import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 import zw.co.zim.willplatform.processor.CaseServiceProcessor;
 import zw.co.zim.willplatform.utils.AppConstants;
 

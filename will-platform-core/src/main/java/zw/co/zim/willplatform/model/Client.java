@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import zw.co.zim.willplatform.dto.UserRecordDto;
-import zw.co.zim.willplatform.enums.OTPDeliveryChannel;
-import zw.co.zim.willplatform.enums.RecordStatus;
+import zw.co.zim.willplatform.utils.enums.OTPDeliveryChannel;
+import zw.co.zim.willplatform.utils.enums.RecordStatus;
 
 import java.time.LocalDate;
 

@@ -1,8 +1,8 @@
 package zw.co.zim.willplatform.dto.mapper;
 
+import org.springframework.stereotype.Service;
 import zw.co.zim.willplatform.dto.AssetOffshoreRecordDto;
 import zw.co.zim.willplatform.model.AssetOffshore;
-import org.springframework.stereotype.Service;
 
 import java.util.function.Function;
 
@@ -10,6 +10,12 @@ import java.util.function.Function;
 public class AssetOffshoreDtoMapper implements Function<AssetOffshore, AssetOffshoreRecordDto> {
     @Override
     public AssetOffshoreRecordDto apply(AssetOffshore assetOffshore) {
-        return new AssetOffshoreRecordDto(assetOffshore.getDescription(), assetOffshore.getOffshoreValue(), assetOffshore.getUserId(),assetOffshore.getRecordStatus());
+        return AssetOffshoreRecordDto.builder()
+            .id(assetOffshore.getId())
+            .value(assetOffshore.getOffshoreValue())
+            .description(assetOffshore.getDescription())
+            .userId(assetOffshore.getUserId())
+            .recordStatus(assetOffshore.getRecordStatus())
+            .build();
     }
 }

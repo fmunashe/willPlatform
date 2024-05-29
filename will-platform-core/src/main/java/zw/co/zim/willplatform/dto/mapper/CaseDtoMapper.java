@@ -20,6 +20,8 @@ public class CaseDtoMapper implements Function<Cases, CaseDto> {
             .clientId(cases.getUserId().getId())
             .assignedAgent(cases.getAssignedAgent().getId())
             .recordStatus(cases.getStatus().getStatus())
+            .createdAt(cases.getCreatedAt())
+            .updatedAt(cases.getUpdatedAt())
             .build();
     }
 }

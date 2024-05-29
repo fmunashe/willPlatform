@@ -1,14 +1,14 @@
 package zw.co.zim.willplatform.controller.api;
 
-import zw.co.zim.willplatform.dto.AssetTimeShareDto;
-import zw.co.zim.willplatform.processor.AssetTimeshareProcessor;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
+import zw.co.zim.willplatform.dto.AssetTimeShareDto;
+import zw.co.zim.willplatform.processor.AssetTimeshareProcessor;
+import zw.co.zim.willplatform.utils.AppConstants;
+import zw.co.zim.willplatform.utils.messages.request.TimeshareRequest;
+import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 @RestController
 @CrossOrigin
@@ -19,29 +19,43 @@ public class AssetTimeshareController {
     public AssetTimeshareController(AssetTimeshareProcessor processor) {
         this.processor = processor;
     }
+
     @GetMapping
-    public ResponseEntity<List<AssetTimeShareDto>> getAllTimeshares() {
-        List<AssetTimeShareDto> timeshare = processor.findAll();
+    public ResponseEntity<ApiResponse<AssetTimeShareDto>> getAllTimeshares(
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize
+    ) {
+        ApiResponse<AssetTimeShareDto> timeshare = processor.findAll(pageNo, pageSize);
         return ResponseEntity.status(HttpStatus.OK).body(timeshare);
     }
 
 
     @PostMapping("/save")
-    public ResponseEntity<AssetTimeShareDto> createTimeshare(@RequestBody @Valid AssetTimeShareDto assetTimeShareDto) {
-        AssetTimeShareDto recordDto = processor.save(assetTimeShareDto);
+    public ResponseEntity<ApiResponse<AssetTimeShareDto>> createTimeshare(@RequestBody @Valid TimeshareRequest timeshareRequest) {
+        ApiResponse<AssetTimeShareDto> recordDto = processor.save(timeshareRequest);
         return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<AssetTimeShareDto> updateTimeshare(@PathVariable("id") Long id, @RequestBody AssetTimeShareDto assetTimeShareDto) {
-        AssetTimeShareDto recordDto = processor.update(id, assetTimeShareDto);
+    public ResponseEntity<ApiResponse<AssetTimeShareDto>> updateTimeshare(@PathVariable("id") Long id, @RequestBody AssetTimeShareDto assetTimeShareDto) {
+        ApiResponse<AssetTimeShareDto> recordDto = processor.update(id, assetTimeShareDto);
         return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AssetTimeShareDto> findById(@PathVariable("id") Long id) {
-        Optional<AssetTimeShareDto> recordDto = processor.findById(id);
-        return recordDto.map(timeShareDto -> ResponseEntity.status(HttpStatus.OK).body(timeShareDto)).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ApiResponse<AssetTimeShareDto>> findById(@PathVariable("id") Long id) {
+        ApiResponse<AssetTimeShareDto> recordDto = processor.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(recordDto);
+    }
+
+    @GetMapping("/byClientId{id}")
+    public ResponseEntity<ApiResponse<AssetTimeShareDto>> findByClientId(
+        @PathVariable("id") Long clientId,
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize) {
+
+        ApiResponse<AssetTimeShareDto> recordDto = processor.findAllByUserId(clientId, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 
     @DeleteMapping("/{id}")

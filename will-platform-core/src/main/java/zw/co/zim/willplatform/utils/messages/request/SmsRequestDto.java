@@ -1,4 +1,4 @@
-package zw.co.zim.willplatform.messages.request;
+package zw.co.zim.willplatform.utils.messages.request;
 
 import lombok.Builder;
 import lombok.Data;

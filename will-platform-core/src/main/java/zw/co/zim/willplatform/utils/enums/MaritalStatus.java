@@ -1,4 +1,4 @@
-package zw.co.zim.willplatform.enums;
+package zw.co.zim.willplatform.utils.enums;
 
 public enum MaritalStatus {
     MARRIED("MARRIED"), DIVORCED("DIVORCED"), DECEASED("DECEASED"), WIDOW("WIDOW"), WIDOWER("WIDOWER");

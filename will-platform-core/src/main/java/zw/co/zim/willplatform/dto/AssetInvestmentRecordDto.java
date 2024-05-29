@@ -1,10 +1,13 @@
 package zw.co.zim.willplatform.dto;
 
 import jakarta.validation.constraints.NotNull;
-import zw.co.zim.willplatform.enums.RecordStatus;
+import lombok.Builder;
 import zw.co.zim.willplatform.model.Client;
+import zw.co.zim.willplatform.utils.enums.RecordStatus;
 
+@Builder
 public record AssetInvestmentRecordDto(
+    Long id,
     @NotNull(message = "Investment type is required")
     @NotNull(message = "Investment type cannot be blank")
     String investmentType,

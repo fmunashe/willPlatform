@@ -1,14 +1,14 @@
 package zw.co.zim.willplatform.controller.api;
 
-import zw.co.zim.willplatform.dto.AssetInvestmentRecordDto;
-import zw.co.zim.willplatform.processor.AssetInvestmentProcessor;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
+import zw.co.zim.willplatform.dto.AssetInvestmentRecordDto;
+import zw.co.zim.willplatform.processor.AssetInvestmentProcessor;
+import zw.co.zim.willplatform.utils.AppConstants;
+import zw.co.zim.willplatform.utils.messages.request.AssetInvestmentRequest;
+import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 @RestController
 @CrossOrigin
@@ -22,33 +22,46 @@ public class AssetInvestmentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AssetInvestmentRecordDto>> getAllInvestmentAssets() {
-        List<AssetInvestmentRecordDto> investmentRecordDtos = processor.findAll();
+    public ResponseEntity<ApiResponse<AssetInvestmentRecordDto>> getAllInvestmentAssets(
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize
+    ) {
+        ApiResponse<AssetInvestmentRecordDto> investmentRecordDtos = processor.findAll(pageNo, pageSize);
         return ResponseEntity.status(HttpStatus.OK).body(investmentRecordDtos);
     }
 
 
     @PostMapping("/save")
-    public ResponseEntity<AssetInvestmentRecordDto> createInvestmentAsset(@RequestBody @Valid AssetInvestmentRecordDto assetInvestmentRecordDto) {
-        AssetInvestmentRecordDto recordDto = processor.save(assetInvestmentRecordDto);
+    public ResponseEntity<ApiResponse<AssetInvestmentRecordDto>> createInvestmentAsset(@RequestBody @Valid AssetInvestmentRequest investmentRequest) {
+        ApiResponse<AssetInvestmentRecordDto> recordDto = processor.save(investmentRequest);
         return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<AssetInvestmentRecordDto> updateInvestmentAsset(@PathVariable("id") Long id, @RequestBody AssetInvestmentRecordDto assetInvestmentRecordDto) {
-        AssetInvestmentRecordDto recordDto = processor.update(id, assetInvestmentRecordDto);
+    public ResponseEntity<ApiResponse<AssetInvestmentRecordDto>> updateInvestmentAsset(@PathVariable("id") Long id, @RequestBody AssetInvestmentRecordDto assetInvestmentRecordDto) {
+        ApiResponse<AssetInvestmentRecordDto> recordDto = processor.update(id, assetInvestmentRecordDto);
         return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AssetInvestmentRecordDto> findById(@PathVariable("id") Long id) {
-        Optional<AssetInvestmentRecordDto> recordDto = processor.findById(id);
-        return recordDto.map(investmentRecordDto -> ResponseEntity.status(HttpStatus.OK).body(investmentRecordDto)).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ApiResponse<AssetInvestmentRecordDto>> findById(@PathVariable("id") Long id) {
+        ApiResponse<AssetInvestmentRecordDto> recordDto = processor.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(recordDto);
+    }
+
+    @GetMapping("/byClientId{id}")
+    public ResponseEntity<ApiResponse<AssetInvestmentRecordDto>> findByClientId(
+        @PathVariable("id") Long clientId,
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize) {
+
+        ApiResponse<AssetInvestmentRecordDto> recordDto = processor.findAllByUserId(clientId, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteInvestmentAsset(@PathVariable("id") Long id) {
-        processor.deleteById(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Record with id of " + id + " successfully deleted");
+    public ResponseEntity<ApiResponse<AssetInvestmentRecordDto>> deleteInvestmentAsset(@PathVariable("id") Long id) {
+        ApiResponse<AssetInvestmentRecordDto> response = processor.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

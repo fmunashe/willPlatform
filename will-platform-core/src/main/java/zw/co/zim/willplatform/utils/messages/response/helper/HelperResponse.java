@@ -1,7 +1,7 @@
-package zw.co.zim.willplatform.messages.response.helper;
+package zw.co.zim.willplatform.utils.messages.response.helper;
 
 import org.springframework.data.domain.Page;
-import zw.co.zim.willplatform.messages.response.basic.ApiResponse;
+import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 import java.util.List;
 import java.util.function.Function;

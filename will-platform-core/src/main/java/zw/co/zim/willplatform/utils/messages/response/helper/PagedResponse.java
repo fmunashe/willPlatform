@@ -1,4 +1,4 @@
-package zw.co.zim.willplatform.messages.response.helper;
+package zw.co.zim.willplatform.utils.messages.response.helper;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

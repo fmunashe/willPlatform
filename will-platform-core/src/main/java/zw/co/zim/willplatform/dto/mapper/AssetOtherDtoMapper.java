@@ -1,8 +1,8 @@
 package zw.co.zim.willplatform.dto.mapper;
 
+import org.springframework.stereotype.Service;
 import zw.co.zim.willplatform.dto.AssetOtherRecordDto;
 import zw.co.zim.willplatform.model.AssetOther;
-import org.springframework.stereotype.Service;
 
 import java.util.function.Function;
 
@@ -10,6 +10,14 @@ import java.util.function.Function;
 public class AssetOtherDtoMapper implements Function<AssetOther, AssetOtherRecordDto> {
     @Override
     public AssetOtherRecordDto apply(AssetOther assetOther) {
-        return new AssetOtherRecordDto(assetOther.getDescription(), assetOther.getAssetValue(), assetOther.getUserId(),assetOther.getRecordStatus());
+        return AssetOtherRecordDto.builder()
+            .id(assetOther.getId())
+            .value(assetOther.getAssetValue())
+            .description(assetOther.getDescription())
+            .createdAt(assetOther.getCreatedAt())
+            .updatedAt(assetOther.getUpdatedAt())
+            .userId(assetOther.getUserId())
+            .recordStatus(assetOther.getRecordStatus())
+            .build();
     }
 }

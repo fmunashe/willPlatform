@@ -3,9 +3,9 @@ package zw.co.zim.willplatform.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import zw.co.zim.willplatform.enums.Gender;
-import zw.co.zim.willplatform.enums.RecordStatus;
-import zw.co.zim.willplatform.enums.Relationship;
+import zw.co.zim.willplatform.utils.enums.Gender;
+import zw.co.zim.willplatform.utils.enums.RecordStatus;
+import zw.co.zim.willplatform.utils.enums.Relationship;
 
 import java.time.LocalDate;
 

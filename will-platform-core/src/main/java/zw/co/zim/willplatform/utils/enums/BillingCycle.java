@@ -1,4 +1,4 @@
-package zw.co.zim.willplatform.enums;
+package zw.co.zim.willplatform.utils.enums;
 
 public enum BillingCycle {
     MONTHLY("MONTHLY"), WEEKLY("WEEKLY"), FORTNITE("FORTNITE"), ANNUALLY("ANNUALLY"), BIANNUAL("BIANNUAL");

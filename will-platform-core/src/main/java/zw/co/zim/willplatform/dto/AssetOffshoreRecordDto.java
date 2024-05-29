@@ -1,10 +1,13 @@
 package zw.co.zim.willplatform.dto;
 
-import zw.co.zim.willplatform.enums.RecordStatus;
-import zw.co.zim.willplatform.model.Client;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
+import zw.co.zim.willplatform.model.Client;
+import zw.co.zim.willplatform.utils.enums.RecordStatus;
 
+@Builder
 public record AssetOffshoreRecordDto(
+    Long id,
     @NotNull(message = "Asset offshore description is required")
     @NotNull(message = "Asset offshore description cannot be blank")
     String description,

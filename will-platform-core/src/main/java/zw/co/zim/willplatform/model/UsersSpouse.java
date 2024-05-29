@@ -3,9 +3,9 @@ package zw.co.zim.willplatform.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import zw.co.zim.willplatform.enums.CiviallyMarriedStatus;
-import zw.co.zim.willplatform.enums.MaritalStatus;
-import zw.co.zim.willplatform.enums.RecordStatus;
+import zw.co.zim.willplatform.utils.enums.CiviallyMarriedStatus;
+import zw.co.zim.willplatform.utils.enums.MaritalStatus;
+import zw.co.zim.willplatform.utils.enums.RecordStatus;
 
 @Getter
 @Setter

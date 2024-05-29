@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -19,4 +21,6 @@ public class CaseDto {
     private Long clientId;
     private Long assignedAgent;
     private String recordStatus;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

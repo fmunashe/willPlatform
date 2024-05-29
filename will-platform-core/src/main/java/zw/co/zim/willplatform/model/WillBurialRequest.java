@@ -5,8 +5,8 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToOne;
 import lombok.*;
-import zw.co.zim.willplatform.enums.BurialType;
-import zw.co.zim.willplatform.enums.RecordStatus;
+import zw.co.zim.willplatform.utils.enums.BurialType;
+import zw.co.zim.willplatform.utils.enums.RecordStatus;
 
 @Getter
 @Setter

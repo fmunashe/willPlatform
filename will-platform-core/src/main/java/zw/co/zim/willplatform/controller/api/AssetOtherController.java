@@ -1,14 +1,14 @@
 package zw.co.zim.willplatform.controller.api;
 
-import zw.co.zim.willplatform.dto.AssetOtherRecordDto;
-import zw.co.zim.willplatform.processor.AssetOtherProcessor;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
+import zw.co.zim.willplatform.dto.AssetOtherRecordDto;
+import zw.co.zim.willplatform.processor.AssetOtherProcessor;
+import zw.co.zim.willplatform.utils.AppConstants;
+import zw.co.zim.willplatform.utils.messages.request.AssetOtherRequest;
+import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 @RestController
 @CrossOrigin
@@ -22,33 +22,45 @@ public class AssetOtherController {
 
 
     @GetMapping
-    public ResponseEntity<List<AssetOtherRecordDto>> getAllOtherAssets() {
-        List<AssetOtherRecordDto> assetOther = processor.findAll();
+    public ResponseEntity<ApiResponse<AssetOtherRecordDto>> getAllOtherAssets(
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize) {
+        ApiResponse<AssetOtherRecordDto> assetOther = processor.findAll(pageNo, pageSize);
         return ResponseEntity.status(HttpStatus.OK).body(assetOther);
     }
 
 
     @PostMapping("/save")
-    public ResponseEntity<AssetOtherRecordDto> createOtherAsset(@RequestBody @Valid AssetOtherRecordDto assetOtherRecordDto) {
-        AssetOtherRecordDto recordDto = processor.save(assetOtherRecordDto);
+    public ResponseEntity<ApiResponse<AssetOtherRecordDto>> createOtherAsset(@RequestBody @Valid AssetOtherRequest assetOtherRequest) {
+        ApiResponse<AssetOtherRecordDto> recordDto = processor.save(assetOtherRequest);
         return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<AssetOtherRecordDto> updateOtherAsset(@PathVariable("id") Long id, @RequestBody AssetOtherRecordDto assetOtherRecordDto) {
-        AssetOtherRecordDto recordDto = processor.update(id, assetOtherRecordDto);
+    public ResponseEntity<ApiResponse<AssetOtherRecordDto>> updateOtherAsset(@PathVariable("id") Long id, @RequestBody AssetOtherRecordDto assetOtherRecordDto) {
+        ApiResponse<AssetOtherRecordDto> recordDto = processor.update(id, assetOtherRecordDto);
         return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AssetOtherRecordDto> findById(@PathVariable("id") Long id) {
-        Optional<AssetOtherRecordDto> recordDto = processor.findById(id);
-        return recordDto.map(assetOtherRecordDto -> ResponseEntity.status(HttpStatus.OK).body(assetOtherRecordDto)).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ApiResponse<AssetOtherRecordDto>> findById(@PathVariable("id") Long id) {
+        ApiResponse<AssetOtherRecordDto> recordDto = processor.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(recordDto);
+    }
+
+    @GetMapping("/byClientId{id}")
+    public ResponseEntity<ApiResponse<AssetOtherRecordDto>> findByClientId(
+        @PathVariable("id") Long clientId,
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize) {
+
+        ApiResponse<AssetOtherRecordDto> recordDto = processor.findAllByUserId(clientId, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteOtherAsset(@PathVariable("id") Long id) {
-        processor.deleteById(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Record with id of " + id + " successfully deleted");
+    public ResponseEntity<ApiResponse<AssetOtherRecordDto>> deleteOtherAsset(@PathVariable("id") Long id) {
+        ApiResponse<AssetOtherRecordDto> response = processor.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

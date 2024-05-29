@@ -2,12 +2,11 @@ package zw.co.zim.willplatform.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import zw.co.zim.willplatform.enums.RecordStatus;
+import zw.co.zim.willplatform.utils.enums.RecordStatus;
 import zw.co.zim.willplatform.model.BankAsset;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import zw.co.zim.willplatform.model.Client;
-import zw.co.zim.willplatform.model.LiabilitiesUserOwesMoney;
 
 import java.util.List;
 import java.util.Optional;

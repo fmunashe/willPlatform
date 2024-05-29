@@ -17,6 +17,8 @@ public class CaseAllocationDtoMapper implements Function<CaseAllocation, CaseAll
             .allocatedAgent(caseAllocation.getAllocatedAgent())
             .allocationTime(caseAllocation.getAllocationTime())
             .recordStatus(caseAllocation.getRecordStatus().getStatus())
+            .createdAt(caseAllocation.getCreatedAt())
+            .updatedAt(caseAllocation.getUpdatedAt())
             .build();
     }
 }

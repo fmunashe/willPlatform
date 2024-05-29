@@ -1,4 +1,4 @@
-package zw.co.zim.willplatform.enums;
+package zw.co.zim.willplatform.utils.enums;
 
 public enum Relationship {
     PARENT("PARENT"), COUSIN("COUSIN"), SIBLING("SIBLING"), BIOLOGICAL_CHILD("BIOLOGICAL_CHILD");
