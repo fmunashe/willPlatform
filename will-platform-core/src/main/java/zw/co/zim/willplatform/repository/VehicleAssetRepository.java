@@ -4,8 +4,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import zw.co.zim.willplatform.utils.enums.RecordStatus;
+import zw.co.zim.willplatform.model.Client;
 import zw.co.zim.willplatform.model.VehicleAsset;
+import zw.co.zim.willplatform.utils.enums.RecordStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,5 +20,8 @@ public interface VehicleAssetRepository extends JpaRepository<VehicleAsset, Long
     Optional<VehicleAsset> findFirstByRegistrationNumberAndRecordStatusNot(String regNumber, RecordStatus recordStatus);
 
     Optional<VehicleAsset> findFirstByEngineNumberAndRecordStatusNot(String engineNumber, RecordStatus recordStatus);
+
     Optional<VehicleAsset> findFirstByIdAndRecordStatusNot(Long id, RecordStatus recordStatus);
+
+    Page<VehicleAsset> findAllByUserIdAndRecordStatusNot(Pageable pageable, Client clientId, RecordStatus recordStatus);
 }

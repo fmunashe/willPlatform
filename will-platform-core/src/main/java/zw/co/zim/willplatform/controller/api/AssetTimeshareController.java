@@ -59,8 +59,8 @@ public class AssetTimeshareController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteTimeshare(@PathVariable("id") Long id) {
-        processor.deleteById(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Record with id of " + id + " successfully deleted");
+    public ResponseEntity<ApiResponse<AssetTimeShareDto>> deleteTimeshare(@PathVariable("id") Long id) {
+        ApiResponse<AssetTimeShareDto>response =processor.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

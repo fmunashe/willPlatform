@@ -1,14 +1,14 @@
 package zw.co.zim.willplatform.controller.api;
 
-import zw.co.zim.willplatform.dto.VehicleAssetRecordDto;
-import zw.co.zim.willplatform.processor.VehicleAssetProcessor;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
+import zw.co.zim.willplatform.dto.VehicleAssetRecordDto;
+import zw.co.zim.willplatform.processor.VehicleAssetProcessor;
+import zw.co.zim.willplatform.utils.AppConstants;
+import zw.co.zim.willplatform.utils.messages.request.VehicleAssetRequest;
+import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 @RestController
 @RequestMapping("/api/vehicle")
@@ -20,33 +20,58 @@ public class VehicleAssetController {
     }
 
     @GetMapping
-    public ResponseEntity<List<VehicleAssetRecordDto>> getAllVehicles() {
-        List<VehicleAssetRecordDto> vehicles = vehicleAssetProcessor.findAll();
+    public ResponseEntity<ApiResponse<VehicleAssetRecordDto>> getAllVehicles(
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize
+    ) {
+        ApiResponse<VehicleAssetRecordDto> vehicles = vehicleAssetProcessor.findAll(pageNo, pageSize);
         return ResponseEntity.status(HttpStatus.OK).body(vehicles);
     }
 
 
     @PostMapping("/save")
-    public ResponseEntity<VehicleAssetRecordDto> createVehicle(@RequestBody @Valid VehicleAssetRecordDto vehicleAssetRecordDto) {
-        VehicleAssetRecordDto recordDto = vehicleAssetProcessor.save(vehicleAssetRecordDto);
+    public ResponseEntity<ApiResponse<VehicleAssetRecordDto>> createVehicle(@RequestBody @Valid VehicleAssetRequest vehicleAssetRequest) {
+        ApiResponse<VehicleAssetRecordDto> recordDto = vehicleAssetProcessor.save(vehicleAssetRequest);
         return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<VehicleAssetRecordDto> updateVehicle(@PathVariable("id") Long id, @RequestBody VehicleAssetRecordDto vehicleAssetRecordDto) {
-        VehicleAssetRecordDto recordDto = vehicleAssetProcessor.update(id, vehicleAssetRecordDto);
+    public ResponseEntity<ApiResponse<VehicleAssetRecordDto>> updateVehicle(@PathVariable("id") Long id, @RequestBody VehicleAssetRecordDto vehicleAssetRecordDto) {
+        ApiResponse<VehicleAssetRecordDto> recordDto = vehicleAssetProcessor.update(id, vehicleAssetRecordDto);
         return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<VehicleAssetRecordDto> findById(@PathVariable("id") Long id) {
-        Optional<VehicleAssetRecordDto> recordDto = vehicleAssetProcessor.findById(id);
-        return recordDto.map(vehicleRecordDto -> ResponseEntity.status(HttpStatus.OK).body(vehicleRecordDto)).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<ApiResponse<VehicleAssetRecordDto>> findById(@PathVariable("id") Long id) {
+        ApiResponse<VehicleAssetRecordDto> recordDto = vehicleAssetProcessor.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(recordDto);
+    }
+
+    @GetMapping("/ByRegNumber/{regNumber}")
+    public ResponseEntity<ApiResponse<VehicleAssetRecordDto>> findByRegistrationNumber(@PathVariable("regNumber") String regNumber) {
+        ApiResponse<VehicleAssetRecordDto> recordDto = vehicleAssetProcessor.findVehicleByRegNumber(regNumber);
+        return ResponseEntity.status(HttpStatus.OK).body(recordDto);
+    }
+
+    @GetMapping("/ByEngineNumber/{engineNumber}")
+    public ResponseEntity<ApiResponse<VehicleAssetRecordDto>> findByEngineNumber(@PathVariable("engineNumber") String engineNumber) {
+        ApiResponse<VehicleAssetRecordDto> recordDto = vehicleAssetProcessor.findVehicleByRegNumber(engineNumber);
+        return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteVehicle(@PathVariable("id") Long id) {
-        vehicleAssetProcessor.deleteById(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Record with id of " + id + " successfully deleted");
+    public ResponseEntity<ApiResponse<VehicleAssetRecordDto>> deleteVehicleAsset(@PathVariable("id") Long id) {
+        ApiResponse<VehicleAssetRecordDto> response = vehicleAssetProcessor.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/byClientId{clientId}")
+    public ResponseEntity<ApiResponse<VehicleAssetRecordDto>> findByClientId(
+        @PathVariable("clientId") Long clientId,
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize) {
+
+        ApiResponse<VehicleAssetRecordDto> recordDto = vehicleAssetProcessor.findAllByUserId(clientId, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 }

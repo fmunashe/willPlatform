@@ -1,11 +1,16 @@
 package zw.co.zim.willplatform.dto;
 
+import lombok.Builder;
 import zw.co.zim.willplatform.utils.enums.RecordStatus;
 import zw.co.zim.willplatform.model.Client;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDateTime;
+
+@Builder
 public record BankAssetRecordDto(
+    Long id,
     @NotNull(message = "Bank name is required")
     @NotBlank(message = "Bank name cannot be blank")
     String bankName,
@@ -15,7 +20,10 @@ public record BankAssetRecordDto(
     @NotNull(message = "Balance is required")
     Double balance,
     Client user,
-    RecordStatus recordStatus
+    RecordStatus recordStatus,
+    LocalDateTime createdAt,
+    LocalDateTime updatedAt
+
 ) {
 
 }

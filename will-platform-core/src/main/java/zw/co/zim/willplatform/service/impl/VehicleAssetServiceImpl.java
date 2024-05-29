@@ -5,6 +5,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import zw.co.zim.willplatform.model.AssetPolicy;
+import zw.co.zim.willplatform.model.Client;
 import zw.co.zim.willplatform.utils.enums.RecordStatus;
 import zw.co.zim.willplatform.model.VehicleAsset;
 import zw.co.zim.willplatform.repository.VehicleAssetRepository;
@@ -73,5 +75,13 @@ public class VehicleAssetServiceImpl implements VehicleAssetService {
     @Override
     public Optional<VehicleAsset> findVehicleByRegNumber(String regNumber) {
         return vehicleAssetRepository.findFirstByRegistrationNumberAndRecordStatusNot(regNumber, RecordStatus.DELETED);
+    }
+
+    @Override
+    public Page<VehicleAsset> findAllByUserId(Client clientId, Integer pageNo, Integer pageSize) {
+        pageNo = PageableHelper.cleanPageNumber(pageNo);
+        pageSize = PageableHelper.cleanPageSize(pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "id");
+        return vehicleAssetRepository.findAllByUserIdAndRecordStatusNot(pageable, clientId, RecordStatus.DELETED);
     }
 }

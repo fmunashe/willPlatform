@@ -93,9 +93,9 @@ public class AssetTimeshareProcessorImpl implements AssetTimeshareProcessor {
 
     @Override
     public ApiResponse<AssetTimeShareDto> deleteById(Long id) {
-        Optional<AssetTimeShare> policy = assetTimeshareService.findById(id);
+        Optional<AssetTimeShare> timeShare = assetTimeshareService.findById(id);
 
-        if (policy.isEmpty() || !policy.get().getId().equals(id)) {
+        if (timeShare.isEmpty() || !timeShare.get().getId().equals(id)) {
             throw new RecordNotFoundException("Failed to find timeshare record with Id " + id);
         }
         assetTimeshareService.deleteById(id);
