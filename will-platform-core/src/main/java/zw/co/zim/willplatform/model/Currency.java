@@ -6,6 +6,8 @@ import jakarta.persistence.Enumerated;
 import lombok.*;
 import zw.co.zim.willplatform.utils.enums.RecordStatus;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @Builder
@@ -16,7 +18,7 @@ public class Currency extends BaseEntity {
     private String name;
     private String symbol;
     private String iso;
-    private String conversionRate;
+    private Double conversionRate;
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;
 }

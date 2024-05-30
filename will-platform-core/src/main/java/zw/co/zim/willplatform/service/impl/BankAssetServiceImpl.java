@@ -1,21 +1,23 @@
 package zw.co.zim.willplatform.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import zw.co.zim.willplatform.utils.enums.RecordStatus;
 import zw.co.zim.willplatform.model.BankAsset;
 import zw.co.zim.willplatform.model.Client;
 import zw.co.zim.willplatform.repository.BankAssetRepository;
 import zw.co.zim.willplatform.service.BankAssetService;
 import zw.co.zim.willplatform.utils.PageableHelper;
+import zw.co.zim.willplatform.utils.enums.RecordStatus;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class BankAssetServiceImpl implements BankAssetService {
 
     private final BankAssetRepository bankAssetRepository;

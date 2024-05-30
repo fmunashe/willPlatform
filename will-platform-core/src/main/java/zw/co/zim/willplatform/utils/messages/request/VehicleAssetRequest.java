@@ -47,6 +47,5 @@ public class VehicleAssetRequest {
     String registrationPaperWith;
 
     @NotNull(message = "Client id field is required")
-    @NotBlank(message = "Client id field cannot be blank")
     Long clientId;
 }

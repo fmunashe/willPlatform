@@ -14,10 +14,10 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class IncomingRequestAndOutgoingResponseLogging {
     @Pointcut("execution(* zw.co.zim.willplatform.processor..*(..))")
-    public void methodExecution() {
+    public void processorMethodsExecution() {
     }
 
-    @Before("methodExecution()")
+    @Before("processorMethodsExecution()")
     public void logActionBefore(JoinPoint joinPoint) {
         String className = joinPoint.getTarget().getClass().getSimpleName();
         String methodName = joinPoint.getSignature().getName();
@@ -26,7 +26,7 @@ public class IncomingRequestAndOutgoingResponseLogging {
         log.info("========== Incoming Request On {} {} With Payload {} ==========", className, methodName, payload);
     }
 
-    @AfterReturning(pointcut = "methodExecution()", returning = "result")
+    @AfterReturning(pointcut = "processorMethodsExecution()", returning = "result")
     public void logAfterReturning(JoinPoint joinPoint, Object result) {
         String className = joinPoint.getTarget().getClass().getSimpleName();
         String methodName = joinPoint.getSignature().getName();

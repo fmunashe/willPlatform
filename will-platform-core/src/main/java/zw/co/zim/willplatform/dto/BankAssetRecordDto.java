@@ -1,6 +1,7 @@
 package zw.co.zim.willplatform.dto;
 
 import lombok.Builder;
+import zw.co.zim.willplatform.model.Currency;
 import zw.co.zim.willplatform.utils.enums.RecordStatus;
 import zw.co.zim.willplatform.model.Client;
 import jakarta.validation.constraints.NotBlank;
@@ -19,6 +20,8 @@ public record BankAssetRecordDto(
     String accountNumber,
     @NotNull(message = "Balance is required")
     Double balance,
+    @NotNull(message = "Currency is required")
+    Currency currency,
     Client user,
     RecordStatus recordStatus,
     LocalDateTime createdAt,

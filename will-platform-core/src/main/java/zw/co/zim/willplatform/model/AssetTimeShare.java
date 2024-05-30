@@ -25,6 +25,6 @@ public class AssetTimeShare extends BaseEntity {
         this.description = assetTimeShareDto.description();
         this.timeshareValue = assetTimeShareDto.value();
         this.userId = assetTimeShareDto.userId();
-        this.recordStatus = getRecordStatus();
+        this.recordStatus = assetTimeShareDto.recordStatus();
     }
 }

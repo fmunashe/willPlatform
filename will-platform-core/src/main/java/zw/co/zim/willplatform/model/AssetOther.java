@@ -24,6 +24,6 @@ public class AssetOther extends BaseEntity {
         this.description = recordDto.description();
         this.assetValue = recordDto.value();
         this.userId = recordDto.userId();
-        this.recordStatus = getRecordStatus();
+        this.recordStatus = recordDto.recordStatus();
     }
 }

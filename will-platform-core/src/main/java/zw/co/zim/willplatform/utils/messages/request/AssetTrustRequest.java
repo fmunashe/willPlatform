@@ -19,6 +19,5 @@ public class AssetTrustRequest {
     Double value;
 
     @NotNull(message = "Trust client id is required")
-    @NotBlank(message = "Trust client id cannot be blank")
     Long clientId;
 }

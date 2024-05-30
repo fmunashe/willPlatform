@@ -23,7 +23,9 @@ public class BankAssetRequest {
     @NotNull(message = "Balance is required")
     Double balance;
 
+    @NotNull(message = "Currency is required")
+    String currency;
+
     @NotNull(message = "Client id is required")
-    @NotBlank(message = "Client id cannot be blank")
     Long clientId;
 }

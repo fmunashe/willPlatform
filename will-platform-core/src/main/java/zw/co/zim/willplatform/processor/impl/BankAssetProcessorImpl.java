@@ -4,12 +4,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import zw.co.zim.willplatform.dto.BankAssetRecordDto;
 import zw.co.zim.willplatform.dto.mapper.BankAssetDtoMapper;
+import zw.co.zim.willplatform.exceptions.RecordExistsException;
 import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
 import zw.co.zim.willplatform.model.BankAsset;
 import zw.co.zim.willplatform.model.Client;
+import zw.co.zim.willplatform.model.Currency;
 import zw.co.zim.willplatform.processor.BankAssetProcessor;
 import zw.co.zim.willplatform.service.BankAssetService;
 import zw.co.zim.willplatform.service.ClientsService;
+import zw.co.zim.willplatform.service.CurrencyService;
 import zw.co.zim.willplatform.utils.AppConstants;
 import zw.co.zim.willplatform.utils.enums.RecordStatus;
 import zw.co.zim.willplatform.utils.messages.request.BankAssetRequest;
@@ -24,11 +27,13 @@ public class BankAssetProcessorImpl implements BankAssetProcessor {
     private final BankAssetService bankAssetService;
     private final BankAssetDtoMapper mapper;
     private final ClientsService clientsService;
+    private final CurrencyService currencyService;
 
-    public BankAssetProcessorImpl(BankAssetService bankAssetService, BankAssetDtoMapper mapper, ClientsService clientsService) {
+    public BankAssetProcessorImpl(BankAssetService bankAssetService, BankAssetDtoMapper mapper, ClientsService clientsService, CurrencyService currencyService) {
         this.bankAssetService = bankAssetService;
         this.mapper = mapper;
         this.clientsService = clientsService;
+        this.currencyService = currencyService;
     }
 
     @Override
@@ -44,10 +49,23 @@ public class BankAssetProcessorImpl implements BankAssetProcessor {
         if (optionalClient.isEmpty()) {
             throw new RecordNotFoundException("Failed to find client with Id " + bankAssetRequest.getClientId());
         }
+
+        Optional<BankAsset> optionalBankAsset = bankAssetService.findBankByAccountNumber(bankAssetRequest.getAccountNumber());
+        if (optionalBankAsset.isPresent()) {
+            throw new RecordExistsException("There already exists a bank with account number " + bankAssetRequest.getAccountNumber());
+        }
+
+        Optional<Currency> optionalCurrency = currencyService.findCurrencyByName(bankAssetRequest.getCurrency());
+        if (optionalCurrency.isEmpty()) {
+            throw new RecordNotFoundException("Failed to find currency with name " + bankAssetRequest.getCurrency());
+        }
+
+
         BankAssetRecordDto recordDto = BankAssetRecordDto.builder()
             .user(optionalClient.get())
             .bankName(bankAssetRequest.getBankName())
             .balance(bankAssetRequest.getBalance())
+            .currency(optionalCurrency.get())
             .accountNumber(bankAssetRequest.getAccountNumber())
             .recordStatus(RecordStatus.ACTIVE)
             .build();

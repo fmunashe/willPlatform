@@ -5,16 +5,20 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-import zw.co.zim.willplatform.utils.enums.RecordStatus;
-import zw.co.zim.willplatform.utils.enums.RoleEnum;
 import zw.co.zim.willplatform.model.Client;
+import zw.co.zim.willplatform.model.Currency;
 import zw.co.zim.willplatform.model.SystemUser;
 import zw.co.zim.willplatform.repository.ClientRepository;
+import zw.co.zim.willplatform.repository.CurrencyRepository;
 import zw.co.zim.willplatform.repository.SystemUserRepository;
 import zw.co.zim.willplatform.service.ClientsService;
+import zw.co.zim.willplatform.service.CurrencyService;
 import zw.co.zim.willplatform.service.SystemUserService;
+import zw.co.zim.willplatform.utils.enums.RecordStatus;
+import zw.co.zim.willplatform.utils.enums.RoleEnum;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Component
 @Builder
@@ -26,12 +30,16 @@ public class TestDataSeeder {
     private final SystemUserRepository userRepository;
     private final ClientsService clientsService;
     private final ClientRepository clientRepository;
+    private final CurrencyService currencyService;
+    private final CurrencyRepository currencyRepository;
 
-    public TestDataSeeder(SystemUserService systemUserService, SystemUserRepository userRepository, ClientsService clientsService, ClientRepository clientRepository) {
+    public TestDataSeeder(SystemUserService systemUserService, SystemUserRepository userRepository, ClientsService clientsService, ClientRepository clientRepository, CurrencyService currencyService, CurrencyRepository currencyRepository) {
         this.systemUserService = systemUserService;
         this.userRepository = userRepository;
         this.clientsService = clientsService;
         this.clientRepository = clientRepository;
+        this.currencyService = currencyService;
+        this.currencyRepository = currencyRepository;
     }
 
     @PostConstruct
@@ -58,6 +66,31 @@ public class TestDataSeeder {
 
             systemUserService.save(user);
             clientsService.save(client);
+
+        }
+        seedCurrency();
+    }
+
+    private void seedCurrency() {
+        currencyRepository.deleteAll();
+        List<Currency> currencies = List.of(Currency.builder()
+                .conversionRate(1D)
+                .iso("USD")
+                .symbol("$")
+                .name("USD")
+                .recordStatus(RecordStatus.ACTIVE)
+                .build(),
+
+            Currency.builder()
+                .conversionRate(13.56D)
+                .iso("ZiG")
+                .symbol("ZiG")
+                .name("ZiG")
+                .recordStatus(RecordStatus.ACTIVE)
+                .build());
+
+        for (Currency currency : currencies) {
+            currencyService.save(currency);
         }
     }
 }

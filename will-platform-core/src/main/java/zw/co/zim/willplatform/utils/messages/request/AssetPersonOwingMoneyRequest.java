@@ -24,6 +24,5 @@ public class AssetPersonOwingMoneyRequest {
     String contactNumber;
 
     @NotNull(message = "Person owing money contact number required")
-    @NotBlank(message = "Person owing money contact number cannot be blank")
     Long clientId;
 }

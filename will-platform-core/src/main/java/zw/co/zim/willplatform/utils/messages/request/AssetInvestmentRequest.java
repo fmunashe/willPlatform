@@ -23,6 +23,5 @@ public class AssetInvestmentRequest {
     String company;
 
     @NotNull(message = "Investment company is required")
-    @NotNull(message = "Investment company cannot be blank")
     Long clientId;
 }

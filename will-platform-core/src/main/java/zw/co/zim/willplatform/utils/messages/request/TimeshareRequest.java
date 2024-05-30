@@ -20,6 +20,5 @@ public class TimeshareRequest {
     double value;
 
     @NotNull(message = "Asset timeshare client id is required")
-    @NotBlank(message = "Asset timeshare client id cannot be blank")
     Long clientId;
 }

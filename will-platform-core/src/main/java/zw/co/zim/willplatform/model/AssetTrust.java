@@ -25,6 +25,6 @@ public class AssetTrust extends BaseEntity {
         this.nameOfTrust = assetTrustDto.nameOfTrust();
         this.trustValue = assetTrustDto.value();
         this.userId = assetTrustDto.userId();
-        this.recordStatus = getRecordStatus();
+        this.recordStatus = assetTrustDto.recordStatus();
     }
 }

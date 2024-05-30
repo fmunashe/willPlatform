@@ -45,6 +45,6 @@ public class PropertyAsset extends BaseEntity {
         this.personWhoHoldsDeed = propertyAssetRecordDto.personWhoHoldsDeed();
         this.additionalInformation = propertyAssetRecordDto.additionalInformation();
         this.userId = propertyAssetRecordDto.user();
-        this.recordStatus = getRecordStatus();
+        this.recordStatus = propertyAssetRecordDto.recordStatus();
     }
 }

@@ -29,6 +29,6 @@ public class AssetPolicy extends BaseEntity {
         this.company = policyRecordDto.company();
         this.policyValue = policyRecordDto.value();
         this.userId = policyRecordDto.userId();
-        this.recordStatus = getRecordStatus();
+        this.recordStatus = policyRecordDto.recordStatus();
     }
 }

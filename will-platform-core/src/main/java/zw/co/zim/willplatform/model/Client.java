@@ -1,5 +1,6 @@
 package zw.co.zim.willplatform.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -36,8 +37,10 @@ public class Client extends BaseEntity {
     @Embedded
     private Address physicalAddress;
 
+    @JsonIgnore
     private String password;
     private Boolean acceptedTermsAndConditions;
+    @JsonIgnore
     private String OTP;
 
     @Enumerated(EnumType.STRING)
@@ -53,5 +56,6 @@ public class Client extends BaseEntity {
         this.nationalIdNumber = userRecordDto.nationalId();
         this.passportNumber = userRecordDto.passportNumber();
         this.physicalAddress = new Address(userRecordDto.streetNumber(), userRecordDto.suburb(), userRecordDto.city(), userRecordDto.province(), userRecordDto.country());
+        this.recordStatus =userRecordDto.recordStatus();
     }
 }

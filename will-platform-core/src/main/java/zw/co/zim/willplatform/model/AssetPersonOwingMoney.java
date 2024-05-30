@@ -27,6 +27,6 @@ public class AssetPersonOwingMoney extends BaseEntity {
         this.amountOwed = recordDto.amountOwed();
         this.contactNumber = recordDto.contactNumber();
         this.userId = recordDto.userId();
-        this.recordStatus = getRecordStatus();
+        this.recordStatus = recordDto.recordStatus();
     }
 }

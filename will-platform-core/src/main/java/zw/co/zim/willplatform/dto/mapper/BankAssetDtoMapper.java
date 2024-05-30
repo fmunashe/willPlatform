@@ -15,6 +15,7 @@ public class BankAssetDtoMapper implements Function<BankAsset, BankAssetRecordDt
             .bankName(bankAsset.getBankName())
             .accountNumber(bankAsset.getAccountNumber())
             .balance(bankAsset.getBalance())
+            .currency(bankAsset.getCurrency())
             .user(bankAsset.getUserId())
             .createdAt(bankAsset.getCreatedAt())
             .updatedAt(bankAsset.getUpdatedAt())

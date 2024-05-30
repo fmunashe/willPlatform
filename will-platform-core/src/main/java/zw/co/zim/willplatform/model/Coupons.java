@@ -1,6 +1,8 @@
 package zw.co.zim.willplatform.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToOne;
 import lombok.*;
 import zw.co.zim.willplatform.utils.enums.ProductNames;
@@ -23,5 +25,6 @@ public class Coupons extends BaseEntity {
     private boolean applied;
     @OneToOne
     private Client userId;
+    @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;
 }

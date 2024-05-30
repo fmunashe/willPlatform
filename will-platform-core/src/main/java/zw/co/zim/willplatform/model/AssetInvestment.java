@@ -27,6 +27,6 @@ public class AssetInvestment extends BaseEntity {
         this.investmentValue = recordDto.value();
         this.company = recordDto.company();
         this.userId = recordDto.userId();
-        this.recordStatus = getRecordStatus();
+        this.recordStatus = recordDto.recordStatus();
     }
 }

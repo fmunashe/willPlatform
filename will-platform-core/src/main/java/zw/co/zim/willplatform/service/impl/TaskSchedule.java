@@ -15,8 +15,8 @@ public class TaskSchedule {
         this.logger = logger;
     }
 
-    @Scheduled(cron = "*/5 * * * * *")
-    private void logMessage(){
+//    @Scheduled(cron = "*/5 * * * * *")
+    protected void logMessage(){
         logger.accept(message+ LocalDateTime.now());
     }
 }
