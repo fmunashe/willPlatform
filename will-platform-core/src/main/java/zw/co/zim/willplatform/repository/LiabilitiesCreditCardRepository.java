@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface LiabilitiesCreditCardRepository extends JpaRepository<LiabilitiesCreditCard, Long> {
     Page<LiabilitiesCreditCard> findAllByRecordStatusNot(Pageable pageable, RecordStatus recordStatus);
 
-    List<LiabilitiesCreditCard> findAllByUserIdAndRecordStatusNot(Client clientId, RecordStatus recordStatus);
+    Page<LiabilitiesCreditCard> findAllByUserIdAndRecordStatusNot(Pageable pageable,Client clientId, RecordStatus recordStatus);
 
     Optional<LiabilitiesCreditCard> findFirstByIdAndRecordStatusNot(Long id, RecordStatus recordStatus);
 

@@ -5,10 +5,8 @@ import zw.co.zim.willplatform.common.AppService;
 import zw.co.zim.willplatform.model.Client;
 import zw.co.zim.willplatform.model.LiabilitiesCreditCard;
 
-import java.util.List;
-
 public interface LiabilitiesCreditCardService extends AppService<LiabilitiesCreditCard> {
     Page<LiabilitiesCreditCard> findAll(Integer pageNo, Integer pageSize);
 
-    List<LiabilitiesCreditCard> findAllByUserId(Client clientId);
+    Page<LiabilitiesCreditCard> findAllByUserId(Client clientId, Integer pageNo, Integer pageSize);
 }

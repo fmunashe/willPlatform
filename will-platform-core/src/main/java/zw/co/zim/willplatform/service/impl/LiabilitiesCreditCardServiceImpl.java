@@ -71,7 +71,10 @@ public class LiabilitiesCreditCardServiceImpl implements LiabilitiesCreditCardSe
     }
 
     @Override
-    public List<LiabilitiesCreditCard> findAllByUserId(Client clientId) {
-        return repository.findAllByUserIdAndRecordStatusNot(clientId, RecordStatus.DELETED);
+    public Page<LiabilitiesCreditCard> findAllByUserId(Client clientId,Integer pageNo,Integer pageSize) {
+        pageNo = PageableHelper.cleanPageNumber(pageNo);
+        pageSize = PageableHelper.cleanPageSize(pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "id");
+        return repository.findAllByUserIdAndRecordStatusNot(pageable,clientId, RecordStatus.DELETED);
     }
 }

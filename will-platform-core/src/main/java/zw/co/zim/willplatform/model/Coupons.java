@@ -1,15 +1,10 @@
 package zw.co.zim.willplatform.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.*;
-import zw.co.zim.willplatform.utils.enums.ProductNames;
 import zw.co.zim.willplatform.utils.enums.RecordStatus;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @Setter
@@ -19,7 +14,9 @@ import java.util.List;
 @Entity
 public class Coupons extends BaseEntity {
     private String code;
-    private List<ProductNames> packages;
+    @ManyToOne
+    @JoinColumn(name = "productId", nullable = false)
+    private Products productId;
     private LocalDate expiryDate;
     private Double discount;
     private boolean applied;

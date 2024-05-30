@@ -1,8 +1,8 @@
 package zw.co.zim.willplatform.dto.mapper;
 
+import org.springframework.stereotype.Service;
 import zw.co.zim.willplatform.dto.PropertyAssetRecordDto;
 import zw.co.zim.willplatform.model.PropertyAsset;
-import org.springframework.stereotype.Service;
 
 import java.util.function.Function;
 
@@ -10,19 +10,22 @@ import java.util.function.Function;
 public class PropertyAssetDtoMapper implements Function<PropertyAsset, PropertyAssetRecordDto> {
     @Override
     public PropertyAssetRecordDto apply(PropertyAsset propertyAsset) {
-        return new PropertyAssetRecordDto(propertyAsset.getPropertyName(),
-            propertyAsset.getAddress(),
-            propertyAsset.getDescription(),
-            propertyAsset.getPropertyValue(),
-            propertyAsset.getHaveABond(),
-            propertyAsset.getBondIsWith(),
-            propertyAsset.getInYourName(),
-            propertyAsset.getIsFarm(),
-            propertyAsset.getPersonPropertyIsUnder(),
-            propertyAsset.getYouHoldDeed(),
-            propertyAsset.getPersonWhoHoldsDeed(),
-            propertyAsset.getAdditionalInformation(),
-            propertyAsset.getUserId(),
-            propertyAsset.getRecordStatus());
+        return PropertyAssetRecordDto.builder()
+            .id(propertyAsset.getId())
+            .propertyName(propertyAsset.getPropertyName())
+            .address(propertyAsset.getAddress())
+            .description(propertyAsset.getDescription())
+            .value(propertyAsset.getPropertyValue())
+            .haveABond(propertyAsset.getHaveABond())
+            .bondIsWith(propertyAsset.getBondIsWith())
+            .inYourName(propertyAsset.getInYourName())
+            .isFarm(propertyAsset.getIsFarm())
+            .personPropertyIsUnder(propertyAsset.getPersonPropertyIsUnder())
+            .youHoldDeed(propertyAsset.getYouHoldDeed())
+            .personWhoHoldsDeed(propertyAsset.getPersonWhoHoldsDeed())
+            .additionalInformation(propertyAsset.getAdditionalInformation())
+            .user(propertyAsset.getUserId())
+            .recordStatus(propertyAsset.getRecordStatus())
+            .build();
     }
 }

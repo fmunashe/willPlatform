@@ -14,6 +14,7 @@ import zw.co.zim.willplatform.utils.enums.RecordStatus;
 public class PropertyAsset extends BaseEntity {
     private String propertyName;
     private String description;
+    @Embedded
     private Address address;
     private Double propertyValue;
     private Boolean haveABond;

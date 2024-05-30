@@ -1,12 +1,17 @@
 package zw.co.zim.willplatform.dto;
 
-import zw.co.zim.willplatform.utils.enums.RecordStatus;
-import zw.co.zim.willplatform.model.Address;
-import zw.co.zim.willplatform.model.Client;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
+import zw.co.zim.willplatform.model.Address;
+import zw.co.zim.willplatform.model.Client;
+import zw.co.zim.willplatform.utils.enums.RecordStatus;
 
+import java.time.LocalDateTime;
+
+@Builder
 public record PropertyAssetRecordDto(
+    Long id,
     @NotNull(message = "Property name field is required")
     @NotBlank(message = "property name field cannot be blank")
     String propertyName,
@@ -32,6 +37,8 @@ public record PropertyAssetRecordDto(
     String personWhoHoldsDeed,
     String additionalInformation,
     Client user,
-    RecordStatus recordStatus
+    RecordStatus recordStatus,
+    LocalDateTime createdAt,
+    LocalDateTime updatedAt
 ) {
 }
