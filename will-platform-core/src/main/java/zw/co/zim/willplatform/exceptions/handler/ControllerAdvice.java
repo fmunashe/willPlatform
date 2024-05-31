@@ -18,14 +18,8 @@ import java.util.stream.Collectors;
 @org.springframework.web.bind.annotation.ControllerAdvice
 public class ControllerAdvice {
     @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<GenericResponse<String>> handleException(BusinessException exception) {
-        GenericResponse<String> response = GenericResponse.<String>builder()
-            .statusCode(HttpStatus.BAD_REQUEST.value())
-            .success(false)
-            .message(exception.getMessage())
-            .responseDTOS(null)
-            .responseDTO(null)
-            .build();
+    public ResponseEntity<ApiResponse<String>> handleException(BusinessException exception) {
+        ApiResponse<String> response = HelperResponse.buildApiResponse(null, null, false, 400, false, exception.getMessage(), null);
         return ResponseEntity.ok(response);
     }
 
