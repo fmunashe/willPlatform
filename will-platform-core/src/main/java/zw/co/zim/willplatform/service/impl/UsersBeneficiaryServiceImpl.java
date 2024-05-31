@@ -5,12 +5,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import zw.co.zim.willplatform.utils.enums.RecordStatus;
 import zw.co.zim.willplatform.model.Client;
 import zw.co.zim.willplatform.model.UsersBeneficiary;
 import zw.co.zim.willplatform.repository.UsersBeneficiaryRepository;
 import zw.co.zim.willplatform.service.UsersBeneficiaryService;
 import zw.co.zim.willplatform.utils.PageableHelper;
+import zw.co.zim.willplatform.utils.enums.RecordStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +31,16 @@ public class UsersBeneficiaryServiceImpl implements UsersBeneficiaryService {
     @Override
     public Optional<UsersBeneficiary> findById(Long id) {
         return repository.findFirstByIdAndRecordStatusNot(id, RecordStatus.DELETED);
+    }
+
+    @Override
+    public Optional<UsersBeneficiary> findFirstByClientIdAndEmail(Client clientId, String email) {
+        return repository.findFirstByUserIdAndEmailAndRecordStatusNot(clientId, email, RecordStatus.DELETED);
+    }
+
+    @Override
+    public Optional<UsersBeneficiary> findFirstByClientIdAndIDNumber(Client clientId, String idNumber) {
+        return repository.findFirstByUserIdAndIdNumberAndRecordStatusNot(clientId, idNumber, RecordStatus.DELETED);
     }
 
     @Override
