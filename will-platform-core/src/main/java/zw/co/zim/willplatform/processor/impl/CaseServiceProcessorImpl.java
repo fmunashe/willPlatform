@@ -171,7 +171,7 @@ public class CaseServiceProcessorImpl implements CaseServiceProcessor {
             .description(caseDto.getDescription())
             .priority(CasePriority.valueOf(caseDto.getPriority()))
             .userId(client)
-            .status(RecordStatus.valueOf(caseDto.getRecordStatus()))
+            .status(caseDto.getRecordStatus())
             .assignedAgent(assignedUser)
             .build();
     }

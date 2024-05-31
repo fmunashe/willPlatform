@@ -1,14 +1,14 @@
 package zw.co.zim.willplatform.service;
 
 import org.springframework.data.domain.Page;
-import zw.co.zim.willplatform.common.AppService;
+import zw.co.zim.willplatform.common.BaseService;
 import zw.co.zim.willplatform.utils.enums.CaseType;
 import zw.co.zim.willplatform.model.CaseAllocation;
 import zw.co.zim.willplatform.model.Cases;
 
 import java.util.Optional;
 
-public interface CaseAllocationService extends AppService<CaseAllocation> {
+public interface CaseAllocationService extends BaseService<CaseAllocation> {
 
     Page<CaseAllocation> findAll(Integer pageNo, Integer pageSize);
 
