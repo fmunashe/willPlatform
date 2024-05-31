@@ -1,18 +1,16 @@
 package zw.co.zim.willplatform.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
-@Data
-@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CaseDto {
-    private Long id;
+@SuperBuilder
+public class CaseDto extends BaseDto {
     private String caseNumber;
     private String subject;
     private String description;
@@ -20,7 +18,4 @@ public class CaseDto {
     private String caseType;
     private Long clientId;
     private Long assignedAgent;
-    private String recordStatus;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 }
