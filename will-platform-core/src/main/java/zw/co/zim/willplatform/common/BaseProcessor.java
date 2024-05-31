@@ -2,7 +2,7 @@ package zw.co.zim.willplatform.common;
 
 import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
-public interface ProcessorService<T, S> {
+public interface BaseProcessor<T, S> {
 
     ApiResponse<T> findAll(Integer pageNo, Integer pageSize);
 
