@@ -18,4 +18,6 @@ public interface UsersBeneficiaryRepository extends JpaRepository<UsersBeneficia
     Page<UsersBeneficiary> findAllByUserIdAndRecordStatusNot(Pageable pageable, Client userId, RecordStatus recordStatus);
 
     Optional<UsersBeneficiary> findFirstByIdAndRecordStatusNot(Long id, RecordStatus recordStatus);
+    Optional<UsersBeneficiary> findFirstByUserIdAndEmailAndRecordStatusNot(Client client,String email, RecordStatus recordStatus);
+    Optional<UsersBeneficiary> findFirstByUserIdAndIdNumberAndRecordStatusNot(Client client,String nationalId, RecordStatus recordStatus);
 }
