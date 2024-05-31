@@ -47,7 +47,7 @@ public class ProductsServiceImpl implements ProductsService {
             product.setCurrency(products.getCurrency());
             product.setName(products.getName());
             product.setDescription(products.getDescription());
-            product.setSubscription(products.getSubscription());
+            product.setSubscriptions(products.getSubscriptions());
             product.setPrice(products.getPrice());
             product.setRecordStatus(products.getRecordStatus());
             return repository.save(product);
