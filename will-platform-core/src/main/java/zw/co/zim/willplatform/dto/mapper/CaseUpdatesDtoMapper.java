@@ -16,7 +16,7 @@ public class CaseUpdatesDtoMapper implements Function<CaseUpdate, CaseUpdatesDto
             .name(caseUpdate.getName())
             .description(caseUpdate.getDescription())
             .createdBy(caseUpdate.getCreatedBy())
-            .status(caseUpdate.getStatus().getStatus())
+            .recordStatus(caseUpdate.getStatus())
             .createdAt(caseUpdate.getCreatedAt())
             .updatedAt(caseUpdate.getUpdatedAt())
             .build();
