@@ -5,12 +5,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import zw.co.zim.willplatform.utils.enums.RecordStatus;
 import zw.co.zim.willplatform.model.Client;
 import zw.co.zim.willplatform.model.WillAlternativeExecutor;
 import zw.co.zim.willplatform.repository.WillAlternativeExecutorRepository;
 import zw.co.zim.willplatform.service.WillAlternativeExecutorService;
 import zw.co.zim.willplatform.utils.PageableHelper;
+import zw.co.zim.willplatform.utils.enums.RecordStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -73,7 +73,10 @@ public class WillAlternativeExecutorServiceImpl implements WillAlternativeExecut
     }
 
     @Override
-    public Optional<WillAlternativeExecutor> findFirstByUserId(Client userId, Integer pageNo, Integer pageSize) {
-        return repository.findFirstByUserIdAndRecordStatusNot(userId, RecordStatus.DELETED);
+    public Page<WillAlternativeExecutor> findAllByUserId(Client userId, Integer pageNo, Integer pageSize) {
+        pageNo = PageableHelper.cleanPageNumber(pageNo);
+        pageSize = PageableHelper.cleanPageSize(pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "id");
+        return repository.findAllByUserIdAndRecordStatusNot(pageable, userId, RecordStatus.DELETED);
     }
 }

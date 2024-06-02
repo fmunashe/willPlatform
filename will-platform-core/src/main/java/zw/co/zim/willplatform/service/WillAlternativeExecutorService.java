@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface WillAlternativeExecutorService extends BaseService<WillAlternativeExecutor> {
     Page<WillAlternativeExecutor> findAll(Integer pageNo, Integer pageSize);
 
-    Optional<WillAlternativeExecutor> findFirstByUserId(Client userId, Integer pageNo, Integer pageSize);
+    Page<WillAlternativeExecutor> findAllByUserId(Client userId, Integer pageNo, Integer pageSize);
 }
