@@ -25,8 +25,8 @@ public class UsersBeneficiaryController {
         @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
         @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize
     ) {
-        ApiResponse<UsersBeneficiaryDto> bankAssets = processor.findAll(pageNo, pageSize);
-        return ResponseEntity.status(HttpStatus.OK).body(bankAssets);
+        ApiResponse<UsersBeneficiaryDto> beneficiaries = processor.findAll(pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK).body(beneficiaries);
     }
 
     @PostMapping("/save")
