@@ -1,4 +1,4 @@
-package zw.co.zim.willplatform.processor.alternativeExecutor;
+package zw.co.zim.willplatform.processor.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -9,6 +9,7 @@ import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
 import zw.co.zim.willplatform.model.Address;
 import zw.co.zim.willplatform.model.Client;
 import zw.co.zim.willplatform.model.WillAlternativeExecutor;
+import zw.co.zim.willplatform.processor.WillAlternativeExecutorProcessor;
 import zw.co.zim.willplatform.service.ClientsService;
 import zw.co.zim.willplatform.service.WillAlternativeExecutorService;
 import zw.co.zim.willplatform.utils.AppConstants;
@@ -21,7 +22,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public final class WillAlternativeExecutorProcessorImpl implements WillAlternativeExecutorProcessor {
+public class WillAlternativeExecutorProcessorImpl implements WillAlternativeExecutorProcessor {
     private final WillAlternativeExecutorService executorService;
     private final WillAlternativeExecutorDtoMapper mapper;
     private final ModelMapper modelMapper;

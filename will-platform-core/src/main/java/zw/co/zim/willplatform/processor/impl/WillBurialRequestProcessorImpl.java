@@ -1,4 +1,4 @@
-package zw.co.zim.willplatform.processor.willBurialRequest;
+package zw.co.zim.willplatform.processor.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -9,6 +9,7 @@ import zw.co.zim.willplatform.exceptions.RecordExistsException;
 import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
 import zw.co.zim.willplatform.model.Client;
 import zw.co.zim.willplatform.model.WillBurialRequest;
+import zw.co.zim.willplatform.processor.WillBurialRequestProcessor;
 import zw.co.zim.willplatform.service.ClientsService;
 import zw.co.zim.willplatform.service.WillBurialRequestService;
 import zw.co.zim.willplatform.utils.AppConstants;
@@ -21,7 +22,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public final class WillBurialRequestProcessorImpl implements WillBurialRequestProcessor {
+public class WillBurialRequestProcessorImpl implements WillBurialRequestProcessor {
     private final WillBurialRequestService burialRequestService;
     private final ClientsService clientsService;
     private final WillBurialRequestDtoMapper mapper;

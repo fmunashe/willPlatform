@@ -1,4 +1,4 @@
-package zw.co.zim.willplatform.processor.spouse;
+package zw.co.zim.willplatform.processor.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -8,6 +8,7 @@ import zw.co.zim.willplatform.dto.mapper.UsersSpouseDtoMapper;
 import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
 import zw.co.zim.willplatform.model.Client;
 import zw.co.zim.willplatform.model.UsersSpouse;
+import zw.co.zim.willplatform.processor.UsersSpouseProcessor;
 import zw.co.zim.willplatform.service.ClientsService;
 import zw.co.zim.willplatform.service.UsersSpouseService;
 import zw.co.zim.willplatform.utils.AppConstants;
@@ -21,7 +22,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public final class UsersSpouseProcessorImpl implements UsersSpouseProcessor {
+public class UsersSpouseProcessorImpl implements UsersSpouseProcessor {
     private final UsersSpouseService spouseService;
     private final ClientsService clientsService;
     private final ModelMapper modelMapper;

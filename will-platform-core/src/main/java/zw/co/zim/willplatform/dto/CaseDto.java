@@ -3,6 +3,7 @@ package zw.co.zim.willplatform.dto;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
@@ -10,7 +11,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class CaseDto extends BaseDto {
+@ToString
+public class CaseDto extends BaseDto{
     private String caseNumber;
     private String subject;
     private String description;

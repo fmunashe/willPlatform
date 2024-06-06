@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import zw.co.zim.willplatform.utils.enums.RecordStatus;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
@@ -11,7 +12,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public abstract class BaseDto {
+@ToString
+public abstract class BaseDto implements Serializable {
     private Long id;
     private RecordStatus recordStatus;
     private LocalDateTime createdAt;

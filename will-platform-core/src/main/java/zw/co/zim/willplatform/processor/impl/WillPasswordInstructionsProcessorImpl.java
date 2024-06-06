@@ -1,4 +1,4 @@
-package zw.co.zim.willplatform.processor.willPasswordInstructions;
+package zw.co.zim.willplatform.processor.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -8,6 +8,7 @@ import zw.co.zim.willplatform.dto.mapper.WillPasswordInstructionsDtoMapper;
 import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
 import zw.co.zim.willplatform.model.Client;
 import zw.co.zim.willplatform.model.WillPasswordsInstructions;
+import zw.co.zim.willplatform.processor.WillPasswordInstructionsProcessor;
 import zw.co.zim.willplatform.service.ClientsService;
 import zw.co.zim.willplatform.service.WillPasswordsService;
 import zw.co.zim.willplatform.utils.AppConstants;
@@ -20,7 +21,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public final class WillPasswordInstructionsProcessorImpl implements WillPasswordInstructionsProcessor {
+public class WillPasswordInstructionsProcessorImpl implements WillPasswordInstructionsProcessor {
     private final WillPasswordsService willPasswordsService;
     private final ClientsService clientsService;
     private final ModelMapper modelMapper;

@@ -53,7 +53,7 @@ public class CaseUpdatesProcessorImpl implements CaseUpdatesProcessor {
             .name(caseUpdatesDto.getName())
             .description(caseUpdatesDto.getDescription())
             .createdBy(caseUpdatesDto.getCreatedBy())
-            .status(caseUpdatesDto.getRecordStatus())
+            .status(RecordStatus.PENDING)
             .build();
         caseUpdate = updatesService.save(caseUpdate);
         return HelperResponse.buildApiResponse(null, null, false, 200, false, AppConstants.SUCCESS_MESSAGE, mapper.apply(caseUpdate));

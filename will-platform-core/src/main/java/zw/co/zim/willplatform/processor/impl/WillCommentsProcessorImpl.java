@@ -1,4 +1,4 @@
-package zw.co.zim.willplatform.processor.willComments;
+package zw.co.zim.willplatform.processor.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -8,6 +8,7 @@ import zw.co.zim.willplatform.dto.mapper.WillCommentsDtoMapper;
 import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
 import zw.co.zim.willplatform.model.Client;
 import zw.co.zim.willplatform.model.WillComments;
+import zw.co.zim.willplatform.processor.WillCommentsProcessor;
 import zw.co.zim.willplatform.service.ClientsService;
 import zw.co.zim.willplatform.service.WillCommentsService;
 import zw.co.zim.willplatform.utils.AppConstants;
@@ -20,7 +21,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public final class WillCommentsProcessorImpl implements WillCommentsProcessor {
+public class WillCommentsProcessorImpl implements WillCommentsProcessor {
     private final WillCommentsService commentsService;
     private final ClientsService clientsService;
     private final ModelMapper modelMapper;
