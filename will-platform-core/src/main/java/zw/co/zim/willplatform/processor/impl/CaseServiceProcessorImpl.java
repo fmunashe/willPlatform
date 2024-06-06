@@ -134,6 +134,20 @@ public class CaseServiceProcessorImpl implements CaseServiceProcessor {
     }
 
     @Override
+    public ApiResponse<CaseDto> findAllByClient(Long clientId, Integer pageNo, Integer pageSize) {
+        Optional<Client> optional = clientsService.findById(clientId);
+
+        if (optional.isEmpty()) {
+            throw new RecordNotFoundException("Failed to find client with Id " + clientId);
+        }
+        Client client = optional.get();
+        Page<Cases> pagedCases = service.findAllByClient(client, pageNo, pageSize);
+
+        return HelperResponse.buildApiResponse(pagedCases, mapper, true, 200, true, AppConstants.LIST_MESSAGE, null);
+
+    }
+
+    @Override
     public ApiResponse<CaseDto> findFirstByCaseNumber(String caseNumber) {
         Optional<Cases> optional = service.findFirstByCaseNumber(caseNumber);
         return optional.map(cases -> HelperResponse.buildApiResponse(null, null, false, 200, true, AppConstants.FOUND_MESSAGE, mapper.apply(cases)))

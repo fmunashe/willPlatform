@@ -5,9 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import zw.co.zim.willplatform.dto.CaseDto;
-import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 import zw.co.zim.willplatform.processor.CaseServiceProcessor;
 import zw.co.zim.willplatform.utils.AppConstants;
+import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 @RestController
 @RequestMapping("cases")
@@ -48,6 +48,15 @@ public class CasesController {
         return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 
+    @GetMapping("/byClient/{clientId}")
+    public ResponseEntity<ApiResponse<CaseDto>> getAllCasesByClient(
+        @PathVariable("clientId") Long clientId,
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize) {
+        ApiResponse<CaseDto> recordDto = processor.findAllByClient(clientId, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK).body(recordDto);
+    }
+
     @GetMapping("/byCaseType/{caseType}")
     public ResponseEntity<ApiResponse<CaseDto>> getAllCasesByCaseType(
         @PathVariable("caseType") String caseType,
@@ -68,6 +77,12 @@ public class CasesController {
     public ResponseEntity<ApiResponse<CaseDto>> getCaseByNumber(
         @PathVariable("caseNumber") String caseNumber) {
         ApiResponse<CaseDto> recordDto = processor.findFirstByCaseNumber(caseNumber);
+        return ResponseEntity.status(HttpStatus.OK).body(recordDto);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<CaseDto>> findById(@PathVariable("id") Long id) {
+        ApiResponse<CaseDto> recordDto = processor.findById(id);
         return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 

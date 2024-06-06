@@ -5,13 +5,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import zw.co.zim.willplatform.utils.enums.CaseType;
-import zw.co.zim.willplatform.utils.enums.RecordStatus;
 import zw.co.zim.willplatform.model.Cases;
+import zw.co.zim.willplatform.model.Client;
 import zw.co.zim.willplatform.model.SystemUser;
 import zw.co.zim.willplatform.repository.CasesRepository;
 import zw.co.zim.willplatform.service.CaseService;
 import zw.co.zim.willplatform.utils.PageableHelper;
+import zw.co.zim.willplatform.utils.enums.CaseType;
+import zw.co.zim.willplatform.utils.enums.RecordStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -89,6 +90,14 @@ public class CaseServiceImpl implements CaseService {
         pageSize = PageableHelper.cleanPageSize(pageSize);
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "id");
         return repository.findAllByAssignedAgentAndStatusNot(pageable, assignedAgent, RecordStatus.DELETED);
+    }
+
+    @Override
+    public Page<Cases> findAllByClient(Client client, Integer pageNo, Integer pageSize) {
+        pageNo = PageableHelper.cleanPageNumber(pageNo);
+        pageSize = PageableHelper.cleanPageSize(pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.Direction.DESC, "id");
+        return repository.findAllByUserIdAndStatusNot(pageable, client, RecordStatus.DELETED);
     }
 
     @Override
