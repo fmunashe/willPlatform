@@ -8,7 +8,7 @@ public class KeyGen {
         super();
     }
 
-    public static String generateTicketNumber() {
+    public static String generateCouponCode() {
         String CHARACTERS = "0123456789";
         int length = 6;
 
@@ -21,6 +21,6 @@ public class KeyGen {
             ref.append(CHARACTERS.charAt(randomIndex));
         }
 
-        return "SMBZT-" + ref;
+        return ref.toString();
     }
 }

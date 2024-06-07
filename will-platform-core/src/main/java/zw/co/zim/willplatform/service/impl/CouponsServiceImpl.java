@@ -6,12 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import zw.co.zim.willplatform.utils.enums.RecordStatus;
 import zw.co.zim.willplatform.model.Coupons;
 import zw.co.zim.willplatform.repository.CouponsRepository;
 import zw.co.zim.willplatform.repository.spcecifications.CouponSpecification;
 import zw.co.zim.willplatform.service.CouponService;
 import zw.co.zim.willplatform.utils.PageableHelper;
+import zw.co.zim.willplatform.utils.enums.RecordStatus;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -103,5 +103,10 @@ public class CouponsServiceImpl implements CouponService {
             coupon.setRecordStatus(RecordStatus.DELETED);
             repository.save(coupon);
         }
+    }
+
+    @Override
+    public Coupons applyCoupon(Coupons coupon) {
+        return repository.save(coupon);
     }
 }
