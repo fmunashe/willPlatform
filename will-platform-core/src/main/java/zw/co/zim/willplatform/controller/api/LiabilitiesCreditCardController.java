@@ -11,7 +11,7 @@ import zw.co.zim.willplatform.utils.messages.request.CreditCardRequest;
 import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 @RestController
-@RequestMapping("/liabilities/creditCard")
+@RequestMapping("/liabilities/creditCards")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class LiabilitiesCreditCardController {
     private final LiabilitiesCreditCardProcessor processor;

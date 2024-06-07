@@ -12,7 +12,7 @@ import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/timeshare")
+@RequestMapping("/assetTimeshares")
 public class AssetTimeshareController {
     private final AssetTimeshareProcessor processor;
 

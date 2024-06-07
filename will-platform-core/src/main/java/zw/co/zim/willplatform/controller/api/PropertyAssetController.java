@@ -12,7 +12,7 @@ import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/property")
+@RequestMapping("/properties")
 public class PropertyAssetController {
     private final PropertyAssetProcessor propertyAssetProcessor;
 

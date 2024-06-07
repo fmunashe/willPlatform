@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/users")
+@RequestMapping("/clients")
 @RequiredArgsConstructor
 public class UserController {
     private final UserProcessor userProcessor;

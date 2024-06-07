@@ -12,7 +12,7 @@ import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/policy")
+@RequestMapping("/assetPolicies")
 public class AssetPolicyController {
 
     private final AssetPolicyProcessor processor;

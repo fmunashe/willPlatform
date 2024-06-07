@@ -11,7 +11,7 @@ import zw.co.zim.willplatform.utils.messages.request.OutstandingAccountRequest;
 import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 @RestController
-@RequestMapping("/liabilities/outstandingAccount")
+@RequestMapping("/liabilities/outstandingAccounts")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class LiabilitiesOutstandingAccountController {
     private final LiabilitiesOutstandingAccountProcessor processor;

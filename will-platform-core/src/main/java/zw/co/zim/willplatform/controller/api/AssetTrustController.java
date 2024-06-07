@@ -12,7 +12,7 @@ import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/assetTrust")
+@RequestMapping("/assetTrusts")
 public class AssetTrustController {
     private final AssetTrustProcessor processor;
 

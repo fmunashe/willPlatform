@@ -10,7 +10,7 @@ import zw.co.zim.willplatform.utils.AppConstants;
 import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 @RestController
-@RequestMapping("cases")
+@RequestMapping("/cases")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class CasesController {
     private final CaseServiceProcessor processor;

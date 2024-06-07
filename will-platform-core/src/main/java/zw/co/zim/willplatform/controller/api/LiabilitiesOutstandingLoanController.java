@@ -12,7 +12,7 @@ import zw.co.zim.willplatform.utils.messages.request.OutstandingLoanRequest;
 import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 @RestController
-@RequestMapping("/liabilities/outstandingLoan")
+@RequestMapping("/liabilities/outstandingLoans")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class LiabilitiesOutstandingLoanController {
     private final LiabilitiesOutstandingLoanProcessor processor;

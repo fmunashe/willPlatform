@@ -11,7 +11,7 @@ import zw.co.zim.willplatform.utils.messages.request.UsersBeneficiaryRequest;
 import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 @RestController
-@RequestMapping("/api/beneficiaries")
+@RequestMapping("/beneficiaries")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class UsersBeneficiaryController {
     private final UsersBeneficiaryProcessor processor;

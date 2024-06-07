@@ -11,7 +11,7 @@ import zw.co.zim.willplatform.utils.messages.request.VehicleAssetRequest;
 import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 @RestController
-@RequestMapping("/api/vehicle")
+@RequestMapping("/vehicles")
 public class VehicleAssetController {
     private final VehicleAssetProcessor vehicleAssetProcessor;
 

@@ -12,7 +12,7 @@ import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/assetInvestment")
+@RequestMapping("/assetInvestments")
 public class AssetInvestmentController {
 
     private final AssetInvestmentProcessor processor;

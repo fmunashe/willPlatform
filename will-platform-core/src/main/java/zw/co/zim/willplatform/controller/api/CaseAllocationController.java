@@ -10,7 +10,7 @@ import zw.co.zim.willplatform.utils.AppConstants;
 import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 @RestController
-@RequestMapping("/case/allocation")
+@RequestMapping("/case/allocations")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class CaseAllocationController {
     private final CaseAllocationProcessor processor;

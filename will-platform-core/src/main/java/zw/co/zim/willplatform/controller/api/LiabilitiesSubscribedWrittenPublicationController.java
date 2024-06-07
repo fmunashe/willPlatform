@@ -11,7 +11,7 @@ import zw.co.zim.willplatform.utils.messages.request.WrittenPublicationRequest;
 import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 @RestController
-@RequestMapping("/liabilities/writtenPublication")
+@RequestMapping("/liabilities/writtenPublications")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class LiabilitiesSubscribedWrittenPublicationController {
 

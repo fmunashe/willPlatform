@@ -12,7 +12,7 @@ import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/offshore")
+@RequestMapping("/assetOffShores")
 public class AssetOffshoreController {
     private final AssetOffshoreProcessor processor;
 
