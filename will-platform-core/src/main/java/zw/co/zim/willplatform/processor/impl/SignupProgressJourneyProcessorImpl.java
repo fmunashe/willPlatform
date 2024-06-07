@@ -107,8 +107,8 @@ public class SignupProgressJourneyProcessorImpl implements SignupProgressJourney
 
     @Override
     public ApiResponse<Map<String, Long>> signupProgressStatistics() {
-        Page<SignupProgressJourney> signupProgress = service.findAll(Integer.parseInt(AppConstants.DEFAULT_PAGE_NUMBER), 1000000);
-        List<SignupProgressJourneyDto> signupProgressList = HelperResponse.mappedDtoList(signupProgress.getContent(), mapper);
+        List<SignupProgressJourney> signupProgress = service.findAll();
+        List<SignupProgressJourneyDto> signupProgressList = HelperResponse.mappedDtoList(signupProgress, mapper);
         Map<String, Long> response = signupProgressList.stream().collect(Collectors.collectingAndThen(Collectors.toList(), list -> Map.of(
             "completedQuestionnaire", list.stream().filter(SignupProgressJourneyDto::getCompletedQuestionnaire).count(),
             "completedPersonalSection", list.stream().filter(SignupProgressJourneyDto::getCompletedPersonalSection).count(),
