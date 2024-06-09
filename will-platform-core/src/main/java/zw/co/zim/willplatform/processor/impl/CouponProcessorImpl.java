@@ -6,11 +6,9 @@ import org.springframework.stereotype.Service;
 import zw.co.zim.willplatform.dto.CouponsDto;
 import zw.co.zim.willplatform.dto.mapper.CouponDtoMapper;
 import zw.co.zim.willplatform.exceptions.RecordNotFoundException;
-import zw.co.zim.willplatform.model.Client;
 import zw.co.zim.willplatform.model.Coupons;
 import zw.co.zim.willplatform.model.Products;
 import zw.co.zim.willplatform.processor.CouponsProcessor;
-import zw.co.zim.willplatform.service.ClientsService;
 import zw.co.zim.willplatform.service.CouponService;
 import zw.co.zim.willplatform.service.ProductsService;
 import zw.co.zim.willplatform.utils.AppConstants;
@@ -26,15 +24,13 @@ import java.util.Optional;
 
 @Service
 public class CouponProcessorImpl implements CouponsProcessor {
-    private final ClientsService clientsService;
     private final CouponService couponService;
     private final ModelMapper modelMapper;
 
     private final CouponDtoMapper mapper;
     private final ProductsService productsService;
 
-    public CouponProcessorImpl(ClientsService clientsService, CouponService couponService, ModelMapper modelMapper, CouponDtoMapper mapper, ProductsService productsService) {
-        this.clientsService = clientsService;
+    public CouponProcessorImpl( CouponService couponService, ModelMapper modelMapper, CouponDtoMapper mapper, ProductsService productsService) {
         this.couponService = couponService;
         this.modelMapper = modelMapper;
         this.mapper = mapper;
@@ -116,7 +112,7 @@ public class CouponProcessorImpl implements CouponsProcessor {
 
     @Override
     public ApiResponse<CouponsDto> findAllExpiredAndNotAppliedCoupons(Integer pageNo, Integer pageSize, LocalDate expiryDate, Boolean appliedNo) {
-        Page<Coupons> coupons = couponService.findAllPagedAppliedCoupons(pageNo, pageSize, appliedNo);
+        Page<Coupons> coupons = couponService.findAllExpiredAndNotAppliedCoupons(pageNo, pageSize,expiryDate, appliedNo);
         return HelperResponse.buildApiResponse(coupons, mapper, true, 200, true, AppConstants.LIST_MESSAGE, null);
     }
 
@@ -128,15 +124,8 @@ public class CouponProcessorImpl implements CouponsProcessor {
             throw new RecordNotFoundException("Failed to find coupon record with code " + couponCode);
         }
 
-        Optional<Client> optionalClient = clientsService.findById(clientId);
-
-        if (optionalClient.isEmpty()) {
-            throw new RecordNotFoundException("Failed to find client record with id " + clientId);
-        }
-
         Coupons coupon = optional.get();
         coupon.setApplied(true);
-        coupon.setUserId(optionalClient.get());
         coupon = couponService.applyCoupon(coupon);
         return HelperResponse.buildApiResponse(null, null, false, 200, true, AppConstants.SUCCESS_MESSAGE, mapper.apply(coupon));
     }

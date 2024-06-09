@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
+import zw.co.zim.willplatform.utils.enums.OTPDeliveryChannel;
 import zw.co.zim.willplatform.utils.enums.RecordStatus;
 
 import java.time.LocalDate;
@@ -15,6 +16,10 @@ public record UserRecordDto(
     @NotNull(message = "First name is required")
     @NotBlank(message = "First name field cannot be blank")
     String firstName,
+    String middleName,
+    String password,
+    Boolean acceptedTermsAndConditions,
+    OTPDeliveryChannel sendOtpVia,
     @NotNull(message = "Last name is required")
     @NotBlank(message = "Last name field cannot be blank")
     String lastName,

@@ -20,8 +20,6 @@ public class Coupons extends BaseEntity {
     private LocalDate expiryDate;
     private Double discount;
     private boolean applied;
-    @OneToOne
-    private Client userId;
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;
 }

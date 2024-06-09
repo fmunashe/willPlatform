@@ -22,6 +22,9 @@ public class SignupProgressJourney extends BaseEntity {
     private Boolean completedAssetsSection;
     private Boolean completedLiabilitiesSection;
     private Boolean completedWillSection;
+    private Boolean completedBeneficiarySection;
+    private Boolean completedChildrenSection;
+    private Boolean completedGuardianSection;
     private Boolean willComplete;
     private Boolean finalisedWill;
     private Boolean subscribed;

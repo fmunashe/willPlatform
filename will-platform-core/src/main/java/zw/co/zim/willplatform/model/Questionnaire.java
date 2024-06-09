@@ -5,6 +5,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToOne;
 import lombok.*;
+import zw.co.zim.willplatform.utils.enums.MaritalStatus;
 import zw.co.zim.willplatform.utils.enums.RecordStatus;
 
 @Getter
@@ -17,6 +18,7 @@ public class Questionnaire extends BaseEntity {
     @OneToOne
     private Client userId;
     private Boolean formerSpouse;
+    private MaritalStatus maritalStatus;
     private Boolean haveChildren;
     private Boolean registeredTaxPayer;
     private Boolean businessOwner;

@@ -17,10 +17,7 @@ import zw.co.zim.willplatform.utils.enums.RecordStatus;
 import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 import zw.co.zim.willplatform.utils.messages.response.helper.HelperResponse;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -109,16 +106,19 @@ public class SignupProgressJourneyProcessorImpl implements SignupProgressJourney
     public ApiResponse<Map<String, Long>> signupProgressStatistics() {
         List<SignupProgressJourney> signupProgress = service.findAll();
         List<SignupProgressJourneyDto> signupProgressList = HelperResponse.mappedDtoList(signupProgress, mapper);
-        Map<String, Long> response = signupProgressList.stream().collect(Collectors.collectingAndThen(Collectors.toList(), list -> Map.of(
-            "completedQuestionnaire", list.stream().filter(SignupProgressJourneyDto::getCompletedQuestionnaire).count(),
-            "completedPersonalSection", list.stream().filter(SignupProgressJourneyDto::getCompletedPersonalSection).count(),
-            "completedSpouseSection", list.stream().filter(SignupProgressJourneyDto::getCompletedSpouseSection).count(),
-            "completedAssetsSection", list.stream().filter(SignupProgressJourneyDto::getCompletedAssetsSection).count(),
-            "completedLiabilitiesSection", list.stream().filter(SignupProgressJourneyDto::getCompletedLiabilitiesSection).count(),
-            "completedWillSection", list.stream().filter(SignupProgressJourneyDto::getCompletedWillSection).count(),
-            "willComplete", list.stream().filter(SignupProgressJourneyDto::getWillComplete).count(),
-            "finalisedWill", list.stream().filter(SignupProgressJourneyDto::getFinalisedWill).count(),
-            "subscribed", list.stream().filter(SignupProgressJourneyDto::getSubscribed).count()
+        Map<String, Long> response = signupProgressList.stream().collect(Collectors.collectingAndThen(Collectors.toList(), list -> Map.ofEntries(
+            new AbstractMap.SimpleEntry<>("completedQuestionnaire", list.stream().filter(SignupProgressJourneyDto::getCompletedQuestionnaire).count()),
+            new AbstractMap.SimpleEntry<>("completedPersonalSection", list.stream().filter(SignupProgressJourneyDto::getCompletedPersonalSection).count()),
+            new AbstractMap.SimpleEntry<>("completedSpouseSection", list.stream().filter(SignupProgressJourneyDto::getCompletedSpouseSection).count()),
+            new AbstractMap.SimpleEntry<>("completedAssetsSection", list.stream().filter(SignupProgressJourneyDto::getCompletedAssetsSection).count()),
+            new AbstractMap.SimpleEntry<>("completedLiabilitiesSection", list.stream().filter(SignupProgressJourneyDto::getCompletedLiabilitiesSection).count()),
+            new AbstractMap.SimpleEntry<>("completedWillSection", list.stream().filter(SignupProgressJourneyDto::getCompletedWillSection).count()),
+            new AbstractMap.SimpleEntry<>("completedBeneficiarySection", list.stream().filter(SignupProgressJourneyDto::getCompletedBeneficiarySection).count()),
+            new AbstractMap.SimpleEntry<>("completedChildrenSection", list.stream().filter(SignupProgressJourneyDto::getCompletedChildrenSection).count()),
+            new AbstractMap.SimpleEntry<>("completedGuardianSection", list.stream().filter(SignupProgressJourneyDto::getCompletedGuardianSection).count()),
+            new AbstractMap.SimpleEntry<>("willComplete", list.stream().filter(SignupProgressJourneyDto::getWillComplete).count()),
+            new AbstractMap.SimpleEntry<>("finalisedWill", list.stream().filter(SignupProgressJourneyDto::getFinalisedWill).count()),
+            new AbstractMap.SimpleEntry<>("subscribed", list.stream().filter(SignupProgressJourneyDto::getSubscribed).count())
         )));
 
         return HelperResponse.buildApiResponse(null, null, false, 200, true, AppConstants.SUCCESS_MESSAGE, response);

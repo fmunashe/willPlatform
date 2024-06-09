@@ -19,5 +19,4 @@ public class CouponsDto extends BaseDto {
     private LocalDate expiryDate;
     private Double discount;
     private boolean applied;
-    private Long userId;
 }

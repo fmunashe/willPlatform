@@ -86,7 +86,6 @@ public class CouponsServiceImpl implements CouponService {
             coupon.setCode(coupons.getCode());
             coupon.setApplied(coupons.isApplied());
             coupon.setDiscount(coupon.getDiscount());
-            coupon.setUserId(coupons.getUserId());
             coupon.setExpiryDate(coupons.getExpiryDate());
             coupon.setProductId(coupons.getProductId());
             coupon.setRecordStatus(coupons.getRecordStatus());

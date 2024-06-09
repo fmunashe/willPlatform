@@ -16,7 +16,6 @@ public class CouponDtoMapper implements Function<Coupons, CouponsDto> {
             .discount(coupons.getDiscount())
             .expiryDate(coupons.getExpiryDate())
             .applied(coupons.isApplied())
-            .userId(coupons.getUserId().getId())
             .productId(coupons.getProductId().getId())
             .createdAt(coupons.getCreatedAt())
             .updatedAt(coupons.getUpdatedAt())

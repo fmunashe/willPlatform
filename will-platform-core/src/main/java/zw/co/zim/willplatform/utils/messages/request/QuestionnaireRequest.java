@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import zw.co.zim.willplatform.utils.enums.MaritalStatus;
 
 @Data
 @Builder
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class QuestionnaireRequest {
     private Long clientId;
     private Boolean formerSpouse;
+    private MaritalStatus maritalStatus;
     private Boolean haveChildren;
     private Boolean registeredTaxPayer;
     private Boolean businessOwner;

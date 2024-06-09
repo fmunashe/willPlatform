@@ -1,12 +1,16 @@
 package zw.co.zim.willplatform.utils.messages.request;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import zw.co.zim.willplatform.utils.enums.BurialType;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class BurialRequest {
     @NotNull(message = "Burial type is required")
     private BurialType burialType;

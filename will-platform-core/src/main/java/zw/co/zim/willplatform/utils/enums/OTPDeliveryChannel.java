@@ -1,5 +1,8 @@
 package zw.co.zim.willplatform.utils.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum OTPDeliveryChannel {
     SMS("SMS"),EMAIL("EMAIL");
     private final String name;
@@ -8,7 +11,4 @@ public enum OTPDeliveryChannel {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
 }

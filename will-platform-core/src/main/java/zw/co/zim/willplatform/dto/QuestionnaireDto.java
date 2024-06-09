@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import zw.co.zim.willplatform.model.Client;
+import zw.co.zim.willplatform.utils.enums.MaritalStatus;
 
 @Getter
 @Setter
@@ -15,6 +16,7 @@ import zw.co.zim.willplatform.model.Client;
 public class QuestionnaireDto extends BaseDto {
     private Client userId;
     private Boolean formerSpouse;
+    private MaritalStatus maritalStatus;
     private Boolean haveChildren;
     private Boolean registeredTaxPayer;
     private Boolean businessOwner;

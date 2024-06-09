@@ -26,13 +26,14 @@ public class Client extends BaseEntity {
     @NotNull
     private String lastName;
     @NotNull
+    @Column(unique = true)
     private String email;
+    private String mobileNumber;
     private String firstLanguage;
     @NotNull
     private LocalDate dateOfBirth;
     @Column(unique = true)
     private String nationalIdNumber;
-    @Column(unique = true)
     private String passportNumber;
     @Embedded
     private Address physicalAddress;

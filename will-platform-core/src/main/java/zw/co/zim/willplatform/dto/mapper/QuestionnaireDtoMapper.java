@@ -14,6 +14,7 @@ public class QuestionnaireDtoMapper implements Function<Questionnaire, Questionn
             .id(questionnaire.getId())
             .userId(questionnaire.getUserId())
             .formerSpouse(questionnaire.getFormerSpouse())
+            .maritalStatus(questionnaire.getMaritalStatus())
             .haveChildren(questionnaire.getHaveChildren())
             .registeredTaxPayer(questionnaire.getRegisteredTaxPayer())
             .businessOwner(questionnaire.getBusinessOwner())

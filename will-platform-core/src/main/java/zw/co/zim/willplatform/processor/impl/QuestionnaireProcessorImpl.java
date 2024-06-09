@@ -115,6 +115,7 @@ public class QuestionnaireProcessorImpl implements QuestionnaireProcessor {
         return QuestionnaireDto.builder()
             .userId(client)
             .formerSpouse(questionnaireRequest.getFormerSpouse())
+            .maritalStatus(questionnaireRequest.getMaritalStatus())
             .haveChildren(questionnaireRequest.getHaveChildren())
             .registeredTaxPayer(questionnaireRequest.getRegisteredTaxPayer())
             .businessOwner(questionnaireRequest.getBusinessOwner())

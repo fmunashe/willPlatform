@@ -19,7 +19,7 @@ public class Products extends BaseEntity {
     private ProductNames name;
     private String description;
     private Double price;
-    @OneToOne
+    @ManyToOne
     private Currency currency;
     @Enumerated(EnumType.STRING)
     private RecordStatus recordStatus;

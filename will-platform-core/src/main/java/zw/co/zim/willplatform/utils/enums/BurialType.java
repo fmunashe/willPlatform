@@ -1,7 +1,7 @@
 package zw.co.zim.willplatform.utils.enums;
 
 public enum BurialType {
-    BURIAL("BURIAL"), CREMATION("CREMATION"), ORGAN_DONOR("ORGAN DONOR"), ORGAN_DONOR_AND_BURIAL("ORGAN DONOR AND BURIAL"), ORGAN_DONOR_AND_CREMATION("ORGAN DONOR AND CREMATION");
+    BURIAL("BURIAL"), CREMATION("CREMATION"), DONATION("DONATION");
 
     private final String type;
 
