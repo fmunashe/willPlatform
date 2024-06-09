@@ -45,6 +45,7 @@ public class SignupProgressJourneyStatusUpdateImpl implements SignupProgressJour
     }
 
     @Override
+    @Scheduled(cron = "* */30 * * * *")
     public void assetsSection() {
         log.info("===== Checking Assets Section Signup Progress Journey =====");
         var completedAssets = new AtomicInteger(0);
