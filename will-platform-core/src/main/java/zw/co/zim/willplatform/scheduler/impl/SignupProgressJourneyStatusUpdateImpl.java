@@ -25,6 +25,7 @@ public class SignupProgressJourneyStatusUpdateImpl implements SignupProgressJour
     private final SpouseSection spouseSection;
     private final PersonalSection personalSection;
     private final AssetsSection assetsSection;
+    private final LiabilitiesSection liabilitiesSection;
 
     public SignupProgressJourneyStatusUpdateImpl(
         SignupProgressJourneyService progressJourneyService,
@@ -33,7 +34,7 @@ public class SignupProgressJourneyStatusUpdateImpl implements SignupProgressJour
         ChildrenSection childrenSection,
         BeneficiarySection beneficiarySection,
         SpouseSection spouseSection,
-        PersonalSection personalSection, AssetsSection assetsSection) {
+        PersonalSection personalSection, AssetsSection assetsSection, LiabilitiesSection liabilitiesSection) {
         this.progressJourneyService = progressJourneyService;
         this.questionnaireService = questionnaireService;
         this.guardianSection = guardianSection;
@@ -42,10 +43,26 @@ public class SignupProgressJourneyStatusUpdateImpl implements SignupProgressJour
         this.spouseSection = spouseSection;
         this.personalSection = personalSection;
         this.assetsSection = assetsSection;
+        this.liabilitiesSection = liabilitiesSection;
+    }
+
+
+    @Scheduled(cron = "* */30 * * * *")
+    public void syncSections() {
+        assetsSection();
+        liabilitiesSection();
+        personalSection();
+        questionnaireSection();
+        spouseSection();
+        beneficiarySection();
+        childrenSection();
+        guardiansSection();
+        writtenSubscriptionSection();
+//    willSection();
+//    finalisedSection();
     }
 
     @Override
-    @Scheduled(cron = "* */30 * * * *")
     public void assetsSection() {
         log.info("===== Checking Assets Section Signup Progress Journey =====");
         var completedAssets = new AtomicInteger(0);
@@ -86,11 +103,32 @@ public class SignupProgressJourneyStatusUpdateImpl implements SignupProgressJour
 
     @Override
     public void liabilitiesSection() {
+        log.info("===== Checking Liabilities Section Signup Progress Journey =====");
+        var completedLiabilities = new AtomicInteger(0);
 
+        List<SignupProgressJourney> progressJourneyList = progressJourneyService.findAll().stream()
+            .filter(progress -> !progress.getCompletedLiabilitiesSection() && progress.getCompletedQuestionnaire())
+            .toList();
+
+        progressJourneyList.parallelStream().forEach(progressJourney -> {
+            boolean creditCard = liabilitiesSection.isLiabilitiesCreditCardComplete(progressJourney);
+            boolean outstandingAccount = liabilitiesSection.isLiabilitiesOutstandingAccountComplete(progressJourney);
+            boolean outstandingLoan = liabilitiesSection.isLiabilitiesOutstandingLoanComplete(progressJourney);
+            boolean userOwesMoney = liabilitiesSection.isLiabilitiesUserOwesMoneyComplete(progressJourney);
+            if (creditCard
+                && outstandingAccount
+                && outstandingLoan
+                && userOwesMoney) {
+                progressJourney.setCompletedLiabilitiesSection(true);
+                progressJourneyService.save(progressJourney);
+                completedLiabilities.incrementAndGet();
+            }
+        });
+
+        log.info("===== {} Completed Liabilities section =====", completedLiabilities);
     }
 
     @Override
-    @Scheduled(cron = "* */30 * * * *")
     public void personalSection() {
         log.info("===== Checking Personal Section Signup Progress Journey =====");
         var completed = new AtomicInteger(0);
@@ -112,7 +150,6 @@ public class SignupProgressJourneyStatusUpdateImpl implements SignupProgressJour
     }
 
     @Override
-    @Scheduled(cron = "* */30 * * * *")
     public void questionnaireSection() {
         log.info("===== Checking Questionnaire Section Signup Progress Journey =====");
         var total = new AtomicInteger(0);
@@ -133,7 +170,6 @@ public class SignupProgressJourneyStatusUpdateImpl implements SignupProgressJour
     }
 
     @Override
-    @Scheduled(cron = "* */30 * * * *")
     public void spouseSection() {
         log.info("===== Checking Spouse Section Signup Progress Journey =====");
         var totalSpouse = new AtomicInteger(0);
@@ -155,7 +191,6 @@ public class SignupProgressJourneyStatusUpdateImpl implements SignupProgressJour
     }
 
     @Override
-    @Scheduled(cron = "* */30 * * * *")
     public void beneficiarySection() {
         log.info("===== Checking Beneficiaries Section Signup Progress Journey =====");
         var totalBeneficiaries = new AtomicInteger(0);
@@ -178,7 +213,6 @@ public class SignupProgressJourneyStatusUpdateImpl implements SignupProgressJour
     }
 
     @Override
-    @Scheduled(cron = "* */30 * * * *")
     public void childrenSection() {
         log.info("===== Checking Children Section Signup Progress Journey =====");
         var totalChildren = new AtomicInteger(0);
@@ -200,7 +234,6 @@ public class SignupProgressJourneyStatusUpdateImpl implements SignupProgressJour
     }
 
     @Override
-    @Scheduled(cron = "* */30 * * * *")
     public void guardiansSection() {
         log.info("===== Checking Guardian Section Signup Progress Journey =====");
         var totalGuardian = new AtomicInteger(0);
@@ -232,8 +265,24 @@ public class SignupProgressJourneyStatusUpdateImpl implements SignupProgressJour
     }
 
     @Override
-    public void WrittenSubscriptionSection() {
+    public void writtenSubscriptionSection() {
+        log.info("===== Checking Written publication Section Signup Progress Journey =====");
+        var totalPublication = new AtomicInteger(0);
 
+        List<SignupProgressJourney> progressJourneyList = progressJourneyService.findAll().stream()
+            .filter(progress -> !progress.getSubscribed() && progress.getCompletedQuestionnaire())
+            .toList();
+
+        progressJourneyList.parallelStream().forEach(progressJourney -> {
+            boolean shouldCompleteWrittenPublications = liabilitiesSection.isLiabilitiesWrittenPublicationComplete(progressJourney);
+            if (shouldCompleteWrittenPublications) {
+                progressJourney.setSubscribed(true);
+                progressJourneyService.save(progressJourney);
+                totalPublication.incrementAndGet();
+            }
+        });
+
+        log.info("===== {} Completed Written publication Section =====", totalPublication);
     }
 
 }

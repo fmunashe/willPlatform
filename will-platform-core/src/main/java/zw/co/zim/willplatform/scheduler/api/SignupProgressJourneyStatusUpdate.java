@@ -21,5 +21,5 @@ public interface SignupProgressJourneyStatusUpdate {
 
     void finalisedSection();
 
-    void WrittenSubscriptionSection();
+    void writtenSubscriptionSection();
 }

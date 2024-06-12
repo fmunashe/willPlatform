@@ -34,6 +34,7 @@ public class TotalDemiseProcessorImpl implements TotalDemiseProcessor {
         this.mapper = mapper;
     }
 
+
     @Override
     public ApiResponse<TotalDemiseDto> findAll(Integer pageNo, Integer pageSize) {
         Page<TotalDemise> demisePage = totalDemiseService.findAll(pageNo, pageSize);
