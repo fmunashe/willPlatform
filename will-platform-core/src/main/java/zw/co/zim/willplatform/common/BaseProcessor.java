@@ -1,6 +1,5 @@
 package zw.co.zim.willplatform.common;
 
-import zw.co.zim.willplatform.dto.BaseDto;
 import zw.co.zim.willplatform.utils.messages.response.basic.ApiResponse;
 
 public interface BaseProcessor<T, S> {

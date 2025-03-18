@@ -227,7 +227,7 @@ public class AssetsSectionImpl implements AssetsSection {
     }
 
     private int getPageNumber() {
-        return Integer.parseInt(AppConstants.DEFAULT_PAGE_NUMBER);
+        return 0;
     }
 
     private int getPageSize() {

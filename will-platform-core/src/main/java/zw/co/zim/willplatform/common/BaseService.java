@@ -1,7 +1,5 @@
 package zw.co.zim.willplatform.common;
 
-import zw.co.zim.willplatform.model.BaseEntity;
-
 import java.util.List;
 import java.util.Optional;
 

@@ -39,9 +39,9 @@ public class Questionnaire extends BaseEntity {
     private Boolean userOweMoney;
     private Boolean subscribedWrittenPublication;
     private Boolean haveFireArm;
-    private Boolean numberOfFireArms;
+    private int numberOfFireArms;
     private Boolean haveMedicalAid;
-    private Boolean medicalAidName;
+    private String medicalAidName;
     private Boolean haveDependenciesOverSeas;
     private String occupation;
     private String educationalLevel;

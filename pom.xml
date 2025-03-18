@@ -3,10 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.zim</groupId>
-    <artifactId>willplatform</artifactId>
+    <artifactId>will-platform-core</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>willplatform</name>
-    <description>willplatform</description>
+    <name>will-platform-core</name>
+    <description>will-platform-core</description>
     <packaging>pom</packaging>
     <modules>
         <module>will-platform-core</module>

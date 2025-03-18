@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.zim</groupId>
-	<artifactId>will-platform-core</artifactId>
+	<artifactId>willPlatform</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>will-platform-core</name>
     <description>Will platform core functionality</description>

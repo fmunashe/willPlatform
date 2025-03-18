@@ -10,7 +10,7 @@ import java.util.function.BiPredicate;
 public class UsersBeneficiaryChecker implements BiPredicate<List<UsersBeneficiary>, Double> {
     @Override
     public boolean test(List<UsersBeneficiary> usersBeneficiaries, Double currentPercentage) {
-        if (usersBeneficiaries.isEmpty()) {
+        if (usersBeneficiaries.isEmpty() &&(currentPercentage > 0.0 || currentPercentage <= 100.0)) {
             return true;
         }
 
