@@ -1,0 +1,19 @@
+2025-07-21T14:57:45.241+02:00  INFO 13048 --- [WillPlatform] [main] z.c.z.w.SmartwillApplicationTests        : Starting SmartwillApplicationTests using Java 17.0.12 with PID 13048 (started by F8877543 in C:\Users\F8877543\Desktop\willPlatform\will-platform-core)
+2025-07-21T14:57:45.243+02:00  INFO 13048 --- [WillPlatform] [main] z.c.z.w.SmartwillApplicationTests        : The following 1 profile is active: "dev"
+2025-07-21T14:57:47.093+02:00  INFO 13048 --- [WillPlatform] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-21T14:57:47.536+02:00  INFO 13048 --- [WillPlatform] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 428 ms. Found 38 JPA repository interfaces.
+2025-07-21T14:57:47.985+02:00  INFO 13048 --- [WillPlatform] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=c4b3cd0b-af3b-38f0-ac3f-5bd32356edbd
+2025-07-21T14:57:49.130+02:00  INFO 13048 --- [WillPlatform] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-21T14:57:49.307+02:00  INFO 13048 --- [WillPlatform] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2025-07-21T14:57:49.424+02:00  INFO 13048 --- [WillPlatform] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-07-21T14:57:49.732+02:00  INFO 13048 --- [WillPlatform] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-21T14:57:49.774+02:00  INFO 13048 --- [WillPlatform] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-07-21T14:57:49.937+02:00  INFO 13048 --- [WillPlatform] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:willplatform user=SA
+2025-07-21T14:57:49.938+02:00  INFO 13048 --- [WillPlatform] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-07-21T14:57:51.711+02:00  INFO 13048 --- [WillPlatform] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-21T14:57:51.845+02:00  INFO 13048 --- [WillPlatform] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-21T14:57:58.000+02:00  INFO 13048 --- [WillPlatform] [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:willplatform'
+2025-07-21T14:57:58.274+02:00  INFO 13048 --- [WillPlatform] [main] z.c.z.w.SmartwillApplicationTests        : Started SmartwillApplicationTests in 13.428 seconds (process running for 14.662)
+2025-07-21T14:57:59.074+02:00  INFO 13048 --- [WillPlatform] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-21T14:57:59.098+02:00  INFO 13048 --- [WillPlatform] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-07-21T14:57:59.101+02:00  INFO 13048 --- [WillPlatform] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

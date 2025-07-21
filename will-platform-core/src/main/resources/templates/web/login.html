@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    <th:block th:replace="fragments/shared :: head-css"></th:block>
+</head>
+<body>
+<div class="container-fluid p-0">
+    <div class="row m-0">
+        <div class="col-12 p-0">
+            <div class="login-card login-dark">
+                <div>
+                    <div>
+                        <a class="logo" th:href="@{login}">
+                            <img class="img-fluid for-light" th:src="@{/assets/images/logo/logo.png}" alt="looginpage">
+                            <img class="img-fluid for-dark" th:src="@{/assets/images/logo/logo_dark.png}"
+                                 alt="looginpage">
+                        </a>
+                    </div>
+                    <div class="login-main">
+                        <form class="theme-form" th:action="@{/web/login}" th:object="${loginForm}" method="post">
+                            <h3>Sign in to account</h3>
+                            <p>Enter your email & password to login</p>
+                            <div class="form-group">
+                                <label class="col-form-label">Email Address</label>
+                                <input class="form-control" type="email" required="" th:field="*{username}"
+                                       placeholder="admin@gmail.com">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label">Password</label>
+                                <div class="form-input position-relative">
+                                    <input class="form-control" type="password" th:field="*{password}"
+                                           name="login[password]" required="" placeholder="*********">
+                                    <div class="show-hide"><span class="show"></span></div>
+                                </div>
+                            </div>
+                            <div th:if="${param.error}">
+                                <p style="color:red;">Invalid credentials</p>
+                            </div>
+                            <div class="form-group mb-0">
+                                <div class="checkbox p-0">
+                                    <input id="checkbox1" type="checkbox">
+                                    <label class="text-muted" for="checkbox1">Remember password</label>
+                                </div>
+                                <a class="link" th:href="@{forgot-password}">Forgot password?</a>
+                                <div class="text-end mt-3">
+                                    <button class="btn btn-primary btn-block w-100" type="submit">Sign in</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <th:block th:replace="fragments/shared :: scripts-js"></th:block>
+</div>
+</body>
+</html>
