@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class OTPGen {
     public static String generateOTP() {
-        String CHARACTERS = "123456";
+        String CHARACTERS = "1234567890";
         int length = 6;
 
         Random random = new Random();

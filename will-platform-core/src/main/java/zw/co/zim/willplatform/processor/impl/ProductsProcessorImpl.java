@@ -62,7 +62,7 @@ public class ProductsProcessorImpl implements ProductsProcessor {
 
         Optional<Currency> optionalCurrency = currencyService.findCurrencyByName(productRequest.getCurrency());
         if (optionalCurrency.isEmpty()) {
-            throw new RecordExistsException("Failed to find currency with name " + productRequest.getCurrency());
+            throw new RecordNotFoundException("Failed to find currency with name " + productRequest.getCurrency());
         }
 
         Currency currency = optionalCurrency.get();

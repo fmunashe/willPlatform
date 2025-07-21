@@ -49,6 +49,16 @@ public class AssetInvestmentController {
         return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
 
+    @GetMapping("/byInvestmentType{type}")
+    public ResponseEntity<ApiResponse<AssetInvestmentRecordDto>> findByInvestmentType(
+        @PathVariable("type") String investmentType,
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+        @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize) {
+
+        ApiResponse<AssetInvestmentRecordDto> recordDto = processor.findAllByInvestmentType(investmentType, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK).body(recordDto);
+    }
+
     @GetMapping("/byClientId{id}")
     public ResponseEntity<ApiResponse<AssetInvestmentRecordDto>> findByClientId(
         @PathVariable("id") Long clientId,

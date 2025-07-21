@@ -3,6 +3,7 @@ package zw.co.zim.willplatform.controller.api;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import zw.co.zim.willplatform.dto.ProductsDto;
 import zw.co.zim.willplatform.processor.ProductsProcessor;
@@ -39,7 +40,7 @@ public class ProductsController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<ApiResponse<ProductsDto>> createProduct(@RequestBody @Valid ProductRequest productRequest) {
+    public ResponseEntity<ApiResponse<ProductsDto>> createProduct(@RequestBody @Validated ProductRequest productRequest) {
         ApiResponse<ProductsDto> recordDto = processor.save(productRequest);
         return ResponseEntity.status(HttpStatus.OK).body(recordDto);
     }
