@@ -17,7 +17,7 @@ public class TestDataImpl {
         this.client = client;
     }
 
-//    @Scheduled(cron = "0 */2 * * * *")
+    @Scheduled(cron = "0 */2 * * * *")
     protected void processUserDataFromRemoteAPI() {
         log.info("===== Init Data Processing =====");
         List<TestData> userData = client.getUsersData();
